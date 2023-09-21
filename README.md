@@ -1,4 +1,4 @@
-# Advanced Tables (formerly Filter Sets)
+# Advanced Tables v3 (formerly Filter Sets)
 
 ![Advanced Tables with View Manager](https://user-images.githubusercontent.com/6097099/269182900-f3226af9-8e0c-4895-98e6-58499a76de7f.png)
 
@@ -91,7 +91,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0+`.
 
-*Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://v2.filamentphp.com/plugins/filter-sets) documentation for installation and usage instructions.*
+*Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.*
 
 ### Installing with Composer
 
