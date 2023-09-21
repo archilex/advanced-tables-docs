@@ -447,6 +447,10 @@ All of the customizations that were previously managed in the `filament-filter-s
 
 *Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` [config file].*
 
+##### Language files
+
+The language files have been completely reworked to match the new terminology. Since the language files have been renamed, there isn't a risk of missing translations, but if you had previously published and modified your language files, you will need to [publish](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets) and update the new ones. 
+
 #### What's next
 
 Now that you've successfully upgraded, be sure to take a look at all the [new features](#new-features) for additional options.
