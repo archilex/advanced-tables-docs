@@ -326,11 +326,15 @@ Due to the namespace changes, you may need to update your old migrations to use 
 
 However, if you have already deployed to your production server, you will most likely need to update your *local* migrations so you don't run into errors when trying to `migrate:fresh`:
 
-In your `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table` migrations, change:
+In your local `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table` migrations, change:
 
 `use Archilex\FilamentFilterSets\Support\Config;` to `use Archilex\AdvancedTables\Support\Config;`
 
-*Reminder: Do **NOT** delete and republish your old migrations if you have already deployed to your production server. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
+If you wish you can also update the deprecated methods in both migration files:
+
+Change `$userClass = Config::getUserModelName();` to  `$userClass = Config::getUser();`
+
+*Reminder: If you have already deployed to your production server, do **NOT** delete and republish your old migrations. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
 
 ##### Filter Set Filter 
 
