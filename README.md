@@ -322,13 +322,15 @@ Before you begin, be sure to follow the setup instructions for [Filament panels]
 
 ##### Migrations
 
-Due to the namespace changes, you will need to update your old migrations to use the new namespacing and methods. 
+Due to the namespace changes, you may need to update your old migrations to use the new namespacing. If you are updating a local project and you have *not yet* deployed to production, you can just delete the old migrations and publish the new ones. 
 
-In your `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table.php.php` migrations, change:
+However, if you have already deployed to your production server, you will most likely need to update your *local* migrations so you don't run into errors when trying to `migrate:fresh`:
+
+In your `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table` migrations, change:
 
 `use Archilex\FilamentFilterSets\Support\Config;` to `use Archilex\AdvancedTables\Support\Config;`
 
-*Important: Do **NOT** delete and republish your old migrations if you have already deployed to your production server. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
+*Reminder: Do **NOT** delete and republish your old migrations if you have already deployed to your production server. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
 
 ##### Filter Set Filter 
 
