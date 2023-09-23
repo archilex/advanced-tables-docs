@@ -320,6 +320,16 @@ Before you begin, be sure to follow the setup instructions for [Filament panels]
 
 #### High-impact changes
 
+##### Migrations
+
+Due to the namespace changes, you will need to update your old migrations to use the new namespacing and methods. 
+
+In your `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table.php.php` migrations, change:
+
+`use Archilex\FilamentFilterSets\Support\Config;` to `use Archilex\AdvancedTables\Support\Config;`
+
+*Important: Do **NOT** delete and republish your old migrations if you have already deployed to your production server. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
+
 ##### Filter Set Filter 
 
 The previous `FilterSetFilter` that lived in the `filters` dropdown has replaced by the [Quick Save](#quick-save-new) button to save new views and the [View Manager](#view-manager-new) to select and manage them. This means you should remove the `FilterSetFilter` and its imported class `use Archilex\FilamentFilterSets\Filters\FilterSetFilter` from each of your tables.
@@ -445,7 +455,7 @@ All of the customizations that were previously managed in the `filament-filter-s
 - [forms.display_icon_select](#disabling-the-icon-picker)
 - [forms.display_color_picker](#disabling-the-color-picker)
 
-*Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` [config file].*
+*Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` config file.*
 
 ##### Language files
 
