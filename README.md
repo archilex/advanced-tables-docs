@@ -89,7 +89,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 ### Requirements
 
-Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0+`.
+Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0.10+`.
 
 *Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.*
 
@@ -149,6 +149,7 @@ The license key and fingerprint should be separated by a colon (:).
 *If using Filament's standalone Table Builder, please refer to the [Filament Table Builder setup instructions](#setting-up-advanced-tables-in-filament-table-builder)*
 
 1. Publish and run the migrations
+
     *Important: If you are using a User class other than Laravel's default `User::class` or a user's table other than Laravel's default `users` you should [update these configurations](#configuring-the-userclass) **before** migrating.*
 
     ```bash
@@ -157,6 +158,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 2. Publish the language files
+
     Optionally, you may publish the language files:
 
     ```bash
@@ -164,6 +166,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 3. Add Advanced Tables to your Filament Panel
+
     Add Advanced Tables to a panel by instantiating the plugin class and passing it to the `plugin()` method of the configuration:
 
     ```php
@@ -190,6 +193,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 5. Integrate Filter Set's Tailwind and css files
+
     Filament v3 recommends developers [create a custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to better support a plugin's additional Tailwind classes. After you have created your custom theme, add Advanced Tables' views to your *new theme's* `tailwind.config.js` file usually located in `resources/css/filament/admin/tailwind.config.js`:
 
     ```js
@@ -206,6 +210,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 6. Compile
+
     Next, compile your theme:
 
     ```bash 
@@ -225,6 +230,7 @@ The license key and fingerprint should be separated by a colon (:).
 *Important: Beyond the [normal requirements](#requirements), using Advanced Tables with Filament Table Builder requires you have some type of user authentication system such as [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#laravel-breeze) since each view belongs to the currently authenticated user.*
 
 1. Publish the config files
+
     While optional, it is recommended you publish the config file to be able to fully customize Advanced Table. However, If you are using a User class other than Laravel's default `User::class` or a user's table other than Laravel's default `users` you should publish the config file and update these configurations **before** migrating.
 
     ```bash
@@ -232,6 +238,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 2. Publish the language files
+
     Optionally, publish the language files:
 
     ```bash
@@ -241,7 +248,7 @@ The license key and fingerprint should be separated by a colon (:).
 3. Publish and run the migrations
 
     ```bash
-    php artisan vendor:publish --tag="filament-filter-sets-migrations"
+    php artisan vendor:publish --tag="advanced-tables-migrations"
     php artisan migrate
     ```
 
@@ -257,6 +264,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 5. Integrate Advanced Tables's custom css file
+
     Add the following line to the top of your `app.css` file:
     
     ```css
@@ -264,6 +272,7 @@ The license key and fingerprint should be separated by a colon (:).
     ```
 
 6. Compile
+
     Next, compile your theme:
 
     ```bash 
@@ -324,9 +333,9 @@ Before you begin, be sure to follow the setup instructions for [Filament panels]
 
 Due to the namespace changes, you may need to update your old migrations to use the new namespacing. If you are updating a local project and you have *not yet* deployed to production, you can just delete the old migrations and publish the new ones. 
 
-However, if you have already deployed to your production server, you will most likely need to update your *local* migrations so you don't run into errors when trying to `migrate:fresh`:
+However, if you have *already* deployed to your production server, you will most likely need to update your *local* migrations so you don't run into errors when trying to `migrate:fresh`:
 
-In your local `create_filament_filter_sets_table` and your `create_filament_filter_set_user_table` migrations, change:
+In your local `yyyy_mm_dd_xxxxxx_create_filament_filter_sets_table` and your `yyyy_mm_dd_xxxxxx_create_filament_filter_set_user_table` migrations, change:
 
 `use Archilex\FilamentFilterSets\Support\Config;` to `use Archilex\AdvancedTables\Support\Config;`
 
@@ -334,7 +343,7 @@ If you wish you can also update the deprecated methods in both migration files:
 
 Change `$userClass = Config::getUserModelName();` to  `$userClass = Config::getUser();`
 
-*Reminder: If you have already deployed to your production server, do **NOT** delete and republish your old migrations. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
+*Important: If you have already deployed to your production server, do **NOT** delete and republish these two migration files. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
 
 ##### Filter Set Filter 
 
@@ -1776,7 +1785,7 @@ AdvancedTablesPlugin::make()
 Each text field in Advanced Tables has been added to the language file allowing you to customize the text to better fit your application needs. You can publish the language files with:
 
 ```bash
-php artisan vendor:publish --tag=filament-filter-sets-translations
+php artisan vendor:publish --tag=advanced-tables-translations
 ```
 
 This will copy the language files to your `resources\lang\vendor\advanced-tables` directory. Currently 🇺🇸 English, 🇲🇽 Spanish, and 🇫🇷 French translations are available.
