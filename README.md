@@ -1868,6 +1868,31 @@ All of the configurations listed above are also available when using Filament's 
 
 ## Tips and Tricks
 
+### Create and export reports
+
+By combining Advanced Tables with the powerful [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel) by Dennis Koch, you and your users can take full advantage of your custom views to generate customizable reports. Your view's filters, toggled columns, sorting, and reordered columns are automatically configured in your exported data. Advanced Tables and Excel Export make customizing, saving, and exporting reports easy, yet powerful.
+
+1. Install Excel Export per the plugins [instructions](https://filamentphp.com/plugins/pxlrbt-excel#installation)
+2. Add the `ExportBulkAction` to your table:
+
+```php
+public static function table(Table $table): Table
+{
+    return $table
+        ->bulkActions([
+            ExportBulkAction::make()
+        ]);
+}
+```
+
+3. Create your custom view using either [Preset Views](#preset-views) or [User Views](#user-views). Use whichever combination of filters, sorting, and toggled columns you like. Remember, with Advanced Tables you can also [reorder your columns](#reorderable-columns-new) as well!
+
+4. [Save your custom view](#quick-save-new). If this will be a report you generate frequently, you can add it to your [Favorites Bar](#favorites-bar). Or just keep it in the [View Manager](#view-manager-new) for easy access later on.
+
+5. Click the `bulk select` button in the table header to select the records in your custom view and then choose `Export`. Your selected records will be downloaded, sorted, filtered, and organized, just like you want. 
+
+Be sure to check out the rest of [Excel Export's docs](https://filamentphp.com/plugins/pxlrbt-excel) for further ways to customize your exports. And if Excel Export is helpful to your business, be sure to [sponsor Dennis](https://github.com/sponsors/pxlrbt).
+
 ### Updating your stats widgets automatically
 
 Filament v3 now makes it easy for you to have your widgets automatically update when you filter your views using Advanced Tables. Now, when you choose one of your Views, your widgets will update to reflect your filtered data. From [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget):
@@ -1904,31 +1929,6 @@ Stat::make('Orders', $this->getPageTableQuery()->count()),
 ```
 
 That's it! Now when you click on one of your Views, the widgets will update accordingly. See [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget) for more details.
-
-### Create and export reports
-
-By combining Advanced Tables with the powerful [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel) by Dennis Koch, you and your users can take full advantage of your custom views to generate customizable reports. Your view's filters, toggled columns, sorting, and reordered columns are automatically configured in your exported data. Advanced Tables and Excel Export make customizing, saving, and exporting reports easy, yet powerful.
-
-1. Install Excel Export per the plugins [instructions](https://filamentphp.com/plugins/pxlrbt-excel#installation)
-2. Add the `ExportBulkAction` to your table:
-
-```php
-public static function table(Table $table): Table
-{
-    return $table
-        ->bulkActions([
-            ExportBulkAction::make()
-        ]);
-}
-```
-
-3. Create your custom view using either [Preset Views](#preset-views) or [User Views](#user-views). Use whichever combination of filters, sorting, and toggled columns you like. Remember, with Advanced Tables you can also [reorder your columns](#reorderable-columns-new) as well!
-
-4. [Save your custom view](#quick-save-new). If this will be a report you generate frequently, you can add it to your [Favorites Bar](#favorites-bar). Or just keep it in the [View Manager](#view-manager-new) for easy access later on.
-
-5. Click the `bulk select` button in the table header to select the records in your custom view and then choose `Export`. Your selected records will be downloaded, sorted, filtered, and organized, just like you want. 
-
-Be sure to check out the rest of [Excel Export's docs](https://filamentphp.com/plugins/pxlrbt-excel) for further ways to customize your exports. And if Excel Export is helpful to your business, be sure to [sponsor Dennis](https://github.com/sponsors/pxlrbt).
 
 ## Support
 
