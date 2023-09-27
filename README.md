@@ -30,6 +30,7 @@ Check out a short video of some of the powerful features included in Advanced Ta
 - Choose from six different [themes](#themes)
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
 - Users can make their User Views [publicly](#making-a-user-view-public) available to all users
+- Easily [create and export](#create-and-export-reports) reports from your customized views with [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel)
 - Admins can create [global favorite views](#making-a-user-view-public) that will appear for all users
 - Powerful [policy integration](#authorization) gives you complete control
 - (New) Includes an [approval system](#approving-public-and-global-favorite-user-views-new) for User Views
@@ -1864,6 +1865,70 @@ If you are using the Filament Panels, Advanced Tables comes with a `UserViewReso
 ### Configurations
 
 All of the configurations listed above are also available when using Filament's standalone Table Builder. However, these will need to be configured in the config file. 
+
+## Tips and Tricks
+
+### Updating your stats widgets automatically
+
+Filament v3 now makes it easy for you to have your widgets automatically update when you filter your views using Advanced Tables. Now, when you choose one of your Views, your widgets will update to reflect your filtered data. From [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget):
+
+1. Add the `ExposesTableToWidgets` trait to your page class:
+
+```php 
+class ListOrders extends ListRecords
+{
+    use ExposesTableToWidgets;
+}
+```
+
+2. Inside your widget classes, add the `InteractsWithPageTable` trait and return the name of the page class from the `getTablePage()` method:
+
+```php 
+class OrderStats extends Widget
+{
+    use InteractsWithPageTable;
+ 
+    protected function getTablePage(): string
+    {
+        return ListOrders::class;
+    }
+}
+```
+
+3. Finally, in your widget class, use the `$this->getPageTableQuery()` to access the query builder instance:
+
+```php
+use Filament\Widgets\StatsOverviewWidget\Stat;
+
+Stat::make('Orders', $this->getPageTableQuery()->count()),
+```
+
+That's it! Now when you click on one of your Views, the widgets will update accordingly. See [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget) for more details.
+
+### Create and export reports
+
+By combining Advanced Tables with the powerful [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel) by Dennis Koch, you and your users can take full advantage of your custom views to generate customizable reports. Your view's filters, toggled columns, sorting, and reordered columns are automatically configured in your exported data. Advanced Tables and Excel Export make customizing, saving, and exporting reports easy, yet powerful.
+
+1. Install Excel Export per the plugins [instructions](https://filamentphp.com/plugins/pxlrbt-excel#installation)
+2. Add the `ExportBulkAction` to your table:
+
+```php
+public static function table(Table $table): Table
+{
+    return $table
+        ->bulkActions([
+            ExportBulkAction::make()
+        ]);
+}
+```
+
+3. Create your custom view using either [Preset Views](#preset-views) or [User Views](#user-views). Use whichever combination of filters, sorting, and toggled columns you like. Remember, with Advanced Tables you can also [reorder your columns](#reorderable-columns-new) as well!
+
+4. [Save your custom view](#quick-save-new). If this will be a report you generate frequently, you can add it to your [Favorites Bar](#favorites-bar). Or just keep it in the [View Manager](#view-manager-new) for easy access later on.
+
+5. Click the `bulk select` button in the table header to select the records in your custom view and then choose `Export`. Your selected records will be downloaded, sorted, filtered, and organized, just like you want. 
+
+Be sure to check out the rest of [Excel Export's docs](https://filamentphp.com/plugins/pxlrbt-excel) for further ways to customize your exports. And if Excel Export is helpful to your business, be sure to [sponsor Dennis](https://github.com/sponsors/pxlrbt).
 
 ## Support
 
