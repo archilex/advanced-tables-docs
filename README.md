@@ -572,15 +572,13 @@ To change the configuration of filters, columns, grouping, etc. see [Editing a U
 
 ### Editing a User View's table configuration
 
-To change a User View's table configuration of filters, columns, grouping, etc. you must overwrite the existing view:
+To update a User View's table configuration of filters, columns, grouping, etc. you can use the `Replace view` action:
 
 1. Set the table up with the desired configuration.
-2. Click the `+` in the top right corner of the table.
-3. Name the view the *same* name as the view you want to overwrite
-4. Apply any of the favorite, public, and/or global settings.
-5. Save the view.
+2. Open the View Manager.
+3. Next to the view you want to update, click the action button, and choose `Replace view`.
 
-Saving a view with the same name will overwrite the existing view, updating the table configuration for that view.
+Replacing a view will overwrite the existing view with the current table's configuration.
 
 If you would like to just update the name, icon, color, and/or visibility of a view, see [Editing a User View's name, icon, color or visibility](#editing-a-user-views-name-icon-color-or-visibility)
 
