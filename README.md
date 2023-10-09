@@ -1312,11 +1312,12 @@ AdvancedTablesPlugin::make()
 
 #### Displaying in the table toolbar
 
-By default, Quick Save is displayed in the Favorites Bar. You may display it in the toolbar next to the Filters dropdown by passing `false` to the `quickSaveInFavoritesBar()` method:
+By default, Quick Save is displayed in the Favorites Bar. You may display it in the toolbar by passing `false` to the `quickSaveInFavoritesBar()` method and adding the quickSaveInTable() method:
 
 ```php
 AdvancedTablesPlugin::make()
     ->quickSaveInFavoritesBar(false)
+    ->quickSaveInTable()
 ```
 
 #### Displaying as a modal
@@ -1452,11 +1453,11 @@ AdvancedTablesPlugin::make()
 
 #### Displaying a Save View link
 
-You may include a Save View link inside the View Manager with the `viewManagerquickSave()` method:
+You may include a Save View link inside the View Manager with the `viewManagerSaveView()` method:
 
 ```php
 AdvancedTablesPlugin::make()
-    ->viewManagerquickSave()
+    ->viewManagerSaveView()
 ```
 
 This also allows you to hide the Quick Save button from the Favorites Bar to maximize the space available in the Favorites Bar:
@@ -1466,8 +1467,10 @@ AdvancedTablesPlugin::make()
     ->quickSaveInFavoritesBar(false)
     ->viewManagerInFavoritesBar(false)
     ->viewManagerInTable()
-    ->viewManagerquickSave()
+    ->viewManagerSaveView()
 ```
+
+*Note: This option is only available when the View Manager is displayed as a dropdown. When displaying the View Manager as a slideOver, `viewManagerSaveView()` has no effect.*
 
 #### Displaying a Reset link
 
