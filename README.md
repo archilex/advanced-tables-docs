@@ -1679,6 +1679,66 @@ AdvancedTablesPlugin::make()
     ->resourceLoadAllUsers(false)
 ```
 
+#### Using multiple panels
+
+When using [multiple panels](https://filamentphp.com/docs/3.x/panels/configuration#overview) the User Views Resource will automatically only show the User Views associated with a panel's respective resources. However, since the User Views Resource itself comes from the plugin, if you create views *inside* the User View Resource then those views will appear in each panel's User Views Resource. Sometimes, this maybe desired. For example, if you create an "Approved" view inside the User View Resource, you may want that view to appear in the User Views Resource of every panel. 
+
+However, if you prefer each User Views Resource to be independent, you can follow the steps below:
+
+*Note: This will only affect future views created for the User Views Resource. It will not update views you previously created for your User Views Resource.*
+
+1. Copy `archilex/filament-filter-sets/src/Resources/UserViewResource.php` and `archilex/filament-filter-sets/src/Resources/UserViewResource/Pages/ManageUserViews.php` files to your panels directory:
+
+    ```
+    ├── Filament
+    │   ├── SecondaryPanel
+    │   │   ├── Resources
+    │   │   │   ├── UserViewResource.php
+    │   │   │   ├── UserViewResource
+    │   │   │   │   ├── Pages
+    │   │   │   │   │   ├── ManageUserViews.php
+    ```
+
+    *Note: While you can extend the plugin's UserViewResource for each panel, it is also possible to use the plugin's UserViewResource for your main panel and only extend the resource for your secondary panels.*
+
+2. Extend UserViewResource.php:
+
+    ```php
+    namespace App\Filament\SecondaryPanel\Resources;
+
+    use App\Filament\SecondaryPanel\Resources\UserViewResource\Pages\ManageUserViews;
+    use Archilex\AdvancedTables\Resources\UserViewResource as Resource;
+
+    class UserViewResource extends Resource
+    {
+        public static function getPages(): array
+        {
+            return [
+                'index' => ManageUserViews::route('/'),
+            ];
+        }
+    }
+    ```
+
+3. Update ManageUserViews.php
+
+    ```php
+    namespace App\Filament\SecondaryPanel\Resources\UserViewResource\Pages;
+
+    use App\Filament\SecondaryPanel\Resources\UserViewResource;
+    use Archilex\AdvancedTables\AdvancedTables;
+    use Filament\Resources\Pages\ManageRecords;
+
+    class ManageUserViews extends ManageRecords
+    {
+        use AdvancedTables;
+
+        protected static string $resource = UserViewResource::class;
+    }
+    ```
+
+Now, when you create a view inside that panel's User Views Resource it will only appear in that panels' User Views Resource.
+
 ## Authorization
 
 Depending on your application, you may not want to give all of your users the ability to use all the functions. Here are a few example situations:
