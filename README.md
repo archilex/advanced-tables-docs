@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Advanced Tables (formerly known as Filter Sets) is a premium plugin for [Filament](https://filamentphp.com/) that supercharges your tables with powerful features like user customizable views, enhanced filter tabs, reorderable columns, convenient view management, and more. 
+Advanced Tables (formerly known as Filter Sets) is a premium plugin for [Filament](https://filamentphp.com/) that supercharges your tables with powerful features like user customizable views, enhanced filter tabs, reorderable columns, convenient view management, filter builder, and more. 
 
 At its core, Advanced Tables allows you to combine filters, grouping, toggled columns, and more into custom views that are just one click away. Users no longer have to rebuild their views each time they need to focus on a certain subset of their data. Advanced Tables gives your users fast access to the information they need.
 
