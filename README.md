@@ -24,6 +24,7 @@ Check out a short video of some of the powerful features included in Advanced Ta
 - (New) Preset Views can also include [filters](#applying-filters-new), [grouping](#applying-default-grouping-new), [toggled columns](#toggling-and-reordering-columns-new), and [column order](#toggling-and-reordering-columns-new)
 - (New) The [Quick Save](#quick-save-new) button means saving custom views is just one click away
 - (New) Enhance your tables with [Column Reordering](#reordering-columns)
+- (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
 - Easily access views in the [Favorites Bar](#favorites-bar)
 - (New) Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
 - (New) [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
@@ -980,6 +981,34 @@ Using the `defaultFilters()` api gives your users a better understanding of how 
 
 *Tip: To see how the table filter array is created, you can `dd($this->tableFilters)` in your table.*
 
+If you are using [Advanced Filter Builder](#advanced-filter-builder-new), you should use the following syntax to define your default filters:
+
+```php
+'follow_up' => PresetView::make()
+    ->defaultFilters([
+        'advanced_filter_builder' => [
+            [ // filter group 1
+                'status' => [
+                    'value' => 'new'
+                ],
+                'created_at' => [
+                    'range' => 'this_month',
+                ],
+            ],
+            [ // filter group 2 (ie: "or")
+                'status' => [
+                    'value' => 'cancelled'
+                ],
+                'created_at' => [
+                    'range' => 'last_month',
+                ],
+            ],
+        ],
+    ])
+```
+
+If the example above, this will create the following query scope: `new orders made this month` OR `cancelled orders made last month`.
+
 ### Applying default grouping (New)
 
 You can apply one of your table [groupings](https://filamentphp.com/docs/3.x/tables/grouping#overview) to your Preset View with the `defaultGrouping()` method:
@@ -1605,6 +1634,84 @@ public static function table(Table $table): Table
         ->columnToggleFormColumns(2)
 ```
 
+## Advanced Filter Builder (New)
+
+Advanced Tables now includes Advanced Filter Builder allowing your users to build powerful queries by combining their filters into `and/or` groups. Filters can now be used *multiple* times and grouped into *or groups*. 
+
+*Note: Due to the stacking nature of Advanced Filter Builder, it currently works best when your Filament filters are rendered in a dropdown.*
+
+### Using Advanced Filter Builder
+
+To enable the Advanced Filter Builder, add `AdvancedFilterBuilder` to your table's `->filter()` method and then move your existing filters into Advanced Filter Builder's own `->filter()` method:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        Filter::make('is_active')
+            ->query(fn (Builder $query): Builder => $query->where('is_active', true))
+            ->toggle(),
+        SelectFilter::make('customer')
+            ->multiple()
+            ->relationship('customer', 'name'),
+        SelectFilter::make('status')
+            ->multiple()
+            ->options([
+                'processing' => 'Processing',
+                'new' => 'New',
+                'shipped' => 'Shipped',
+                'delivered' => 'Delivered',
+                'cancelled' => 'Cancelled',
+            ]),
+    ])
+```
+
+*Tip: If you have already saved a user view with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.*
+
+### Setting the default filters
+
+By default, every filter included in Advanced Filter Builder's `filter()` array will be displayed in the filter dropdown. If you wish to only display some of the filters by default, you can use the `defaultFilters()` method:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        ...
+    ])
+    ->defaultFilters([['status']])
+```
+
+*Important: Be sure to add your filters inside a double array.*
+
+You can also set up multiple default groups:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        ...
+    ])
+    ->defaultFilters([['status'], ['status']])
+```
+
+### Adding icons to the filter picker
+
+You can add icons to the filter picker by passing an array of icons to the `->icons()` method where the name of your filter is the `key` and the icon is the `value`:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        ...
+    ])
+    ->icons([
+        'status' => 'heroicon-o-clock',
+        'currency' => 'heroicon-o-currency-euro',
+        'customer' => 'heroicon-o-user',
+        'created_at' => 'heroicon-o-calendar',
+    ])
+```
+
+#### Customizing the buttons and labels
+
+You may customize the buttons and labels in the [language file](#language-files).
+
 ## User Views Resource
 
 Starting in v3, the User Views Resource is a Filament table resource primarily for admins to be able to manage the User Views of *all* their users. It is also where admins can approve or reject User Views with the [approval system](#approving-public-and-global-favorite-user-views-new).
@@ -2017,12 +2124,23 @@ Please review [our security policy](../../security/policy) on how to report secu
 ### Single License
 The Single License grants the Licensee permission to use Advanced Tables in a single project hosted on a single domain or subdomain. Examples include a personal website or a website for a single client.
 
-If you would like to implement Advanced Tables in a SaaS application, you will need an unlimited license.
+If you would like to implement Advanced Tables in a SaaS application, you will need an [Unlimited](#unlimited-license) or [Lifetime license](#lifetime-license).
 
-The single license grants permission for up to 5 Employees and Contractors of the Licensee to access and use Advanced Tables.
+The single license grants permission for up to 5 Employees and Contractors of the Licensee to access and use Advanced Tables. 
+
+You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
 
 ### Unlimited License
 The Unlimited License grants the Licensee permission to use Advanced Tables on **unlimited** domains and subdomains, including SaaS applications. 
+
+The unlimited license grants permission for up to 25 Employees and Contractors of the Licensee to access and use Advanced Tables.
+
+You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
+
+### Lifetime License
+The Lifetime License grants the Licensee permission the same benefits as the Unlimited License.
+
+You will receive updates for the lifetime of the product. 
 
 The unlimited license grants permission for up to 25 Employees and Contractors of the Licensee to access and use Advanced Tables.
 
