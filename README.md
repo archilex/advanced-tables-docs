@@ -1712,6 +1712,24 @@ AdvancedFilter::make()
     ])
 ```
 
+### Customizing the Expand View Link Position
+
+Currently, the expand view link in the filter dropdown is `absolute` positioned (ugly...I know). If you are using translatable fields, this may cause the link to overlap. You may change the position of the expand view link by passing an array of styles to the `->filterBuilderExpandViewStyles()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->filterBuilderExpandViewStyles(['right: 100px', 'top: 23px'])
+```
+
+This method also take a closure allowing you to set different positions based on a condition such as locale:
+
+```php
+use Illuminate\Support\Facades\App;
+
+AdvancedTablesPlugin::make()
+    ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
+```
+
 #### Customizing the buttons and labels
 
 You may customize the buttons and labels in the [language file](#language-files).
