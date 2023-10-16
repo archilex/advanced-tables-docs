@@ -981,6 +981,8 @@ Using the `defaultFilters()` api gives your users a better understanding of how 
 
 *Tip: To see how the table filter array is created, you can `dd($this->tableFilters)` in your table.*
 
+### Applying filters with Filter Builder (New)
+
 If you are using [Advanced Filter Builder](#advanced-filter-builder-new), you should use the following syntax to define your default filters:
 
 ```php
@@ -1665,7 +1667,9 @@ AdvancedFilter::make()
     ])
 ```
 
-*Tip: If you have already saved a user view with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.*
+*Important: If your users have already saved created User Views with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.*
+
+*However, if you are using Preset Views with [default filters](#applying-filters-new), you will need to [adjust your filters](#applying-filters-with-filter-builder-new) to be compatible with Advanced Filter Builder.*
 
 ### Setting the default filters
 
