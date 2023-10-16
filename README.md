@@ -1730,7 +1730,7 @@ AdvancedTablesPlugin::make()
     ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
 ```
 
-#### Customizing the buttons and labels
+### Customizing the buttons and labels
 
 You may customize the buttons and labels in the [language file](#language-files).
 
