@@ -1810,7 +1810,7 @@ AdvancedTablesPlugin::make()
 
 #### Using multiple panels
 
-When using [multiple panels](https://filamentphp.com/docs/3.x/panels/configuration#overview) the User Views Resource will automatically only show the User Views associated with a panel's respective resources. However, since the User Views Resource itself comes from the plugin, if you create views *inside* the User View Resource then those views will appear in each panel's User Views Resource. Sometimes, this maybe desired. For example, if you create an "Approved" view inside the User View Resource, you may want that view to appear in the User Views Resource of every panel. 
+When using [multiple panels](https://filamentphp.com/docs/3.x/panels/configuration#overview) the User Views Resource by default will only show the User Views associated with the current panel's resources. However, since the `UserViewResource::class` is part of the plugin, if you create views *on* the User View Resource then those views will appear in every panel's User Views Resource. Sometimes, this maybe desired. For example, if you create an "Approved" view on the User View Resource, you may want that view to appear in the User Views Resource of every panel. 
 
 However, if you prefer each User Views Resource to be independent, you can follow the steps below:
 
@@ -1819,13 +1819,13 @@ However, if you prefer each User Views Resource to be independent, you can follo
 1. Copy `archilex/filament-filter-sets/src/Resources/UserViewResource.php` and `archilex/filament-filter-sets/src/Resources/UserViewResource/Pages/ManageUserViews.php` files to your panels directory:
 
     ```
-    ├── Filament
-    │   ├── SecondaryPanel
-    │   │   ├── Resources
-    │   │   │   ├── UserViewResource.php
-    │   │   │   ├── UserViewResource
-    │   │   │   │   ├── Pages
-    │   │   │   │   │   ├── ManageUserViews.php
+    +-- Filament
+    │   +-- SecondaryPanel
+    │   │   +-- Resources
+    │   │   │   +-- UserViewResource.php
+    │   │   │   +-- UserViewResource
+    │   │   │   │   +-- Pages
+    │   │   │   │   │   +-- ManageUserViews.php
     ```
 
     *Note: While you can extend the plugin's UserViewResource for each panel, it is also possible to use the plugin's UserViewResource for your main panel and only extend the resource for your secondary panels.*
@@ -1867,6 +1867,17 @@ However, if you prefer each User Views Resource to be independent, you can follo
     ```
 
 Now, when you create a view inside that panel's User Views Resource it will only appear in that panels' User Views Resource.
+
+##### Showing user views from multiple panels
+
+As mentioned, by default the User Views Resource will only show the User Views that are associated to that panel. However, if you would like to include views from other panels you can do that by passing an array of panel ids to the `->resourcePanels()` method.
+
+```php
+AdvancedTablesPlugin::make()
+    ->resourcePanels(['admin', 'secondaryPanel'])
+```
+
+*Note: The `open` action will only be displayed for the current panel's user views.*
 
 ## Authorization
 
