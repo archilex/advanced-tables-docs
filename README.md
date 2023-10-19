@@ -1237,6 +1237,15 @@ Advanced Tables includes six different themes for the Favorites Bar:
 You can change the theme with the 'favoritesBarTheme()` method:
 
 ```php
+use Archilex\AdvancedTables\Enums\FavoritesBarTheme;
+
+AdvancedTablesPlugin::make()
+    ->favoritesBarTheme(FavoritesBarTheme::Filament)
+```
+
+You may also use the corresponding string instead:
+
+```php
 AdvancedTablesPlugin::make()
     ->favoritesBarTheme('filament')
 ```
