@@ -146,7 +146,7 @@ The license key and fingerprint should be separated by a colon (:).
 
 *Tip: If you get a `402 error`, most likely you forgot to add the colon and fingerprint.*
 
-### Setting up Advanced Tables in Filament Panels (including Relation Managers and Table Widgets)
+### Setting up Advanced Tables in Filament Panels (including Relation Managers, Table Widgets, and Panel Pages)
 
 *If using Filament's standalone Table Builder, please refer to the [Filament Table Builder setup instructions](#setting-up-advanced-tables-in-filament-table-builder)*
 
@@ -486,7 +486,7 @@ Now that you've successfully upgraded, be sure to take a look at all the [new fe
 
 ### Adding Advanced Tables to your table
 
-To use Advanced Tables you will need to add the `AdvancedTables` trait to the appropriate class depending on whether you intend to use it on a [Resource Table](#resource-tables), [Simple Resource Table](#simple-modal-resource-tables), or [Table Widget](#table-widgets).
+To use Advanced Tables you will need to add the `AdvancedTables` trait to the appropriate class depending on whether you intend to use it on a [Resource Table](#resource-tables), [Simple Resource Table](#simple-modal-resource-tables), [Table Widget](#table-widgets), or [Panel Page](#panel-pages).
 
 *Important: For standalone Table Builder users, please refer to the documentation for [using Advanced Tables with Table Builder](#filament-table-builder)*
 
@@ -525,6 +525,40 @@ class LatestOrders extends BaseWidget
 {
     use AdvancedTables;
 ```
+
+#### Panel Pages
+
+To add Advanced Tables to a [Panel Page](https://filamentphp.com/docs/3.x/panels/pages), you need to add the `AdvancedTables` trait to your component. However, as Advanced Tables overrides multiple methods in Filament's `InteractsWithTables` trait, adding the `AdvancedTables` trait to the table will cause a conflict. 
+
+For convenience, Advanced Tables includes a `PanelPage` class which you can use to quickly get up and running:
+
+```php
+use Archilex\AdvancedTables\AdvancedTables;
+use Archilex\AdvancedTables\Livewire\PanelPage;
+
+class CustomPage extends PanelPage
+{
+    use AdvancedTables;
+
+    ...
+```
+
+Of course, there are multiple ways to prevent the trait conflict. The important part is to ensure that the `AdvancedTables` trait is used on a class that extends another class which contains Filament's `InteractsWithTables` trait.
+
+#### Adding the view component to your blade file
+
+You also need to add the Favorites Bar component to your panel page's blade file:
+
+```html
+<div class="space-y-6">
+    
+    <x-advanced-tables::favorites-bar />
+
+    {{ $this->table }}
+</div>
+```
+
+The Favorites Bar expects a space of `24px` to properly display it's links. This can easily be achieved with Tailwind's `space-y-6` class as shown above.
 
 ### Core Concept: User Views vs Preset Views
 
