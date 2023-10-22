@@ -93,7 +93,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0.10+`.
 
-*Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.*
+> Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
 ### Installing with Composer
 
@@ -110,7 +110,7 @@ To install Advanced Tables you'll need to add the package to your `composer.json
 }
 ```
 
-*Important: Advanced Tables was formerly named Filament Filter Sets, but for compatibility with previous versions, the repository has maintained its original name.*
+> Advanced Tables was formerly named Filament Filter Sets, but for compatibility with previous versions, the repository has maintained its original name.
 
 Once the repository has been added to your composer.json file, you can install Advanced Tables like any other composer package using the composer require command:
 
@@ -144,7 +144,7 @@ Password: 8c21df8f-6273-4932-b4ba-8bcc723ef500:my_domain.com
 
 The license key and fingerprint should be separated by a colon (:). 
 
-*Tip: If you get a `402 error`, most likely you forgot to add the colon and fingerprint.*
+> Tip: If you get a `402 error`, most likely you forgot to add the colon and fingerprint.
 
 ### Setting up Advanced Tables in Filament Panels (including Relation Managers, Table Widgets, and Panel Pages)
 
@@ -152,7 +152,7 @@ The license key and fingerprint should be separated by a colon (:).
 
 1. Publish and run the migrations
 
-    *Important: If you are using a User class other than Laravel's default `User::class` or a user's table other than Laravel's default `users` you should [update these configurations](#configuring-the-userclass) **before** migrating.*
+    > Important: If you are using a User class other than Laravel's default `User::class` or a user's table other than Laravel's default `users` you should [update these configurations](#configuring-the-userclass) **before** migrating.
 
     ```bash
     php artisan vendor:publish --tag="advanced-tables-migrations"
@@ -227,9 +227,9 @@ The license key and fingerprint should be separated by a colon (:).
 
 ### Setting up Advanced Tables in Filament Table Builder
 
-*If using Filament Panels, please refer to the [Filament Panels setup instructions](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets)*
+> If using Filament Panels, please refer to the [Filament Panels setup instructions](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets).
 
-*Important: Beyond the [normal requirements](#requirements), using Advanced Tables with Filament Table Builder requires you have some type of user authentication system such as [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#laravel-breeze) since each view belongs to the currently authenticated user.*
+> Important: Beyond the [normal requirements](#requirements), using Advanced Tables with Filament Table Builder requires you have some type of user authentication system such as [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#laravel-breeze) since each view belongs to the currently authenticated user.
 
 1. Publish the config files
 
@@ -295,11 +295,11 @@ When deploying, it is not advised to store your `auth.json`` file inside your pr
 composer config http-basic.filament-filter-sets.composer.sh your_account_email your_license_key_including_your_fingerprint_domain
 ```
 
-*Important: Don't forget to append your fingerprint domain to your password.*
+> Important: Don't forget to append your fingerprint domain to your password.
 
 You can see your credentials in your [Anystack account](https://account.anystack.sh/transactions): `Anystack > Transactions > View details` next to Filament Filter Sets. 
 
-*Tip: Make sure the `auth.json` file is in `.gitignore` to avoid leaking credentials into your git history.*
+> Tip: Make sure the `auth.json` file is in `.gitignore` to avoid leaking credentials into your git history.
 
 If you are using Laravel Forge, you don't need to create the `auth.json` file manually. Instead, you can set the credentials on the `Composer Package Authentication` screen of your server. 
 
@@ -345,7 +345,7 @@ If you wish you can also update the deprecated methods in both migration files:
 
 Change `$userClass = Config::getUserModelName();` to  `$userClass = Config::getUser();`
 
-*Important: If you have already deployed to your production server, do **NOT** delete and republish these two migration files. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.*
+> Important: If you have already deployed to your production server, do **NOT** delete and republish these two migration files. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.
 
 ##### Filter Set Filter 
 
@@ -367,7 +367,7 @@ class ListUsers extends ListRecords
     use AdvancedTables;
 ```
 
-*Important: Previously, you would only need to use the `HasFavorites` trait if you wanted to use the Favorites Bar on a table. As of v3, the `AdvancedTables` trait is the main entry point for the plugin. This means that anywhere you were using `FilterSetFilter` without the respective `HasFavorite` trait you will now need to add the `AdvancedTables` trait to the appropriate class, usually `List*` or `Manage*`.*
+> Important: Previously, you would only need to use the `HasFavorites` trait if you wanted to use the Favorites Bar on a table. As of v3, the `AdvancedTables` trait is the main entry point for the plugin. This means that anywhere you were using `FilterSetFilter` without the respective `HasFavorite` trait you will now need to add the `AdvancedTables` trait to the appropriate class, usually `List*` or `Manage*`.
 
 ##### Heroicons
 
@@ -383,7 +383,7 @@ public function panel(Panel $panel): Panel
         ])
 ```
 
-*The helper service exists to get you up and running as quickly as possible. However, when convenient, it's recommended you implement your own script to update the icons directly in your database and then disable this helper.*
+> The helper service exists to get you up and running as quickly as possible. However, when convenient, it's recommended you implement your own script to update the icons directly in your database and then disable this helper.
 
 #### Developer-created Filter Sets are now Preset Views
 
@@ -432,7 +432,7 @@ class ListUsers extends ListRecords
 }
 ```
 
-*Important: Be sure that any column included in `defaultColumns` is present in on the `columns` method of your table.*
+> Important: Be sure that any column included in `defaultColumns` is present in on the `columns` method of your table.
 
 ##### Filter Set Resource is now User Views Resource
 
@@ -472,7 +472,7 @@ All of the customizations that were previously managed in the `filament-filter-s
 - [forms.display_icon_select](#disabling-the-icon-picker)
 - [forms.display_color_picker](#disabling-the-color-picker)
 
-*Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` config file.*
+> Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` config file.
 
 ##### Language files
 
@@ -488,7 +488,7 @@ Now that you've successfully upgraded, be sure to take a look at all the [new fe
 
 To use Advanced Tables you will need to add the `AdvancedTables` trait to the appropriate class depending on whether you intend to use it on a [Resource Table](#resource-tables), [Simple Resource Table](#simple-modal-resource-tables), [Table Widget](#table-widgets), or [Panel Page](#panel-pages).
 
-*Important: For standalone Table Builder users, please refer to the documentation for [using Advanced Tables with Table Builder](#filament-table-builder)*
+> Important: For standalone Table Builder users, please refer to the documentation for [using Advanced Tables with Table Builder](#filament-table-builder).
 
 #### Resource tables
 
@@ -686,7 +686,7 @@ AdvancedTablesPlugin::make()
     ->quickSaveIncludeSolidIcons(false)
 ```
 
-*Important: Since icons are cached, after updating you will need to clear your cache to see the change with `php artisan cache:clear`*
+> Important: Since icons are cached, after updating you will need to clear your cache to see the change with `php artisan cache:clear`.
 
 #### Configuring the color picker colors (New)
 
@@ -966,7 +966,7 @@ Preset Views can display a badge after the label by passing a string into the `b
     ->badge(Order::query()->where('status', 'processing')->count())
 ```
 
-*Tip: If you want to display multiple badges, you should generate one query separately and then use [Laravel collections](https://laravel.com/docs/10.x/collections#main-content) to filter and count them.*
+> Tip: If you want to display multiple badges, you should generate one query separately and then use [Laravel collections](https://laravel.com/docs/10.x/collections#main-content) to filter and count them.
 
 ### Showing or hiding
 
@@ -993,7 +993,7 @@ public function viewProcessing(User $user)
 }
 ```
 
-*Tip: If your policy is not working, be sure to register it in `AuthServiceProvider` as sometimes Laravel does not successfully auto-register policies.*
+> Tip: If your policy is not working, be sure to register it in `AuthServiceProvider` as sometimes Laravel does not successfully auto-register policies.
 
 ### Applying filters (New)
 
@@ -1013,7 +1013,7 @@ You can apply values to your [table filters](https://filamentphp.com/docs/3.x/ta
 
 Using the `defaultFilters()` api gives your users a better understanding of how a Preset View is filtering the data by turning on Filament's filter indicators.
 
-*Tip: To see how the table filter array is created, you can `dd($this->tableFilters)` in your table.*
+> Tip: To see how the table filter array is created, you can `dd($this->tableFilters)` in your table.
 
 ### Applying filters with Filter Builder (New)
 
@@ -1080,7 +1080,7 @@ If a column is [sortable](https://filamentphp.com/docs/3.x/tables/getting-starte
 
 By default, sorting is ascending, but you may choose descending as well `->defaultSort('total_price', 'desc')`. 
 
-*Tip: While it is possible to add `orderBy()` to your query to sort your table, using `defaultSort()` is recommended as it will correctly show the sorting indicator on the table column.*
+> Tip: While it is possible to add `orderBy()` to your query to sort your table, using `defaultSort()` is recommended as it will correctly show the sorting indicator on the table column.
 
 ### Loading a default Preset View
 
@@ -1113,7 +1113,7 @@ If you need more fine-grained control you may use the individual methods:
     ->preserveSortDirection()
 ```
 
-*Note: By preserving a user's selection you are in turn removing the option for a Preset View to always take a user to that view's predefined configuration as that view is now affected by the user.*
+> Note: By preserving a user's selection you are in turn removing the option for a Preset View to always take a user to that view's predefined configuration as that view is now affected by the user.
 
 ### Preset Views configurations
 
@@ -1284,7 +1284,7 @@ AdvancedTablesPlugin::make()
     ->favoritesBarTheme('filament')
 ```
 
-*Note: Since `links-simple` only has color to visually distinguish between active and in-active states, it is recommended you [disable the ability to select a color](#disabling-the-color-picker) for their User Views since it becomes difficult to know which link is active.*
+> Note: Since `links-simple` only has color to visually distinguish between active and in-active states, it is recommended you [disable the ability to select a color](#disabling-the-color-picker) for their User Views since it becomes difficult to know which link is active.
 
 #### Size
 
@@ -1319,9 +1319,9 @@ AdvancedTablesPlugin::make()
     ->favoritesBarDefaultView(false)
 ```
 
-*Note: In prior versions this view was named `All`, however when clicking this view, it actually resets the table to it's ***default*** settings, which may or may not contain all the records. For this reason, it was renamed to `default` in version 3. However, you may change the name of the Default View in the [language file](#language-files).*
+> Note: In prior versions this view was named `All`, however when clicking this view, it actually resets the table to it's ***default*** settings, which may or may not contain all the records. For this reason, it was renamed to `default` in version 3. However, you may change the name of the Default View in the [language file](#language-files).
 
-*Tip: If you need an `All` button in addition/instead of a `Default` button, you can easily create a [Preset View](#creating-a-preset-view) that shows the data you need.*
+> Tip: If you need an `All` button in addition/instead of a `Default` button, you can easily create a [Preset View](#creating-a-preset-view) that shows the data you need.
 
 #### Default View icon
 
@@ -1396,7 +1396,7 @@ AdvancedTablesPlugin::make()
     ->quickSaveInFavoritesBar(icon: 'heroicon-o-bookmark')
 ```
 
-*Note: The Quick Save icon only applies when the button is in the Favorites Bar.*
+> Note: The Quick Save icon only applies when the button is in the Favorites Bar.
 
 #### Changing the position in the Favorites Bar
 
@@ -1453,7 +1453,7 @@ Next to each view is an action button that gives the user several options depend
 
 User favorites, User views, and Preset views can be sorted by clicking the up/down arrows and then dragging/dropping the view to the desired location. Each view will be confined to it's section. 
 
-*Important: If the User Favorites section contains both Preset Views and User Views, Preset Views will always come first, followed by User Views. These two types of views can only be sorted within their respective groupings. In other words, Preset Views can only be sorted among other Preset Views, and User Views can only be sorted among other User Views.*
+> Important: If the User Favorites section contains both Preset Views and User Views, Preset Views will always come first, followed by User Views. These two types of views can only be sorted within their respective groupings. In other words, Preset Views can only be sorted among other Preset Views, and User Views can only be sorted among other User Views.
 
 ### View Manager configurations
 
@@ -1537,7 +1537,7 @@ AdvancedTablesPlugin::make()
     ->viewManagerBadge(false)
 ```
 
-*Note: The active view badge indicator is only available when the View Manager is used as a dropdown.*
+> Note: The active view badge indicator is only available when the View Manager is used as a dropdown.
 
 #### Hiding the search field
 
@@ -1567,7 +1567,7 @@ AdvancedTablesPlugin::make()
     ->viewManagerSaveView()
 ```
 
-*Note: This option is only available when the View Manager is displayed as a dropdown. When displaying the View Manager as a slideOver, `viewManagerSaveView()` has no effect.*
+> Note: This option is only available when the View Manager is displayed as a dropdown. When displaying the View Manager as a slideOver, `viewManagerSaveView()` has no effect.
 
 #### Displaying a Reset link
 
@@ -1664,7 +1664,7 @@ To reorder columns:
 2. Click the `up/down arrow` button to enable reordering
 3. Drag and drop your columns in the order you prefer.
 
-*Note: At least one column in your table must be `toggleable()` for Filament to display the toggle column button.*
+> Note: At least one column in your table must be `toggleable()` for Filament to display the toggle column button.
 
 ### Reorderable Columns configurations
 
@@ -1706,7 +1706,7 @@ public static function table(Table $table): Table
 
 Advanced Tables now includes Advanced Filter Builder allowing your users to build powerful queries by combining their filters into `and/or` groups. Filters can now be used *multiple* times and grouped into *or groups*. 
 
-*Note: Due to the stacking nature of Advanced Filter Builder, it currently works best when your Filament filters are rendered in a dropdown.*
+> Note: Due to the stacking nature of Advanced Filter Builder, it currently works best when your Filament filters are rendered in a dropdown.
 
 ### Using Advanced Filter Builder
 
@@ -1733,9 +1733,9 @@ AdvancedFilter::make()
     ])
 ```
 
-*Important: If your users have already saved created User Views with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.*
-
-*However, if you are using Preset Views with [default filters](#applying-filters-new), you will need to [adjust your filters](#applying-filters-with-filter-builder-new) to be compatible with Advanced Filter Builder.*
+> Important: If your users have already saved created User Views with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.
+>
+> However, if you are using Preset Views with [default filters](#applying-filters-new), you will need to [adjust your filters](#applying-filters-with-filter-builder-new) to be compatible with Advanced Filter Builder.
 
 ### Setting the default filters
 
@@ -1749,7 +1749,7 @@ AdvancedFilter::make()
     ->defaultFilters([['status']])
 ```
 
-*Important: Be sure to add your filters inside a double array.*
+> Important: Be sure to add your filters inside a double array.
 
 You can also set up multiple default groups:
 
@@ -1804,7 +1804,7 @@ You may customize the buttons and labels in the [language file](#language-files)
 
 Starting in v3, the User Views Resource is a Filament table resource primarily for admins to be able to manage the User Views of *all* their users. It is also where admins can approve or reject User Views with the [approval system](#approving-public-and-global-favorite-user-views-new).
 
-*Important: You will need to set up a [policy](#authorization) to limit access to the User Views Resource. Without a policy, any user will be able to rename, update, or delete any User View. See the policy section for more information.*
+> Important: You will need to set up a [policy](#authorization) to limit access to the User Views Resource. Without a policy, any user will be able to rename, update, or delete any User View. See the policy section for more information.
 
 ### Easily toggling a views public, or global setting
 
@@ -1880,7 +1880,7 @@ When using [multiple panels](https://filamentphp.com/docs/3.x/panels/configurati
 
 However, if you prefer each User Views Resource to be independent, you can follow the steps below:
 
-*Note: This will only affect future views created for the User Views Resource. It will not update views you previously created for your User Views Resource.*
+> Note: This will only affect future views created for the User Views Resource. It will not update views you previously created for your User Views Resource.
 
 1. Copy `archilex/filament-filter-sets/src/Resources/UserViewResource.php` and `archilex/filament-filter-sets/src/Resources/UserViewResource/Pages/ManageUserViews.php` files to your panels directory:
 
@@ -1894,7 +1894,7 @@ However, if you prefer each User Views Resource to be independent, you can follo
     │   │   │   │   │   +-- ManageUserViews.php
     ```
 
-    *Note: While you can extend the plugin's UserViewResource for each panel, it is also possible to use the plugin's UserViewResource for your main panel and only extend the resource for your secondary panels.*
+    > Note: While you can extend the plugin's UserViewResource for each panel, it is also possible to use the plugin's UserViewResource for your main panel and only extend the resource for your secondary panels.
 
 2. Extend UserViewResource.php:
 
@@ -1943,7 +1943,7 @@ AdvancedTablesPlugin::make()
     ->resourcePanels(['admin', 'secondaryPanel'])
 ```
 
-*Note: The `open` action will only be displayed for the current panel's user views.*
+> Note: The `open` action will only be displayed for the current panel's user views.
 
 ## Authorization
 
