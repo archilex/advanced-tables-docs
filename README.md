@@ -1364,6 +1364,29 @@ AdvancedTablesPlugin::make()
 
 However, by disabling User Views, you also disable public and global favorite User Views. If you wish to just hide the Quick Save button for certain users, you should use [policies](#authorization).
 
+#### Disabling the Favorites Bar
+
+You can disable the Favorites Bar entirely (helpful if you only want to use [reorderable columns](#reorderable-columns-new)) by passing `false` to the `favoritesBarEnabled()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->favoritesBarEnabled(false)
+```
+
+You may also configure this per table by overriding the `favoritesBarIsEnabled()` method on your List page:
+
+```php
+class ListOrders extends ListRecords
+{
+    use AdvancedTables; 
+
+    public static function favoritesBarIsEnabled(): bool
+    {
+        return false;
+    }
+    ...
+```
+
 #### Changing the icon
 
 You may change the icon of the Quick Save button using the `icon` argument of the `quickSaveInFavoritesBar()` method:
