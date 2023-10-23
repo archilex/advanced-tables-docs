@@ -1656,6 +1656,8 @@ AdvancedTablesPlugin::make()
 
 Advanced Tables enhances Filament's [toggleable columns](https://filamentphp.com/docs/3.x/tables/columns/getting-started#toggling-column-visibility) dropdown with powerful column reordering. Now you and your users can move hide, show, and move columns to create a totally custom view. Best of all, when a user creates a new User View, their new column order is saved as well. 
 
+> Note: When using a table with a [column layout](https://filamentphp.com/docs/3.x/tables/layout), the columns dropdown will not show the reorder button since columns cannot be reordered in this type of layout.
+
 ### Reordering columns
 
 To reorder columns:
