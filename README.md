@@ -1812,10 +1812,10 @@ public function table(Table $table): Table
         ->filters([
             // ...
         ])
+        ->filtersFormWidth('md')
         ->filtersTriggerAction(
             fn (Action $action) => $action
                 ->slideOver()
-                ->modalWidth('md'),
         );
 }
 ```
