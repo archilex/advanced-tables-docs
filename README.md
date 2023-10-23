@@ -1798,6 +1798,28 @@ AdvancedTablesPlugin::make()
     ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
 ```
 
+### Always opening the filter as a slideOver
+
+If you would prefer Advanced Filter Builder to always open in a slideOver or modal, you may use [Filament's](https://filamentphp.com/docs/3.x/tables/filters#customizing-the-filters-dropdown-trigger-action) `filtersTriggerAction()` method:
+
+```php
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+ 
+public function table(Table $table): Table
+{
+    return $table
+        ->filters([
+            // ...
+        ])
+        ->filtersTriggerAction(
+            fn (Action $action) => $action
+                ->slideOver()
+                ->modalWidth('md'),
+        );
+}
+```
+
 ### Customizing the buttons and labels
 
 You may customize the buttons and labels in the [language file](#language-files).
