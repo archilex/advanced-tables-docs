@@ -225,6 +225,8 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan filament:upgrade
     ```
 
+After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started) to learn how to add Advanced Tables to your tables.
+
 ### Setting up Advanced Tables in Filament Table Builder
 
 > If using Filament Panels, please refer to the [Filament Panels setup instructions](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets).
@@ -286,6 +288,8 @@ The license key and fingerprint should be separated by a colon (:).
     ```bash
     php artisan filament:upgrade
     ```
+
+After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started-1) to learn how to add Advanced Tables to your tables.
 
 ### Deploying
 
