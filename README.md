@@ -225,7 +225,7 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan filament:upgrade
     ```
 
-After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started) to learn how to add Advanced Tables to your tables.
+After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started) to learn how to add Advanced Tables to your resources, relation managers, pages, and/or table widgets.
 
 ### Setting up Advanced Tables in Filament Table Builder
 
@@ -289,7 +289,7 @@ After you've successfully installed Advanced Tables, you may review the [Getting
     php artisan filament:upgrade
     ```
 
-After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started-1) to learn how to add Advanced Tables to your tables.
+After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#filament-table-builder) to learn how to add Advanced Tables to your tables.
 
 ### Deploying
 
@@ -1710,13 +1710,174 @@ public static function table(Table $table): Table
 
 ## Advanced Filter Builder (New)
 
-Advanced Tables now includes Advanced Filter Builder allowing your users to build powerful queries by combining their filters into `and/or` groups. Filters can now be used *multiple* times and grouped into *or groups*. 
+![Advanced filter builder](https://user-images.githubusercontent.com/6097099/278955775-f124d155-8fd8-4af5-bf38-e13ec958df3c.png)
 
-> Note: Due to the stacking nature of Advanced Filter Builder, it currently works best when your Filament filters are rendered in a dropdown.
+Advanced Filter Builder is a custom filtering system that gives your users a simple, yet powerful way to quickly build custom queries. Each filter inside the builder can be used multiple times and grouped into *or groups*, allowing your users to drill down and find the data they need. Advanced Filter Builder was designed to make filtering easy for your users with a simple UI and natural filtering language. 
+
+For developers, Advanced Filter Builder couldn't be easier to implement. With just one line of code, the Advanced Filter Builder will *automatically* generate `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
+
+> Note: Due to the stacking nature of Advanced Filter Builder, this feature currently works best when your Filament filters are rendered in a dropdown or slideOver.
 
 ### Using Advanced Filter Builder
 
-To enable the Advanced Filter Builder, add `AdvancedFilterBuilder` to your table's `->filter()` method and then move your existing filters into Advanced Filter Builder's own `->filter()` method:
+To enable the Advanced Filter Builder, add `AdvancedFilterBuilder` to your table's `->filter()` method:
+
+```php
+return $table
+    ->columns([
+        ...
+    ])
+    ->filters([
+        AdvancedFilter::make(),
+    ])
+```
+
+Each of your table's [compatible columns]() will *automatically* be mapped and available in Advanced Filter Builder's picker:
+
+<img src="https://user-images.githubusercontent.com/6097099/278954852-3a754833-d7a7-414c-a7fc-2dbe52e53b79.jpg" alt="Column Filters" width="600"/>
+
+### Filter Types
+
+Advanced Filter Builder ships with multiple different custom filters, each with it's own set of operators:
+
+#### Text Filter
+
+The `TextFilter` allows you to filter text strings with operators like `is`, `is not`, `starts with`, `does not end with`, `contains`, etc.
+
+<img src="https://user-images.githubusercontent.com/6097099/278954866-658a0990-335e-4fb8-b554-3de42e469592.jpg" alt="Text Filter" width="600"/>
+
+When appropriate, the `TextFilter` can also transform the `is` and `is not` operators into a select dropdown:
+
+<img src="https://user-images.githubusercontent.com/6097099/278954865-2539f10e-3ec9-4445-8484-c9bafeaa7952.jpg" alt="Text Filter with select" width="600"/>
+
+#### Numeric Filter
+
+The `NumericFilter` allows you to filter numbers with operators like `equal to`, `greater than`, `less than or equal to`, `between`, `positive`, etc.
+
+<img src="https://user-images.githubusercontent.com/6097099/278954861-0740435e-244b-4355-9a31-b109fe9b4a41.jpg" alt="Numeric filter" width="600"/>
+
+#### Date Filter
+
+The `DateFilter` allows you to filter dates combining *operators* like `yesterday`, `in the next`, `before`, `between`, etc. with *units* like `day`, `week`, `months ago`, `years from now`, etc.
+
+<img src="https://user-images.githubusercontent.com/6097099/278954859-f4486c21-6a30-429f-8d45-4f96a8ae2275.jpg" alt="Date filter" width="600"/>
+
+#### Select Filter
+
+Advanced Table's custom Select Filter combines a Select Filter with operators `is` and `is not`.
+
+<img src="https://user-images.githubusercontent.com/6097099/278954856-68f48126-a400-4801-a2b7-459a4c59c391.jpg" alt="Select filter" width="600"/>
+
+### Column Mapping
+
+Advanced Filter Builder will automatically map your table columns to the appropriate filter depending on the type of column:
+
+1. `TextColumn::make()->date()` and `TextColumn::make()->dateTime()` columns will be mapped to the [DateFilter](#date-filter).
+2. `TextColumn::make()->numeric()` and `TextColumn::make()->money()` columns will be mapped to the [NumericFilter](#numeric-filter).
+3. Remaining `TextColumn` will be mapped to the [TextFilter](#text-filter).
+4. `SelectColumn` will be mapped to a custom [SelectFilter](#select-filter).
+5. `CheckboxColumn`, `ToggleColumn`, `ImageColumn`, `IconColumn` will be mapped to Filament's `Ternary Filter`.
+
+> Aggregate columns are not supported at this time, but are under development. 
+
+### Manual column mapping
+
+Advanced Table Filter uses the methods on your columns to automatically determine the appropriate filter to use. However, sometimes your table column may not match the type of filter you need. For example, if you are using a TextColumn to display an numeric amount, but aren't using the `->numeric()` method, Advanced Filter Builder wouldn't know it's best to use a `NumericFilter`. In these cases, it's easy to define the filter manually.
+
+To override the mapping of a filter to a column use may use the `->columnFilters()` method. Add the desired [filter type](#filter-types) and pass in the name of the column you wish to override:
+
+```php
+AdvancedFilter::make()
+    ->columnFilters([
+        NumericFilter::make('shipping_price') // Use the NumericFilter on the shipping_price column
+    ])
+```
+
+> The `->columnFilters()` method only accepts Advanced Filter Builder's filters. To override a column filter with one of Filament's filters, you should use the [`filters()` method](#integrating-with-filament-filters).
+
+To enable the select field inside of the TextFilter, you may manually map your column to a TextFilter and then pass in an array of options:
+
+```php
+AdvancedFilter::make()
+    ->columnFilters([
+        TextFilter::make('country')
+            ->options(fn () => Country::all()->pluck('name', 'id'))
+            ->multiple()
+            ->preload(),
+    ])
+```
+
+You may also pass in a relationship to automatically load the available options:
+
+```php
+AdvancedFilter::make()
+    ->columnFilters([
+        TextFilter::make('customer.name')
+            ->relationship(name: 'customer', titleAttribute:'name'),
+    ])
+```
+
+If your table column only needs a dropdown of options to select from, you may manually map your column with Advanced Filter Builder's custom SelectFilter:
+
+```php
+use Archilex\AdvancedTables\Filters\SelectFilter;
+
+AdvancedFilter::make()
+    ->columnFilters([
+        SelectFilter::make('status')
+            ->options([
+                'processing' => 'Processing',
+                'new' => 'New',
+                'shipped' => 'Shipped',
+                'delivered' => 'Delivered',
+                'cancelled' => 'Cancelled',
+            ])
+            ->multiple(), 
+    ])
+```
+
+### Disabling column filters
+
+If you prefer to not use the automatic column mapping and only use the [filters you define](#integrating-with-filament-filters), you may disabled column filters with the `->ignoreColumns()` method:
+
+```php
+AdvancedFilter::make()
+    ->ignoreColumns()
+```
+
+### Including columns
+
+To only filter some of your columns, you may pass an array of column names you wish to include to the `->include()` method:
+
+```php
+AdvancedFilter::make()
+    ->includeColumns([
+        'is_active',
+        'currency',
+        'address.city',
+    ]);
+```
+
+### Excluding columns
+
+If you prefer to exclude columns instead of [including them](#including-columns), you may pass an array of columns names you wish to exclude to the `->exclude()` method:
+
+```php
+AdvancedFilter::make()
+    ->ignoreColumns([
+        'status',
+        'customer.name',
+        'created_at',
+    ]);
+```
+
+### Integrating with Filament Filters
+
+#### Integrating within Advanced Filter Builder
+
+Advanced Filter Builder seamlessly integrates with *any* [Filament filter](https://filamentphp.com/docs/3.x/tables/filters), including [custom filters](https://filamentphp.com/docs/3.x/tables/filters#custom-filter-forms). If you have already created filters for your table, you can also integrate those as well. 
+
+To integrate a Filament Filter inside Advanced Filter Builder, just pass the filters into the `->filters()` method:
 
 ```php
 AdvancedFilter::make()
@@ -1724,24 +1885,33 @@ AdvancedFilter::make()
         Filter::make('is_active')
             ->query(fn (Builder $query): Builder => $query->where('is_active', true))
             ->toggle(),
-        SelectFilter::make('customer')
-            ->multiple()
-            ->relationship('customer', 'name'),
-        SelectFilter::make('status')
-            ->multiple()
-            ->options([
-                'processing' => 'Processing',
-                'new' => 'New',
-                'shipped' => 'Shipped',
-                'delivered' => 'Delivered',
-                'cancelled' => 'Cancelled',
-            ]),
     ])
 ```
+
+Any filter that has the same `name` as your table column, will be **overridden** by your Filament filter. If the filter name does not match any of the table columns it will be added as an **additional** filter.
 
 > Important: If your users have already saved created User Views with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.
 >
 > However, if you are using Preset Views with [default filters](#applying-filters-new), you will need to [adjust your filters](#applying-filters-with-filter-builder-new) to be compatible with Advanced Filter Builder.
+
+#### Integrating outside Advanced Filter Builder
+
+You can still use any of Filament's filters outside of Advanced Filter Builder by adding it as you normally would to your table's `->filters()` method:
+
+```php
+return $table
+    ->columns([
+        ...
+    ])
+    ->filters([
+        Filter::make('is_active')
+            ->query(fn (Builder $query): Builder => $query->where('is_active', true))
+            ->toggle(),
+        AdvancedFilter::make(),
+    ])
+```
+
+The above will add a *single* `Is active` toggle filter to the filter dropdown and then will display the Advanced Filter Builder below it.
 
 ### Setting the default filters
 
@@ -1826,7 +1996,7 @@ public function table(Table $table): Table
 
 ### Customizing the buttons and labels
 
-You may customize the buttons and labels in the [language file](#language-files).
+You may customize Advanced Filter Builders buttons, labels, and filter operators in the [language file](#language-files).
 
 ## User Views Resource
 
