@@ -1714,7 +1714,7 @@ public static function table(Table $table): Table
 
 Advanced Filter Builder is a custom filtering system that gives your users a simple, yet powerful way to quickly build custom queries. Each filter inside the builder can be used multiple times and grouped into *or groups*, allowing your users to drill down and find the data they need. Advanced Filter Builder was designed to make filtering easy for your users with a simple UI and natural filtering language. 
 
-For developers, Advanced Filter Builder couldn't be easier to implement. Advanced Filter Builder *automatically* generates `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
+For developers, Advanced Filter Builder couldn't be easier to implement. Advanced Filter Builder can *automatically* generates `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
 
 > Note: Due to the stacking nature of Advanced Filter Builder, this feature currently works best when your Filament filters are rendered in a dropdown or slideOver.
 
@@ -1732,13 +1732,22 @@ return $table
     ])
 ```
 
-Each of your table's compatible columns will [automatically be mapped](#automatic-column-mapping) to the appropriate [Column Filter](#column-filter-types) and available in Advanced Filter Builder's picker:
+### Enabling Column Filters
 
 <img src="https://user-images.githubusercontent.com/6097099/278954852-3a754833-d7a7-414c-a7fc-2dbe52e53b79.jpg" alt="Column Filters" width="600"/>
 
+To automatically generate Column Filters for each of your table columns, you may use the `->includeColumns()` method. This will [automatically map](#automatic-column-mapping) your table's compatible columns to the appropriate [Column Filter](#column-filter-types) and make them available in Advanced Filter Builder's picker:
+
+```php
+AdvancedFilter::make()
+    ->includeColumns()
+```
+
+>Tip: If you wish to only use some Column Filters, you may use either [include](#including-columns) or [exclude](#excluding-columns) columns.
+
 ### Column Filter types
 
-Advanced Filter Builder ships with multiple different custom Column Filters, each with it's own set of operators:
+Advanced Filter Builder includes multiple different custom Column Filters, each with it's own set of operators:
 
 #### Text Filter
 
@@ -1877,17 +1886,6 @@ return $table
 ```
 
 The above will add a *single* `Is active` toggle filter to the filter dropdown as well as display the Advanced Filter Builder below it.
-
-### Disabling column filters
-
-If you prefer not to use automatic Column Filters and only use filters you have defined, you may disabled them with the `->ignoreColumns()` method:
-
-```php
-AdvancedFilter::make()
-    ->ignoreColumns()
-```
-
->Note: This will also disable any Column Filter you may have manually created. If you wish to only use some Column Filters, you should use either the `->includeColumns()` or `->excludeColumns()` methods below.
 
 ### Including columns
 
