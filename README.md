@@ -1954,6 +1954,62 @@ AdvancedFilter::make()
     ])
 ```
 
+### Enabling search in the Filter Picker
+
+If the Filter Picker has a lot of available filters you can enable a search field using the ->`filterPickerSearch()` method:
+
+```php
+AdvancedFilter::make()
+    ->filterPickerSearch()
+```
+
+### Configuring the number of Filter Picker columns
+
+To change the number of columns the Filter Picker may occupy, you may use the `->filterPickerColumns()` method:
+
+```php
+AdvancedFilter::make()
+    ->filterPickerColumns(2)
+```
+
+Passing an `integer` will determine how many columns are displayed at the `lg` breakpoint. You may also pass an array:
+
+```php
+AdvancedFilter::make()
+    ->filterPickerColumns(['sm' => 2])
+```
+
+### Configuring the Filter Picker width
+
+To customize the width of the Filter Picker, you may use the `->filterPickerWidth()` method, and specify a width - `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, etc.
+
+```php
+AdvancedFilter::make()
+    ->filterPickerWidth('md')
+```
+
+> Tip: Since the slideOver is confined to width `md`, it is recommended the Filter Picker not be set to a width larger than `md` as larger sizes will cause the slideOver to horizontally scroll. 
+
+### Configuring the maximum height of the Filter Picker
+
+To add a maximum height to the Filter Picker, which, in turn, allows the picker to be scrolled, you may use the `->filterPickerMaxHeight()` method, passing a CSS length:
+
+```php
+AdvancedFilter::make()
+    ->filterPickerMaxHeight('240px')
+```
+
+### Customizing the sequence of filter indicator group colors
+
+When adding multiple filter groups ("or" groups), the indicators will be displayed in different colors to help differentiate between the different filter groups. By default, the indicators will be colored in the following sequence: `primary`, `info`, `gray`,  `success`, `danger`, `warning`. You may choose a different sequence by passing an array of colors to the `->indicatorColors()` method:
+
+```php
+AdvancedFilter::make()
+    ->indicatorColors(['info', 'success'])
+```
+
+Any default color that is not defined in the array will be appended after the last defined color. 
+
 ### Customizing the Expand View Link Position
 
 Currently, the expand view link in the filter dropdown is `absolute` positioned (ugly...I know). If you are using translatable fields, this may cause the link to overlap. You may change the position of the expand view link by passing an array of styles to the `->filterBuilderExpandViewStyles()` method:
