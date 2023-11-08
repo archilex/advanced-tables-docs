@@ -1716,8 +1716,6 @@ Advanced Filter Builder is a custom filtering system that gives your users a sim
 
 For developers, Advanced Filter Builder couldn't be easier to implement. Advanced Filter Builder can *automatically* generates `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
 
-> Note: Due to the stacking nature of Advanced Filter Builder, this feature currently works best when your Filament filters are rendered in a dropdown or slideOver.
-
 ### Using Advanced Filter Builder
 
 To enable the Advanced Filter Builder, add `AdvancedFilterBuilder` to your table's `->filter()` method:
@@ -1937,6 +1935,70 @@ AdvancedFilter::make()
     ->defaultFilters([['status'], ['status']])
 ```
 
+### Layout options
+
+Advanced Filter Builder responsively adapts to any of the available [FilterLayouts](https://filamentphp.com/docs/3.x/tables/filters#displaying-filters-in-a-modal) (`AboveContent`, `BelowContent`, `AboveContentCollapsible`, `Modal`, `SlideOver`, `Dropdown`). When the builder is used with the `Dropdown` layout (Filament's default layout), the user will also be presented with an "Expand View" button that will allow the dropdown to expand into a slideOver.
+
+If you using the `Modal` layout, it's recommended you set the `->filtersFormWidth()` on the table to at least `3xl` so the form elements have space to flow:
+
+```php
+use Archilex\AdvancedTables\Filters\AdvancedFilter;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Filament\Tables\Enums\FiltersLayout;
+ 
+public function table(Table $table): Table
+{
+    return $table
+        ->filters([
+            AdvancedFilter::make(),
+        ])
+        ->filtersLayout(FiltersLayout::Modal)
+        ->filtersFormWidth('3xl')
+}
+```
+
+### Customizing the Expand View Link Position
+
+When using Filament's default `Dropdown` filter layout, the user will also be presented with an "Expand View" button that will allow the dropdown to expand into a slideOver. The expand view link in this view is `absolute` positioned (ugly...I know). If you are using translatable fields, this may cause the link to overlap. You may change the position of the expand view link by passing an array of styles to the `->filterBuilderExpandViewStyles()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->filterBuilderExpandViewStyles(['right: 100px', 'top: 23px'])
+```
+
+This method also take a closure allowing you to set different positions based on a condition such as locale:
+
+```php
+use Illuminate\Support\Facades\App;
+
+AdvancedTablesPlugin::make()
+    ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
+```
+
+### Always opening the filter as a slideOver
+
+If you would prefer Advanced Filter Builder to always open in a slideOver or modal, you may use [Filament's](https://filamentphp.com/docs/3.x/tables/filters#customizing-the-filters-dropdown-trigger-action) `filtersTriggerAction()` method:
+
+```php
+use Archilex\AdvancedTables\Filters\AdvancedFilter;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+ 
+public function table(Table $table): Table
+{
+    return $table
+        ->filters([
+            AdvancedFilter::make(),
+        ])
+        ->filtersFormWidth('md')
+        ->filtersTriggerAction(
+            fn (Action $action) => $action
+                ->slideOver()
+        );
+}
+```
+
 ### Adding icons to the Filter Picker
 
 You can add icons to the Filter Picker by passing an array of icons to the `->icons()` method where the name of your filter is the `key` and the icon is the `value`:
@@ -2009,46 +2071,6 @@ AdvancedFilter::make()
 ```
 
 Any default color that is not defined in the array will be appended after the last defined color. 
-
-### Customizing the Expand View Link Position
-
-Currently, the expand view link in the filter dropdown is `absolute` positioned (ugly...I know). If you are using translatable fields, this may cause the link to overlap. You may change the position of the expand view link by passing an array of styles to the `->filterBuilderExpandViewStyles()` method:
-
-```php
-AdvancedTablesPlugin::make()
-    ->filterBuilderExpandViewStyles(['right: 100px', 'top: 23px'])
-```
-
-This method also take a closure allowing you to set different positions based on a condition such as locale:
-
-```php
-use Illuminate\Support\Facades\App;
-
-AdvancedTablesPlugin::make()
-    ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
-```
-
-### Always opening the filter as a slideOver
-
-If you would prefer Advanced Filter Builder to always open in a slideOver or modal, you may use [Filament's](https://filamentphp.com/docs/3.x/tables/filters#customizing-the-filters-dropdown-trigger-action) `filtersTriggerAction()` method:
-
-```php
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Table;
- 
-public function table(Table $table): Table
-{
-    return $table
-        ->filters([
-            // ...
-        ])
-        ->filtersFormWidth('md')
-        ->filtersTriggerAction(
-            fn (Action $action) => $action
-                ->slideOver()
-        );
-}
-```
 
 ### Customizing the buttons and labels
 
