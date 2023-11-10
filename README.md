@@ -91,7 +91,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 ### Requirements
 
-Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0.10+`.
+Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, and `Filament 3.0.75+`.
 
 > Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
@@ -1017,7 +1017,7 @@ You can apply values to your [table filters](https://filamentphp.com/docs/3.x/ta
 
 Using the `defaultFilters()` api gives your users a better understanding of how a Preset View is filtering the data by turning on Filament's filter indicators.
 
-> Tip: To see how the table filter array is created, you can `dd($this->tableFilters)` in your table.
+> Tip: The easiest way to know how to properly form your filter array is to apply the desired filter to your table and then `dd($this->tableFilters)` at the top of the `getPresetViews()` method.
 
 ### Applying filters with Filter Builder (New)
 
@@ -1048,6 +1048,28 @@ If you are using [Advanced Filter Builder](#advanced-filter-builder-new), you sh
 ```
 
 If the example above, this will create the following query scope: `new orders made this month` OR `cancelled orders made last month`.
+
+> Tip: The easiest way to know how to properly form your filter array is to apply the desired filter to your table and then `dd($this->tableFilters)` at the top of the `getPresetViews()` method.
+
+If you are using the builder's [Column Filters](#enabling-column-filters), then you will need to add the applicable values. For example:
+
+```php
+'this_quarter' => PresetView::make()
+    ->defaultFilters([
+        'advanced_filter_builder' => [
+            [ // filter group 1
+                'created_at' => [
+                    'column' => 'created_at', 
+                    'operator' => 'in_the_last',
+                    'value' => 1,
+                    'unit' => 'quarters',
+                ],
+            ],
+        ],
+    ])
+```
+
+> Tip: Many of the column filters have multiple `keys` such as `date_start`, `date_end`, etc. You only need to add the values that you are setting for the filter.
 
 ### Applying default grouping (New)
 
