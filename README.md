@@ -1793,7 +1793,7 @@ The `DateFilter` allows you to filter dates combining *operators* like `yesterda
 
 #### Select Filter
 
-Advanced Table's custom `SelectFilter` combines Filament's `SelectFilter` with operators `is` and `is not`.
+Advanced Table's custom `SelectFilter` combines Filament's `SelectFilter` with operators `is`, `is not`, `is empty`, `is not empty`.
 
 <img src="https://user-images.githubusercontent.com/6097099/278954856-68f48126-a400-4801-a2b7-459a4c59c391.jpg" alt="Select filter" width="600"/>
 
@@ -1804,7 +1804,7 @@ Advanced Filter Builder will automatically map your table columns to the appropr
 1. `TextColumn::make()->date()` and `TextColumn::make()->dateTime()` columns will be mapped to the [DateFilter](#date-filter).
 2. `TextColumn::make()->numeric()` and `TextColumn::make()->money()` columns will be mapped to the [NumericFilter](#numeric-filter).
 3. Any remaining `TextColumn` will be mapped to the [TextFilter](#text-filter).
-4. `SelectColumn` will be mapped to a custom [SelectFilter](#select-filter).
+4. `SelectColumn` will be mapped to Advanced Filter's custom [SelectFilter](#select-filter).
 5. `CheckboxColumn`, `ToggleColumn`, `ImageColumn`, `IconColumn` will be mapped to Filament's `Ternary Filter`.
 
 > Aggregate columns are not supported at this time, but are under development. 
@@ -1828,7 +1828,7 @@ To enable the `Select` field inside of the `TextFilter`, you may use a `TextFilt
 
 ```php
 AdvancedFilter::make()
-    ->columnFilters([
+    ->filters([
         TextFilter::make('country')
             ->options(fn () => Country::all()->pluck('name', 'id')),
     ])
@@ -1838,7 +1838,7 @@ You may also pass in a relationship to automatically load the available options:
 
 ```php
 AdvancedFilter::make()
-    ->columnFilters([
+    ->filters([
         TextFilter::make('customer.name')
             ->relationship(name: 'customer', titleAttribute:'name')
             ->multiple()
@@ -1852,7 +1852,7 @@ Finally, if your table column only needs a dropdown of options to select from (i
 use Archilex\AdvancedTables\Filters\SelectFilter;
 
 AdvancedFilter::make()
-    ->columnFilters([
+    ->filters([
         SelectFilter::make('status')
             ->options([
                 'processing' => 'Processing',
@@ -1865,7 +1865,7 @@ AdvancedFilter::make()
     ])
 ```
 
->Important: Be sure to import `Archilex\AdvancedTables\Filters\SelectFilter` to see the `is` and `is not` operators.
+>Important: Be sure to import `Archilex\AdvancedTables\Filters\SelectFilter` to see the `is`, `is not`, `is empty`, and `is not empty` operators.
 
 #### Adding custom filters
 
