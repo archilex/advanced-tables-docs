@@ -1815,7 +1815,9 @@ Advanced Filter Builder uses the methods on your columns to automatically determ
 
 #### Customizing a Column Filter
 
-You may manually define a Column Filter for a particular column by passing the desired [filter type](#column-filter-types) to the `->filters()` method. The `name` of the filter should be the column you wish to override:
+You may manually define a Column Filter for a particular column by passing the desired [filter type](#column-filter-types) to the `->filters()` method. The `name` of the filter should be the column you wish to override.
+
+> Note: When you are customizing a Column Filter the `name` of the filter *must* match the name of the column in your Filament table. If not, it will not appear in the Filter Picker.
 
 ```php
 AdvancedFilter::make()
