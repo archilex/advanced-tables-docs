@@ -28,6 +28,7 @@ Check out a short video of some of the powerful features included in Advanced Ta
 - Easily access views in the [Favorites Bar](#favorites-bar)
 - (New) Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
 - (New) [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
+- (New) Supports Multi-tenancy
 - Choose from six different [themes](#themes)
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
 - Users can make their User Views [publicly](#making-a-user-view-public) available to all users
@@ -159,7 +160,11 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan migrate
     ```
 
-2. Publish the language files
+2. Setting up tenancy
+
+    If you are installing Advanced Tables into a multi-tenancy application, please [set up multi-tenancy](#multi-tenancy) before proceeding.
+
+3. Publish the language files
 
     Optionally, you may publish the language files:
 
@@ -167,7 +172,7 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan vendor:publish --tag="advanced-tables-translations"
     ```
 
-3. Add Advanced Tables to your Filament Panel
+4. Add Advanced Tables to your Filament Panel
 
     Add Advanced Tables to a panel by instantiating the plugin class and passing it to the `plugin()` method of the configuration:
 
@@ -183,7 +188,7 @@ The license key and fingerprint should be separated by a colon (:).
     }
     ```
 
-4. Add the `HasViews` trait to your `User::class`
+5. Add the `HasViews` trait to your `User::class`
     
     ```php
     use Archilex\AdvancedTables\Concerns\HasViews;
@@ -194,7 +199,7 @@ The license key and fingerprint should be separated by a colon (:).
     }
     ```
 
-5. Integrate Filter Set's Tailwind and css files
+6. Integrate Filter Set's Tailwind and css files
 
     Filament v3 recommends developers [create a custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to better support a plugin's additional Tailwind classes. After you have created your custom theme, add Advanced Tables' views to your *new theme's* `tailwind.config.js` file usually located in `resources/css/filament/admin/tailwind.config.js`:
 
@@ -211,7 +216,7 @@ The license key and fingerprint should be separated by a colon (:).
     @import '../../../../vendor/archilex/filament-filter-sets/resources/css/plugin.css';
     ```
 
-6. Compile
+7. Compile
 
     Next, compile your theme:
 
@@ -321,6 +326,7 @@ Advanced Tables v3 is the biggest release since it's initial launch and contains
 - Preset Views can now be [favorited, hidden, and sorted](#disabling-preset-view-management-new) by the user
 - Columns can now be reordered with the enhanced [toggled column manager](#reordering-columns)
 - A new [approval system](#approving-public-and-global-favorite-user-views-new) allows admins to approve or reject public and global favorites
+- Support for Multi-tenancy
 - Two new [themes](#themes) (Github and Filament)
 - Easily add colors to the color picker using Filament's `Color::class`
 - More than 60 configuration options to completely customize Advanced Tables to your needs
@@ -2099,6 +2105,57 @@ Any default color that is not defined in the array will be appended after the la
 ### Customizing the buttons and labels
 
 You may customize Advanced Filter Builders buttons, labels, and filter operators in the [language file](#language-files).
+
+## Multi-tenancy
+
+Advanced Tables v3 supports [Filament's multi-tenancy](https://filamentphp.com/docs/3.x/panels/tenancy).
+
+It also provides basic support for [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) and [Tenancy for Laravel](https://tenancyforlaravel.com/). (See [support section](#support-for-multi-tenancy) below).
+
+Enabling multi-tenancy allows each User View and/or Managed Preset View to be scoped to the current `Tenant::class`. 
+
+> Note: This functionality is not currently available in standalone Table Builder.
+
+### Setting up multi-tenancy with Filament's multi-tenancy
+
+If you are using Filament's multi-tenancy implementation, set up multi-tenancy per [Filament's instructions](https://filamentphp.com/docs/3.x/panels/tenancy).
+
+### Setting up multi-tenancy with a third party implementation
+
+If you are using [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) or [Tenancy For Laravel](https://tenancyforlaravel.com/docs/v3/introduction) you will need to pass your tenant model class to the `->tenant()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    // Spatie
+    ->tenant(\Spatie\Multitenancy\Models\Tenant::class)
+    // TenancyForLaravel
+    ->tenant(\Stancl\Tenancy\Database\Models\Tenant::class)
+```
+
+> Important: This step is exclusively for use with Spatie and Tenancy For Laravel. If you are using Filament's multi-tenancy, you should *not* use this `tenant()` method as it will override Filament's tenancy.
+
+#### Run the Add Tenancy command
+
+After setting up tenancy, run the `AddTenancy` command:
+
+```bash
+php artisan advanced-tables:add-tenancy
+```
+
+This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
+
+### Configuring the table column
+
+If you had previously manually implemented multi-tenancy in Advanced Tables and need to reference a table column other than the default `tenant_id`, you may configure it by passing your column name to the `->tenantColumn()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->tenantColumn('account_id')
+```
+
+### Support for multi-tenancy
+
+Advanced Tables only fully supports Filament's official multi-tenancy implementation. Since third-party multi-tenancy implementations with either Spatie or Tenancy for Laravel can vary dramatically from developer to developer, it is possible that Advanced Tables will not be fully compatible. Please be sure you have multi-tenancy fully working and tested before attempting to implement multi-tenancy in Advanced Tables. Support can only be provided for issues pertaining to Advanced Tables.
 
 ## User Views Resource
 
