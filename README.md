@@ -1823,6 +1823,8 @@ Advanced Filter Builder uses the methods on your columns to automatically determ
 
 You may manually define a Column Filter for a particular column by passing the desired [filter type](#column-filter-types) to the `->filters()` method. The `name` of the filter should be the column you wish to override.
 
+> Tip: Any filter you add to the `->filters()` array will be shown in the filters dropdown by default. To override this behavior you can use the `->defaultFilters()` method to [configure](#setting-the-default-filters) which filters, if any, are shown by default.
+
 > Note: When you are customizing a Column Filter the `name` of the filter *must* match the name of the column in your Filament table. If not, it will not appear in the Filter Picker.
 
 ```php
@@ -1878,6 +1880,8 @@ AdvancedFilter::make()
 #### Adding custom filters
 
 Advanced Filter Builder can also seamlessly integrate any of Filament's [filters](https://filamentphp.com/docs/3.x/tables/filters), including [custom filters](https://filamentphp.com/docs/3.x/tables/filters#custom-filter-forms). This allows a filter to be used multiple times as well as in "or groups". 
+
+> Tip: Any filter you add to the `->filters()` array will be shown in the filters dropdown by default. To override this behavior you can use the `->defaultFilters()` method to [configure](#setting-the-default-filters) which filters, if any, are shown by default.
 
 To add a filter to Advanced Filter Builder, pass the filter into the `->filters()` method:
 
@@ -1943,7 +1947,17 @@ AdvancedFilter::make()
 
 ### Setting the default filters
 
-By default, every filter included in Advanced Filter Builder's `->filter()` method will be shown in the table's filter dropdown. Column Filters will be available in the filter picker. To only display some of the filters by default, you may use the `->defaultFilters()` method. You may also this method to define Column Filters you wish to be displayed by default in the filter dropdown:
+By default, every filter included in Advanced Filter Builder's `->filters()` method will be shown in the table's filter dropdown. Column Filters that haven't been overriden in the `->filters()` method will be available in the filter picker. To not display any column filters you can pass an empty array to the `->defaultFilters()` method:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        ...
+    ])
+    ->defaultFilters([])
+```
+
+To only display some filters by default, you may pass the name of your filter to the `->defaultFilters()` method inside a double array. You may also use this method to define Column Filters you wish to be displayed by default in the filter dropdown:
 
 ```php
 AdvancedFilter::make()
