@@ -1965,6 +1965,15 @@ AdvancedFilter::make()
     ->defaultFilters([['status'], ['status']])
 ```
 
+### Disabling Or Groups
+
+By default, Advanced Filter Builder allows your filters to be used in "or groups". You may disable this feature by passing `false` to the `->orGroups()` method:
+
+```php
+AdvancedFilter::make()
+    ->orGroups(false)
+```
+
 ### Layout options
 
 Advanced Filter Builder responsively adapts to any of the available [FilterLayouts](https://filamentphp.com/docs/3.x/tables/filters#displaying-filters-in-a-modal) (`AboveContent`, `BelowContent`, `AboveContentCollapsible`, `Modal`, `SlideOver`, `Dropdown`). When the builder is used with the `Dropdown` layout (Filament's default layout), the user will also be presented with an "Expand View" button that will allow the dropdown to expand into a slideOver.
