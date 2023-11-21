@@ -1880,6 +1880,98 @@ AdvancedFilter::make()
 
 >Important: Be sure to import `Archilex\AdvancedTables\Filters\SelectFilter` to see the `is`, `is not`, `is empty`, and `is not empty` operators.
 
+##### Customizing a column filter's operators
+
+You may customize a column filter's operators using either the `->includeOperators()` or `->excludeOperators()` methods:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        TextFilter::make('name')
+            ->includeOperators([
+                TextOperator::CONTAINS,
+                TextOperator::DOES_NOT_CONTAIN
+            ]), 
+        SelectFilter::make('status')
+            ->includeOperators([
+                TextOperator::IS, // The SelectFilter uses the TextOperator
+            ]), 
+        DateFilter::make('created_at')
+            ->excludeOperators([
+                DateOperator::YESTERDAY,
+                DateOperator::TODAY,
+                DateOperator::TOMORROW
+            ]), 
+        NumericFilter::make('total_price')
+            ->excludeOperators([
+                NumericOperator::EQUAL_TO,
+                NumericOperator::NOT_EQUAL_TO
+            ]),
+    ])
+```
+
+To customize a column filter's operators globally, you can call the static `configuringUsing()` method from the `boot()` method of a service provider:
+
+```php
+public function boot()
+{
+    TextFilter::configureUsing(function (TextFilter $filter) {
+        return $filter->includeOperators([
+            TextOperator::CONTAINS,
+            TextOperator::DOES_NOT_CONTAIN
+        ]);
+    });
+}
+```
+
+`includeOperators()` and `excludeOperators()` can also take a closure meaning you can further customize which operators are available:
+
+```php
+TextFilter::configureUsing(function (TextFilter $filter) {
+    return $filter->includeOperators(function (TextFilter $filter) {
+        return $filter->getName() === 'currency'
+            ? [TextOperator::CONTAINS, TextOperator::DOES_NOT_CONTAIN]
+            : [TextOperator::IS, TextOperator::IS_NOT];
+    });
+});
+```
+
+##### Customizing a column filter's default operator
+
+To customize a column filter's default operator you may pass the name of the operator to the `->defaultOperator()` method:
+
+```php
+AdvancedFilter::make()
+    ->filters([
+        TextFilter::make('name')
+            ->defaultOperator(TextOperator::CONTAINS),
+    ])
+```
+
+To customize a column filter's default operator globally, you can call the static `configuringUsing()` method from the `boot()` method of a service provider:
+
+```php
+public function boot()
+{
+    TextFilter::configureUsing(fn (TextFilter $filter) => $filter->defaultOperator(TextOperator::CONTAINS));
+    DateFilter::configureUsing(fn (TextFilter $filter) => $filter->defaultOperator(DateOperator::TODAY));
+    SelectFilter::configureUsing(fn (TextFilter $filter) => $filter->defaultOperator(TextOperator::IS));
+    NumericFilter::configureUsing(fn (TextFilter $filter) => $filter->defaultOperator(NumericOperator::GREATER_THAN));
+}
+```
+
+`defaultOperator()` can also take a closure meaning you can further customize which operator is the default:
+
+```php
+TextFilter::configureUsing(function (TextFilter $filter) {
+    return $filter->defaultOperator(function (TextFilter $filter) {
+        return $filter->getName() === 'currency' 
+            ? TextOperator::CONTAINS 
+            : TextOperator::IS;
+    }); 
+});
+```
+
 #### Adding custom filters
 
 Advanced Filter Builder can also seamlessly integrate any of Filament's [filters](https://filamentphp.com/docs/3.x/tables/filters), including [custom filters](https://filamentphp.com/docs/3.x/tables/filters#custom-filter-forms). This allows a filter to be used multiple times as well as in "or groups". 
