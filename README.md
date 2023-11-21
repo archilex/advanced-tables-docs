@@ -33,7 +33,7 @@ Check out a short video of some of the powerful features included in Advanced Ta
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
 - Users can make their User Views [publicly](#making-a-user-view-public) available to all users
 - Easily [create and export](#create-and-export-reports) reports from your customized views with [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel)
-- Admins can create [global favorite views](#making-a-user-view-public) that will appear for all users
+- Admins can create [global favorite views](#enabling-making-a-user-view-a-global-favorite) that will appear for all users
 - Powerful [policy integration](#authorization) gives you complete control
 - (New) Includes an [approval system](#approving-public-and-global-favorite-user-views-new) for User Views
 - More than 60 configuration options to completely customize Advanced Tables to your needs
@@ -160,11 +160,7 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan migrate
     ```
 
-2. Setting up tenancy
-
-    If you are installing Advanced Tables into a multi-tenancy application, please [set up multi-tenancy](#multi-tenancy) before proceeding.
-
-3. Publish the language files
+2. Publish the language files
 
     Optionally, you may publish the language files:
 
@@ -172,7 +168,7 @@ The license key and fingerprint should be separated by a colon (:).
     php artisan vendor:publish --tag="advanced-tables-translations"
     ```
 
-4. Add Advanced Tables to your Filament Panel
+3. Add Advanced Tables to your Filament Panel
 
     Add Advanced Tables to a panel by instantiating the plugin class and passing it to the `plugin()` method of the configuration:
 
@@ -188,7 +184,7 @@ The license key and fingerprint should be separated by a colon (:).
     }
     ```
 
-5. Add the `HasViews` trait to your `User::class`
+4. Add the `HasViews` trait to your `User::class`
     
     ```php
     use Archilex\AdvancedTables\Concerns\HasViews;
@@ -199,7 +195,7 @@ The license key and fingerprint should be separated by a colon (:).
     }
     ```
 
-6. Integrate Filter Set's Tailwind and css files
+5. Integrate Filter Set's Tailwind and css files
 
     Filament v3 recommends developers [create a custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to better support a plugin's additional Tailwind classes. After you have created your custom theme, add Advanced Tables' views to your *new theme's* `tailwind.config.js` file usually located in `resources/css/filament/admin/tailwind.config.js`:
 
@@ -216,7 +212,7 @@ The license key and fingerprint should be separated by a colon (:).
     @import '../../../../vendor/archilex/filament-filter-sets/resources/css/plugin.css';
     ```
 
-7. Compile
+6. Compile
 
     Next, compile your theme:
 
@@ -229,6 +225,10 @@ The license key and fingerprint should be separated by a colon (:).
     ```bash
     php artisan filament:upgrade
     ```
+
+7. Setting up tenancy
+
+    If you are installing Advanced Tables into a multi-tenancy application, please refer to the separate instructions to [set up multi-tenancy](#multi-tenancy).
 
 After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started) to learn how to add Advanced Tables to your resources, relation managers, pages, and/or table widgets.
 
@@ -293,6 +293,10 @@ After you've successfully installed Advanced Tables, you may review the [Getting
     ```bash
     php artisan filament:upgrade
     ```
+
+7. Setting up tenancy
+
+    If you are installing Advanced Tables into a multi-tenancy application, please refer to the separate instructions to [set up multi-tenancy](#multi-tenancy).
 
 After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#filament-table-builder) to learn how to add Advanced Tables to your tables.
 
@@ -1809,11 +1813,10 @@ Advanced Filter Builder will automatically map your table columns to the appropr
 
 1. `TextColumn::make()->date()` and `TextColumn::make()->dateTime()` columns will be mapped to the [DateFilter](#date-filter).
 2. `TextColumn::make()->numeric()` and `TextColumn::make()->money()` columns will be mapped to the [NumericFilter](#numeric-filter).
-3. Any remaining `TextColumn` will be mapped to the [TextFilter](#text-filter).
-4. `SelectColumn` will be mapped to Advanced Filter's custom [SelectFilter](#select-filter).
-5. `CheckboxColumn`, `ToggleColumn`, `ImageColumn`, `IconColumn` will be mapped to Filament's `Ternary Filter`.
-
-> Aggregate columns are not supported at this time, but are under development. 
+3. [Aggregate Relationship](https://filamentphp.com/docs/3.x/tables/columns/relationships) columns `count`, `avg`, `min`, `max`, and `sum` will be mapped to an aggregate [NumericFilter](#numeric-filter).
+4. Any remaining `TextColumn` will be mapped to the [TextFilter](#text-filter).
+5. `SelectColumn` will be mapped to Advanced Filter's custom [SelectFilter](#select-filter).
+6. `CheckboxColumn`, `ToggleColumn`, `ImageColumn`, `IconColumn` will be mapped to Filament's `Ternary Filter`.
 
 ### Customizing filters
 
@@ -2129,43 +2132,132 @@ Any default color that is not defined in the array will be appended after the la
 
 You may customize Advanced Filter Builders buttons, labels, and filter operators in the [language file](#language-files).
 
-## Multi-tenancy
+## Multi-Tenancy
 
-Advanced Tables v3 supports [Filament's multi-tenancy](https://filamentphp.com/docs/3.x/panels/tenancy).
+Advanced Tables v3 has built in support for [simple one-to-many tenancy](https://filamentphp.com/docs/3.x/panels/tenancy#simple-one-to-many-tenancy), [Filament's multi-tenancy](https://filamentphp.com/docs/3.x/panels/tenancy) as well as basic support for [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) and [Tenancy for Laravel](https://tenancyforlaravel.com/). (Please see [support section](#support-for-multi-tenancy) below).
 
-It also provides basic support for [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) and [Tenancy for Laravel](https://tenancyforlaravel.com/). (See [support section](#support-for-multi-tenancy) below).
+Setting up tenancy with Advanced Tables will depend on your app and the tenancy implementation you are using. Please refer to the appropriate instructions for your setup: 
 
-Enabling multi-tenancy allows each User View and/or Managed Preset View to be scoped to the current `Tenant::class`. 
+1. Simple one-to-many tenancy with Filament Panels - [Instructions](#setting-up-simple-tenancy-with-filament-panels)
+2. Simple one-to-many tenancy with Filament's standalone Table Builder - [Instructions](#setting-up-simple-tenancy-with-filaments-standalone-table-builder)
+3. Multi-tenancy with Filament Panels using Filament's tenancy implementation - [Instructions](#setting-up-multi-tenancy-with-filaments-implementation)
+4. Multi-tenancy with Filament Panels using a third party tenancy implementation (Spatie/Stancl) - [Instructions](#setting-up-multi-tenancy-with-a-third-party-implementation)
+5. Multi-tenancy with Filament's standalone Table Builder and a third party tenancy implementation (Spatie/Stancl) - [Instructions](#setting-up-multi-tenancy-in-filaments-standalone-table-builder-with-a-third-party-implementation)
 
-> Note: This functionality is not currently available in standalone Table Builder.
+### Simple one-to-many tenancy
 
-### Setting up multi-tenancy with Filament's multi-tenancy
+Since in a [simple one-to-many tenancy](https://filamentphp.com/docs/3.x/panels/tenancy#simple-one-to-many-tenancy) implementation, each user only belongs to one tenant (*team, organization, company, etc.*), it may not be necessary to set up tenancy in Advanced Tables as each User View is already scoped to a user. However, if are allowing users to [share views](#making-a-user-view-public) or if your tenant will have admins that can create [Global Favorite Views](#enabling-making-a-user-view-a-global-favorite), you will need to enable tenancy so that each User View will be scoped to the appropriate tenant. 
 
-If you are using Filament's multi-tenancy implementation, set up multi-tenancy per [Filament's instructions](https://filamentphp.com/docs/3.x/panels/tenancy).
+#### Setting up simple tenancy with Filament Panels
 
-### Setting up multi-tenancy with a third party implementation
+1. To set up simple tenancy with Filament Panels you will need to pass your `Tenant::class` to the `->tenant()` method of the `AdvancedTablesPlugin` object:
 
-If you are using [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) or [Tenancy For Laravel](https://tenancyforlaravel.com/docs/v3/introduction) you will need to pass your tenant model class to the `->tenant()` method:
+    ```php
+    AdvancedTablesPlugin::make()
+        ->tenant(Team::class)
+    ```
 
-```php
-AdvancedTablesPlugin::make()
-    // Spatie
-    ->tenant(\Spatie\Multitenancy\Models\Tenant::class)
-    // TenancyForLaravel
-    ->tenant(\Stancl\Tenancy\Database\Models\Tenant::class)
-```
+2. Inside your tenant model you need to include a `getTenantId()` method so Advanced Tables knows which tenant to use for its scopes:
 
-> Important: This step is exclusively for use with Spatie and Tenancy For Laravel. If you are using Filament's multi-tenancy, you should *not* use this `tenant()` method as it will override Filament's tenancy.
+    ```php
+    class Team extends Model
+    {
+        public function getTenantId(): ?string
+        {
+            return auth()->user()?->team_id;
+        }
+    }
+    ```
 
-#### Run the Add Tenancy command
+3. After you have configured your tenant model and the `getTenantId()` method, you may proceed to run the `AddTenancy` command:
 
-After setting up tenancy, run the `AddTenancy` command:
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
 
-```bash
-php artisan advanced-tables:add-tenancy
-```
+    This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
 
-This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
+#### Setting up simple tenancy with Filament's standalone Table Builder
+
+1. To set up simple tenancy with Filament's standalone Table Builder you will need to add your `Tenant::class` to your `advanced-tables.php` config file:
+
+    ```php
+    'tenancy' => [
+        'tenant' => App\Models\Team::class,
+    ],
+    ```
+
+2. Inside your tenant model you need to include a `getTenantId()` method so Advanced Tables knows which tenant to use for its scopes:
+
+    ```php
+    class Team extends Model
+    {
+        public function getTenantId(): ?string
+        {
+            return auth()->user()?->team_id;
+        }
+    }
+    ```
+
+3. After you have configured your tenant model and the `getTenantId()` method, you may proceed to run the `AddTenancy` command:
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+    This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
+
+### Multi-Tenancy
+
+#### Setting up multi-tenancy with Filament's implementation
+
+1. To set up multi-tenancy with Filament Panels and Filament's multi-tenancy implementation, first set up multi-tenancy in Filament per [Filament's instructions](https://filamentphp.com/docs/3.x/panels/tenancy).
+
+2. After setting up tenancy in Filament, run the `AddTenancy` command:
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+    This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
+
+#### Setting up multi-tenancy with a third party implementation
+
+1. To set up multi-tenancy with Filament Panels and [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) or [Tenancy For Laravel](https://tenancyforlaravel.com/docs/v3/introduction) you will need to pass your `Tenant::class` to the `->tenant()` method of the `AdvancedTablesPlugin` object:
+
+    ```php
+    AdvancedTablesPlugin::make()
+        // Spatie
+        ->tenant(\Spatie\Multitenancy\Models\Tenant::class)
+        // TenancyForLaravel
+        ->tenant(\Stancl\Tenancy\Database\Models\Tenant::class)
+    ```
+
+2. After setting up tenancy, run the `AddTenancy` command:
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+    This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
+
+#### Setting up multi-tenancy in Filament's standalone Table Builder with a third party implementation
+
+1. To set up multi-tenancy with Filament's standalone Table Builder along with [Spatie Multi-tenancy](https://spatie.be/docs/laravel-multitenancy/v3/introduction) or [Tenancy For Laravel](https://tenancyforlaravel.com/docs/v3/introduction) you will need to add your `Tenant::class` to your `advanced-tables.php` config file:
+
+    ```php
+    'tenancy' => [
+        'tenant' => \Spatie\Multitenancy\Models\Tenant::class,
+    ],
+    ```
+
+2. After you have configured your tenant model, you may proceed to run the `AddTenancy` command:
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+    This command will add and run the necessary migrations to finishing setting up multi-tenancy in Advanced Tables.
 
 ### Configuring the table column
 
