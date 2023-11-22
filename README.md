@@ -2612,6 +2612,16 @@ AdvancedTablesPlugin::make()
     ->userTableNameColumn('full_name')
 ```
 
+#### Configuring the authentication guard
+
+By default, Advanced Tables will use whichever authentication guard is [set on your Filament panel](https://filamentphp.com/docs/3.x/panels/users#setting-the-authentication-guard). If you are using standalone Table Builder, you may set the authentication guard in the `advanced-tables` config file:
+
+```php
+'users' => [
+    'auth_guard' => 'web',
+],
+```
+
 ### Language Files
 
 Each text field in Advanced Tables has been added to the language file allowing you to customize the text to better fit your application needs. You can publish the language files with:
