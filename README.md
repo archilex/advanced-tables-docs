@@ -12,6 +12,12 @@ With Advanced Tables, views can be set up in advance by the developer or they ca
 
 Best of all, Advanced Tables works with *all* of your Filament tables including Resource Tables, Relation Managers, Table Widgets, and standalone Table Builder.
 
+### Demo (New)
+
+Advanced Tables now has a demo! See all the functionality that Advanced Tables has to offer in an interactive demo. It also includes a Configuration Playground so you can see many of the configuration options you can use to adapt the plugin to your needs.
+
+[Visit the Demo](https://advancedtables.com/demo)
+
 ### Video
 
 Check out a short video of some of the powerful features included in Advanced Tables
