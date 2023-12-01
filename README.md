@@ -2221,7 +2221,7 @@ When adding multiple filter groups ("or" groups), an the Filter Group number (ie
 
 ```php
  AdvancedFilter::make()
-    ->prependFilterGroupLabels()
+    ->prependFilterGroupLabels(false)
 ```
 
 You may also hide the filter group label when there is only one filter group:
