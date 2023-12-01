@@ -2215,6 +2215,31 @@ AdvancedFilter::make()
     ->filterPickerMaxHeight('240px')
 ```
 
+### Hiding the filter indicator group labels
+
+When adding multiple filter groups ("or" groups), an the Filter Group number (ie "Filter Group 1") will be prepended to the indicator to help differentiate between the different filter groups. You may disable this by passing `false` to the `->prependFilterGroupLabels()` method:
+
+```php
+ AdvancedFilter::make()
+    ->prependFilterGroupLabels()
+```
+
+You may also hide the filter group label when there is only one filter group:
+
+```php
+ AdvancedFilter::make()
+    ->prependFilterGroupLabels(prependFilterGroupLabelWhenSoleGroup: false)
+```
+
+And of course, this can be set globally in your service provider:
+```php
+AdvancedFilter::configureUsing(function (AdvancedFilter $filter) {
+    return $filter->prependFilterGroupLabels(prependFilterGroupLabelWhenSoleGroup: false); 
+}); 
+```
+
+>Tip: The name/translation of the label can be modified in the language file.
+
 ### Customizing the sequence of filter indicator group colors
 
 When adding multiple filter groups ("or" groups), the indicators will be displayed in different colors to help differentiate between the different filter groups. By default, the indicators will be colored in the following sequence: `primary`, `info`, `gray`,  `success`, `danger`, `warning`. You may choose a different sequence by passing an array of colors to the `->indicatorColors()` method:
