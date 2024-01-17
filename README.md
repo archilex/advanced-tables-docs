@@ -179,7 +179,7 @@ The license key and fingerprint should be separated by a colon (:).
     Add Advanced Tables to a panel by instantiating the plugin class and passing it to the `plugin()` method of the configuration:
 
     ```php
-    use Archilex\AdvancedTables\AdvancedTablesPlugin;
+    use Archilex\AdvancedTables\Plugin\AdvancedTablesPlugin;
     
     public function panel(Panel $panel): Panel
     {
