@@ -1361,6 +1361,15 @@ AdvancedTablesPlugin::make()
     ->favoritesBarDefaultView(false)
 ```
 
+You may also disable the Default View per resource by overriding the `hasDefaultView()` method in the class where you have added the AdvancedTables trait:
+
+```php
+public function hasDefaultView(): bool
+{
+    return false;
+}
+```
+
 > Note: In prior versions this view was named `All`, however when clicking this view, it actually resets the table to it's ***default*** settings, which may or may not contain all the records. For this reason, it was renamed to `default` in version 3. However, you may change the name of the Default View in the [language file](#language-files).
 
 > Tip: If you need an `All` button in addition/instead of a `Default` button, you can easily create a [Preset View](#creating-a-preset-view) that shows the data you need.
@@ -1753,6 +1762,8 @@ public static function table(Table $table): Table
 Advanced Filter Builder is a custom filtering system that gives your users a simple, yet powerful way to quickly build custom queries. Each filter inside the builder can be used multiple times and grouped into *or groups*, allowing your users to drill down and find the data they need. Advanced Filter Builder was designed to make filtering easy for your users with a simple UI and natural filtering language. 
 
 For developers, Advanced Filter Builder couldn't be easier to implement. Advanced Filter Builder can *automatically* generates `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
+
+>Important: [Adding AdvancedTables](#adding-advanced-tables-to-your-table) to your table is required for Advanced Filter Builder to properly work.
 
 ### Using Advanced Filter Builder
 
