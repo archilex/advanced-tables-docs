@@ -2776,13 +2776,17 @@ public static function table(Table $table): Table
 
 Be sure to check out the rest of [Excel Export's docs](https://filamentphp.com/plugins/pxlrbt-excel) for further ways to customize your exports. And if Excel Export is helpful to your business, be sure to [sponsor Dennis](https://github.com/sponsors/pxlrbt).
 
-### Updating your stats widgets automatically
+### Updating your Widgets or Charts automatically
 
-Filament v3 now makes it easy for you to have your widgets automatically update when you filter your views using Advanced Tables. Now, when you choose one of your Views, your widgets will update to reflect your filtered data. From [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget):
+Filament v3 now makes it easy for you to have your widgets and charts automatically update when you filter your views using Advanced Tables. Now, when you choose one of your Views, your widgets and/or charts will update to reflect your filtered data. 
+
+> Note: While you can use [Filament's](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget) `ExposesTableToWidgets` and `InteractsWithPageTable` traits, if you are using Preset View's `->modifyQueryUsing()` method you *must* use Advanced Table's versions to fully support interactivity on the first click.
 
 1. Add the `ExposesTableToWidgets` trait to your page class:
 
 ```php 
+use Archilex\AdvancedTables\Widgets\Concerns\ExposesTableToWidgets;
+
 class ListOrders extends ListRecords
 {
     use ExposesTableToWidgets;
@@ -2792,6 +2796,8 @@ class ListOrders extends ListRecords
 2. Inside your widget classes, add the `InteractsWithPageTable` trait and return the name of the page class from the `getTablePage()` method:
 
 ```php 
+use Archilex\AdvancedTables\Widgets\Concerns\InteractsWithPageTable;
+
 class OrderStats extends Widget
 {
     use InteractsWithPageTable;
