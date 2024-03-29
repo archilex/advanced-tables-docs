@@ -98,7 +98,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 ### Requirements
 
-Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.0.88+`, and `Laravel 10+`.
+Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2.4+`, and `Laravel 10+`.
 
 > Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
@@ -986,7 +986,27 @@ Preset Views can display a badge after the label by passing a string into the `b
     ->badge(Order::query()->where('status', 'processing')->count())
 ```
 
+### Changing the badge color (New)
+
+The color of a badge may be changed using the `badgeColor()` method:
+
+```php
+'processing' => PresetView::make()
+    ->badge(Order::query()->where('status', 'processing')->count())
+    ->badgeColor('warning')
+```
+
 > Tip: If you want to display multiple badges, you should generate one query separately and then use [Laravel collections](https://laravel.com/docs/10.x/collections#main-content) to filter and count them.
+
+### Adding a tooltip (New)
+
+Preset Views can display a tooltip when hovered over in the Favorites Bar by passing a string into the `tooltip()` method.:
+
+```php
+'lowStock' => PresetView::make()
+    ->modifyQueryUsing(Product::query()->where('price', '>', 1000)->where('qty', '<', 5))
+    ->tooltip('High price products with low stock')
+```
 
 ### Showing or hiding
 
@@ -1730,6 +1750,15 @@ Advanced Tables enables column reordering by default. You may disable this and u
 ```php
 AdvancedTablesPlugin::make()
     ->reorderableColumnsEnabled(false)
+```
+
+You may also disable Reorderable Columns per resource by overriding the `canReorderColumns()` method in the class where you have added the AdvancedTables trait:
+
+```php
+public function canReorderColumns(): bool
+{
+    return false;
+}
 ```
 
 #### Always displaying the hidden label
