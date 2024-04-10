@@ -2854,15 +2854,11 @@ Question? Bug? Feature request? Comment or suggestion? Email me at advancedtable
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://changelog.anystack.sh/filament-filter-sets) for more information on what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Users with active licenses may access the private repo to contribute by visiting the `Licenses` tab of your AnyStack account. 
 
 ## Credits
 
