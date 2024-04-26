@@ -1784,6 +1784,21 @@ public static function table(Table $table): Table
         ->columnToggleFormColumns(2)
 ```
 
+#### Configuring the icons
+
+You may change any of the icons used for Reorderable Columns by using the following methods:
+
+```php
+AdvancedTablesPlugin::make()
+    ->reorderingIcon('heroicon-m-arrows-up-down')
+    ->checkMarkIcon('heroicon-m-check')
+    ->dragHandleIcon('heroicon-o-bars-2')
+    ->visibleIcon('heroicon-s-eye')
+    ->hiddenIcon('heroicon-o-eye-slash')
+```
+
+To remove any of the icon, don't pass anything to the the respective method: `->hiddenIcon()`
+
 ## Advanced Filter Builder (New)
 
 ![Advanced filter builder](https://user-images.githubusercontent.com/6097099/278955775-f124d155-8fd8-4af5-bf38-e13ec958df3c.png)
