@@ -1790,7 +1790,7 @@ You may change any of the icons used for Reorderable Columns by using the follow
 
 ```php
 AdvancedTablesPlugin::make()
-    ->reorderingIcon('heroicon-m-arrows-up-down')
+    ->reorderIcon('heroicon-m-arrows-up-down')
     ->checkMarkIcon('heroicon-m-check')
     ->dragHandleIcon('heroicon-o-bars-2')
     ->visibleIcon('heroicon-s-eye')
