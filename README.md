@@ -1558,6 +1558,33 @@ AdvancedTablesPlugin::make()
     ->viewManagerInTable(position: 'tables::toolbar.toggle-column-trigger.before')
 ```
 
+#### Displaying as a button with a label
+
+By default, View Manager is displayed as a icon button. You may display it as a button with a label by using the `viewManagerButton()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->viewManagerButton(label: 'Views')
+```
+
+#### Changing the button and icon size
+
+You may change the size of the View Manager's button and icon using the `viewManagerButtonSize()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->viewManagerButtonSize('lg')
+```
+
+#### Displaying the button outlined
+
+If you are displaying the View Manager as button you may display it outlined by using the `viewManagerButtonOutlined()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->viewManagerButtonOutlined()
+```
+
 #### Displaying as a SlideOver
 
 By default, View Manager is displayed as a dropdown. You may display it as a slideOver by adding the `viewManagerSlideOver()` method:
@@ -1597,6 +1624,17 @@ You may change the icon used for the View Manager using the `viewManagerIcon()` 
 ```php
 AdvancedTablesPlugin::make()
     ->viewManagerIcon('heroicon-o-bars-3')
+```
+
+#### Icon position
+
+You may change the position of the icon in the View Manager using the `viewManagerIconPosition()` method:
+
+```php
+use Filament\Support\Enums\IconPosition;
+
+AdvancedTablesPlugin::make()
+    ->viewManagerIconPosition(IconPosition::After)
 ```
 
 #### Hiding the active view badge indicator
@@ -2444,6 +2482,15 @@ If you had previously manually implemented multi-tenancy in Advanced Tables and 
 ```php
 AdvancedTablesPlugin::make()
     ->tenantColumn('account_id')
+```
+
+### Disabling multi-tenancy
+
+If you are using multi-tenancy in your app, but would prefer User Views and Preset Views to *not* be scoped to each tenant (i.e. a user's views would be the same regardless of which tenant they are in), you may disable multi-tenancy in the plugin by passing `false` to the `->tenancyEnabled()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->tenancyEnabled(false)
 ```
 
 ### Support for multi-tenancy
