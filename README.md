@@ -2745,6 +2745,15 @@ AdvancedTablesPlugin::make()
     ->userTableNameColumn('full_name')
 ```
 
+#### Configuring the user primary key
+
+If you are set your primary key on your `User::class` model to something other than Laravel's default `id`, you should also configure this in Advanced Tables using the `userTableKeyColumn()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->userTableKeyColumn('uuid')
+```
+
 #### Configuring the authentication guard
 
 By default, Advanced Tables will use whichever authentication guard is [set on your Filament panel](https://filamentphp.com/docs/3.x/panels/users#setting-the-authentication-guard). If you are using standalone Table Builder, you may set the authentication guard in the `advanced-tables` config file:
