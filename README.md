@@ -1761,6 +1761,24 @@ AdvancedTablesPlugin::make()
     ->viewManagerPublicIndicatorWhenGlobal()
 ```
 
+#### Hiding the user icon
+
+By default the View Manager will display the chosen icon for User Views and Preset Views in the View Manager. You may hide this icon in the View Manager with the `viewIcon()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->viewIcon(false)
+```
+
+#### Changing the default view icon
+
+If there is no icon associated with the User View or Preset View, a default icon will be shown in the View Manager. You may change which icon is displayed with the `defaultViewIcon()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->defaultViewIcon('heroicon-o-queue-list')
+```
+
 ## Reorderable Columns (New)
 
 Advanced Tables enhances Filament's [toggleable columns](https://filamentphp.com/docs/3.x/tables/columns/getting-started#toggling-column-visibility) dropdown with powerful column reordering. Now you and your users can move hide, show, and move columns to create a totally custom view. Best of all, when a user creates a new User View, their new column order is saved as well. 
