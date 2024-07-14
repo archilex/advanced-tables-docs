@@ -108,9 +108,9 @@ AnyStack is the service used to handle the payment, licensing, and distribution 
 
 During the purchasing process, AnyStack will provide you with a license key. You will also be asked by AnyStack to activate your license by providing a `domain`. This is usually the domain of where your final project will live. You’ll use this same domain to install locally and in production. Once you have provide a domain, your license key will be activated and you can proceed with [installing with composer](#installing-with-composer) below. 
 
-Tip > If you missed this step, or if you need to add additional domains for other projects, you can access the activation page by going to [Transactions](https://account.anystack.sh/transactions) in your AnyStack account and then clicking `View details` on the Advanced Tables product. 
+> Tip: If you missed this step, or if you need to add additional domains for other projects, you can access the activation page by going to [Transactions](https://account.anystack.sh/transactions) in your AnyStack account and then clicking `View details` on the Advanced Tables product. 
 
-Tip > You will need *both* your `license key` and your `domain` to authenticate when you install the package with composer. 
+> Tip: You will need *both* your `license key` and your `domain` to authenticate when you install the package with composer. 
 
 ### Installing with Composer
 
