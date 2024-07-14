@@ -102,6 +102,16 @@ Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2
 
 > Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
+### Activating your license on AnyStack
+
+AnyStack is the service used to handle the payment, licensing, and distribution of AdvancedTables. 
+
+During the purchasing process, AnyStack will provide you with a license key. You will also be asked by AnyStack to activate your license by providing a `domain`. This is usually the domain of where your final project will live. You’ll use this same domain to install locally and in production. Once you have provide a domain, your license key will be activated and you can proceed with [installing with composer](#installing-with-composer) below. 
+
+Tip > If you missed this step, or if you need to add additional domains for other projects, you can access the activation page by going to [Transactions](https://account.anystack.sh/transactions) in your AnyStack account and then clicking `View details` on the Advanced Tables product. 
+
+Tip > You will need *both* your `license key` and your `domain` to authenticate when you install the package with composer. 
+
 ### Installing with Composer
 
 To install Advanced Tables you'll need to add the package to your `composer.json` file:
