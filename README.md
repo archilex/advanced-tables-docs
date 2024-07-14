@@ -104,7 +104,7 @@ Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2
 
 ### Activating your license on AnyStack
 
-AnyStack is the service used to handle the payment, licensing, and distribution of AdvancedTables. 
+AdvancedTables uses [AnyStack](https://anystack.sh) to handle payment, licensing, and distribution.
 
 During the purchasing process, AnyStack will provide you with a license key. You will also be asked by AnyStack to activate your license by providing a `domain`. This is usually the domain of where your final project will live. You’ll use this same domain to install locally and in production. Once you have provide a domain, your license key will be activated and you can proceed with [installing with composer](#installing-with-composer) below. 
 
