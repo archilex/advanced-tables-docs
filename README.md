@@ -2239,7 +2239,7 @@ When using Filament's default `Dropdown` filter layout, the user will also be pr
 
 ```php
 AdvancedTablesPlugin::make()
-    ->filterBuilderExpandViewStyles(['right: 100px', 'top: 23px'])
+    ->filterBuilderExpandViewStyles(['right: 100px', 'top: 24px'])
 ```
 
 This method also take a closure allowing you to set different positions based on a condition such as locale:
@@ -2248,7 +2248,7 @@ This method also take a closure allowing you to set different positions based on
 use Illuminate\Support\Facades\App;
 
 AdvancedTablesPlugin::make()
-    ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 23px'] : ['right: 80px', 'top: 23px'])
+    ->filterBuilderExpandViewStyles(fn () => App::isLocale('es') ? ['right: 100px', 'top: 24px'] : ['right: 80px', 'top: 24px'])
 ```
 
 ### Always opening the filter as a slideOver
