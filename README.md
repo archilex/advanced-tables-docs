@@ -1873,7 +1873,7 @@ Advanced Filter Builder is a custom filtering system that gives your users a sim
 
 For developers, Advanced Filter Builder couldn't be easier to implement. Advanced Filter Builder can *automatically* generates `text`, `numeric`, `date`, `boolean`, and `select` filters from your table columns! You can also seamlessly integrate your existing filters or override the auto-generated ones allowing you to fully customize the filtering experience.
 
->Important: [Adding AdvancedTables](#adding-advanced-tables-to-your-table) to your table is required for Advanced Filter Builder to properly work.
+> Important: [Adding AdvancedTables](#adding-advanced-tables-to-your-table) to your table is required for Advanced Filter Builder to properly work.
 
 ### Using Advanced Filter Builder
 
@@ -2005,7 +2005,7 @@ AdvancedFilter::make()
     ])
 ```
 
->Important: Be sure to import `Archilex\AdvancedTables\Filters\SelectFilter` to see the `is`, `is not`, `is empty`, and `is not empty` operators.
+> Important: Be sure to import `Archilex\AdvancedTables\Filters\SelectFilter` to see the `is`, `is not`, `is empty`, and `is not empty` operators.
 
 ##### Customizing a column filter's operators
 
@@ -2154,6 +2154,8 @@ AdvancedFilter::make()
     ]);
 ```
 
+> Important: If you are [customizing a Column Filter](#customizing-a-column-filter), that column must be included in the `->includesColumns()` method.
+
 ### Excluding columns
 
 You may instead exclude columns by passing an array of columns `names` to the `->excludeColumns()` method:
@@ -2166,6 +2168,8 @@ AdvancedFilter::make()
         'created_at',
     ]);
 ```
+
+> Important: If you are [customizing a Column Filter](#customizing-a-column-filter), that column must *not* be excluded from the `->excludesColumns()` method.
 
 ### Setting the default filters
 
