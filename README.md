@@ -1426,6 +1426,15 @@ AdvancedTablesPlugin::make()
 
 For more ways to distinguish between Preset Views and Users Views, please read the section [Distinguishing between Preset Views and Users Views](#distinguishing-between-preset-views-and-users-views)
 
+#### Loading Indicator (new)
+
+You may show a loading indicator when switching between views by using the `favoritesBarLoadingIndicator()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->favoritesBarLoadingIndictor()
+```
+
 ## Quick Save (New)
 
 Advanced Tables offers a quick way for end-users to save User Views with the Quick Save button. Quick Save can be customized in a variety of ways to match the needs of your application.
