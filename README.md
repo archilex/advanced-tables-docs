@@ -6,22 +6,24 @@
 
 Advanced Tables (formerly known as Filter Sets) is a premium plugin for [Filament](https://filamentphp.com/) that supercharges your tables with powerful features like user customizable views, enhanced filter tabs, reorderable columns, convenient view management, filter builder, and more. 
 
+### Video
+
+Check out a short video of some of the powerful features included in Advanced Tables
+[![Youtube video](https://user-images.githubusercontent.com/6097099/269337282-39ae1c24-eb4c-4d0b-9c88-11fcf14297ef.png)](https://www.youtube.com/watch?v=_vhVHiBzqrs)
+
+### Demo (New)
+
+See all the functionality that Advanced Tables has to offer in an interactive demo. It also includes a Configuration Playground so you can see many of the configuration options you can use to adapt the plugin to your needs.
+
+[Visit the Demo](https://advancedtables.com/demo)
+
+### About
+
 At its core, Advanced Tables allows you to combine filters, grouping, toggled columns, and more into custom views that are just one click away. Users no longer have to rebuild their views each time they need to focus on a certain subset of their data. Advanced Tables gives your users fast access to the information they need.
 
 With Advanced Tables, views can be set up in advance by the developer or they can be created on-the-fly by your end-users using Quick Save. And with Advanced Table’s View Manager, your users will be able to conveniently create, apply, edit, share, and sort their views right from the resource or table.
 
 Best of all, Advanced Tables works with *all* of your Filament tables including Resource Tables, Relation Managers, Table Widgets, and standalone Table Builder.
-
-### Demo (New)
-
-Advanced Tables now has a demo! See all the functionality that Advanced Tables has to offer in an interactive demo. It also includes a Configuration Playground so you can see many of the configuration options you can use to adapt the plugin to your needs.
-
-[Visit the Demo](https://advancedtables.com/demo)
-
-### Video
-
-Check out a short video of some of the powerful features included in Advanced Tables
-[![Youtube video](https://user-images.githubusercontent.com/6097099/269337282-39ae1c24-eb4c-4d0b-9c88-11fcf14297ef.png)](https://www.youtube.com/watch?v=_vhVHiBzqrs)
 
 ### Features
 
@@ -1432,7 +1434,7 @@ You may show a loading indicator when switching between views by using the `favo
 
 ```php
 AdvancedTablesPlugin::make()
-    ->favoritesBarLoadingIndictor()
+    ->favoritesBarLoadingIndicator()
 ```
 
 ## Quick Save (New)
@@ -2525,13 +2527,13 @@ AdvancedTablesPlugin::make()
     ->tenantColumn('account_id')
 ```
 
-### Disabling multi-tenancy
+### Ignoring multi-tenancy
 
-If you are using multi-tenancy in your app, but would prefer User Views and Preset Views to *not* be scoped to each tenant (i.e. a user's views would be the same regardless of which tenant they are in), you may disable multi-tenancy in the plugin by passing `false` to the `->tenancyEnabled()` method:
+If you are using multi-tenancy in your app, but would prefer User Views and Preset Views to *not* be scoped to each tenant (i.e. a user's views would be the same regardless of which tenant they are in), you may ignore multi-tenancy in the plugin by passing `false` to the `->scopeToTenancy()` method:
 
 ```php
 AdvancedTablesPlugin::make()
-    ->tenancyEnabled(false)
+    ->scopeToTenancy(false)
 ```
 
 ### Support for multi-tenancy
@@ -2975,7 +2977,6 @@ Users with active licenses may access the private repo to contribute by visiting
 ## Credits
 
 - [Kenneth Sese](https://github.com/archilex)
-- [All Contributors](../../contributors)
 
 ## License
 
@@ -2984,14 +2985,14 @@ The Single License grants the Licensee permission to use Advanced Tables in a si
 
 If you would like to implement Advanced Tables in a SaaS application, you will need an [Unlimited](#unlimited-license) or [Lifetime license](#lifetime-license).
 
-The single license grants permission for up to 5 Employees and Contractors of the Licensee to access and use Advanced Tables. 
+The single license grants permission for up to 5 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables. 
 
 You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
 
 ### Unlimited License
 The Unlimited License grants the Licensee permission to use Advanced Tables on **unlimited** domains and subdomains, including SaaS applications. 
 
-The unlimited license grants permission for up to 25 Employees and Contractors of the Licensee to access and use Advanced Tables.
+The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables.
 
 You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
 
@@ -3000,7 +3001,7 @@ The Lifetime License grants the Licensee permission the same benefits as the Unl
 
 You will receive updates for the lifetime of the product. 
 
-The unlimited license grants permission for up to 25 Employees and Contractors of the Licensee to access and use Advanced Tables.
+The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables.
 
 ### Code Distribution
 None of Advanced Tables' licenses allow the public distribution of its source code. So, you may not build an application using Advanced Tables and distribute that application publicly via an open source repository, hosting platforms, or any other code distribution platform.
