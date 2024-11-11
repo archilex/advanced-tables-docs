@@ -2020,7 +2020,9 @@ SelectFilter::make('brand')
     ->favorite()
 ```
 
->Note: Support for Filament's `->columns()` method on filters is coming soon.
+> Note: Support for Filament's `->columns()` method on filters is coming soon.
+
+> Tip: If you use favorite filters, I recommend you publish Filament's table language file (filament/tables/resources/lang/YOUR_LANG/table.php) and change the `indicator` value from "Active Filters" to just "Filters".
 
 #### Limiting the Indicator labels
 
