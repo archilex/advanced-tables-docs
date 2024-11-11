@@ -1893,6 +1893,8 @@ To update to the beta update your `composer.json` file to:
 "archilex/filament-filter-sets": "^3.8@beta",
 ```
 
+After updating be sure to run `npm run build` and `php artisan filament:upgrade`.
+
 ### Enabling Advanced Indicators
 
 During this beta period, Advanced Indicators will be disabled by default. To enable Advanced Indicators use the `->advancedIndicatorsEnabled()` method:
