@@ -1879,7 +1879,7 @@ To remove any of the icon, don't pass anything to the the respective method: `->
 
 ## Advanced Indicators (Beta)
 
-![Advanced indicators](https://private-user-images.githubusercontent.com/6097099/384738348-530b2008-d952-4f04-b95b-2868748bad61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODQ0MTksIm5iZiI6MTczMTI4NDExOSwicGF0aCI6Ii82MDk3MDk5LzM4NDczODM0OC01MzBiMjAwOC1kOTUyLTRmMDQtYjk1Yi0yODY4NzQ4YmFkNjEucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDAxNTE5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NmNhOTk3OWMwNTE5ZmI0NzI3NTA0YTUxMGRhZTYyOTBiZDY0NzMxYTk4NTViNDQ2NjhjZDlhNzc4NzZmY2Q0YiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.oVFcF8hhw-KORcdhuuNY4KYw89XimGW6almphZI0_Jo)
+![Advanced indicators](https://advancedtables.com/images/advanced-indicators.png)
 
 > Important: Advanced Indicators is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) that are under development, and there may be custom Filament implementations that haven't been accounted for, I am launching this as a beta feature. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email.
 
@@ -1931,7 +1931,7 @@ When implementing custom filters with multiple form fields in Filament, there ar
 
 **Example 1 - Display as a single indicator:**
 
-![Single indicator](https://private-user-images.githubusercontent.com/6097099/384746403-4e085f83-8466-4bd5-9a3d-d25097bbabc8.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg0NDIsIm5iZiI6MTczMTI4ODE0MiwicGF0aCI6Ii82MDk3MDk5LzM4NDc0NjQwMy00ZTA4NWY4My04NDY2LTRiZDUtOWEzZC1kMjUwOTdiYmFiYzgucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyMjIyWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9OTBkZjViYWE5MzQxZThhYjc5OGM0ZmZmNWVjZTMxM2IxNDM0N2RkYzFlNjg5NTk0YTc4MWIxNzVjOGZjMGZhNSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.jfP6TjRXIPqWkVXILUDeYPf_YFVEnts1hJ7P-MUhHac)
+![Single indicator](https://advancedtables.com/images/single-indicator.png)
 
 ```php
 Filter::make('created_at')
@@ -1961,7 +1961,7 @@ Filter::make('created_at')
 
 **Example 2 - Display as multiple indicators:**
 
-![Multiple indicators](https://private-user-images.githubusercontent.com/6097099/384746401-7dfb99cb-0fb9-4895-a598-5da4fb4efab6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg0NDIsIm5iZiI6MTczMTI4ODE0MiwicGF0aCI6Ii82MDk3MDk5LzM4NDc0NjQwMS03ZGZiOTljYi0wZmI5LTQ4OTUtYTU5OC01ZGE0ZmI0ZWZhYjYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyMjIyWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ODY4Mjk0NWIxM2JiZTM1NzUwMDZkYTllMTAyZGU0NmI4OTdiZDRjNzcwYmYxZmI5NTYzZmI0Y2MzMTdlZmMzYiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.MlpEAogroDbd_HIueFE8reJzjit-2ntEWiqxepVbH5Y)
+![Multiple indicators](https://advancedtables.com/images/multiple-indicators.png)
 
 ```php
 Filter::make('published_at')
@@ -2011,7 +2011,7 @@ Filter::make('created_at')`
 
 #### Favorite Filters
 
-![Favorite filters](https://private-user-images.githubusercontent.com/6097099/384746981-65a958bf-8361-43a4-80d7-d592024d60ab.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg3MzMsIm5iZiI6MTczMTI4ODQzMywicGF0aCI6Ii82MDk3MDk5LzM4NDc0Njk4MS02NWE5NThiZi04MzYxLTQzYTQtODBkNy1kNTkyMDI0ZDYwYWIucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyNzEzWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9N2ZhZTk5ZGM5ODQ2ZmZhNGRlN2EzNGEwOTZmNDMwYmMxZDZmNWEyMWI2ZTg2MjY2ZjUwYTBlMDkxYmNmMzA3MSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.-LPpiycBM25ZRwlhiKIIN2xgH3D2_GlBXDmC-0lS0_c)
+![Favorite filters](https://advancedtables.com/images/favorite-filters.png)
 
 Advanced Indicators not only gives you quick access to applied filters, but also allows you to specify "favorite" filters which will always be displayed in the indicator bar, even when the filter is not active. You can make a filter a favorite by using the `->favorite()` method:
 
@@ -2024,7 +2024,7 @@ SelectFilter::make('brand')
 
 #### Limiting the Indicator labels
 
-![Advanced indicators](https://private-user-images.githubusercontent.com/6097099/384738348-530b2008-d952-4f04-b95b-2868748bad61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODQ0MTksIm5iZiI6MTczMTI4NDExOSwicGF0aCI6Ii82MDk3MDk5LzM4NDczODM0OC01MzBiMjAwOC1kOTUyLTRmMDQtYjk1Yi0yODY4NzQ4YmFkNjEucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDAxNTE5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NmNhOTk3OWMwNTE5ZmI0NzI3NTA0YTUxMGRhZTYyOTBiZDY0NzMxYTk4NTViNDQ2NjhjZDlhNzc4NzZmY2Q0YiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.oVFcF8hhw-KORcdhuuNY4KYw89XimGW6almphZI0_Jo)
+![Advanced indicators](https://advancedtables.com/images/advanced-indicators.png)
 
 Advanced Indicators also introduces the ability to limit the number of labels that are shown on a Select Filter. Since you now have easy access to filters through the indicator, it may not be necessary to pollute the indicator bar with an excessively long indicator. To limit the indicator labels you may use the `->limitIndicatorLabels()` method:
 
