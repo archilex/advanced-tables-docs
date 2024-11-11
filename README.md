@@ -1885,6 +1885,14 @@ To remove any of the icon, don't pass anything to the the respective method: `->
 
 Advanced Indicators gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
 
+### Updating to the Beta
+
+To update to the beta update your `composer.json` file to:
+
+```bash
+"archilex/filament-filter-sets": "^3.8@beta",
+```
+
 ### Enabling Advanced Indicators
 
 During this beta period, Advanced Indicators will be disabled by default. To enable Advanced Indicators use the `->advancedIndicatorsEnabled()` method:
