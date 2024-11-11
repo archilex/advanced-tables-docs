@@ -1881,11 +1881,13 @@ To remove any of the icon, don't pass anything to the the respective method: `->
 
 ![Advanced indicators](https://private-user-images.githubusercontent.com/6097099/384738348-530b2008-d952-4f04-b95b-2868748bad61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODQ0MTksIm5iZiI6MTczMTI4NDExOSwicGF0aCI6Ii82MDk3MDk5LzM4NDczODM0OC01MzBiMjAwOC1kOTUyLTRmMDQtYjk1Yi0yODY4NzQ4YmFkNjEucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDAxNTE5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NmNhOTk3OWMwNTE5ZmI0NzI3NTA0YTUxMGRhZTYyOTBiZDY0NzMxYTk4NTViNDQ2NjhjZDlhNzc4NzZmY2Q0YiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.oVFcF8hhw-KORcdhuuNY4KYw89XimGW6almphZI0_Jo)
 
-> Important: Advanced Indicators is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) that are under development, and there may be custom Filament implementations that haven't been accounted for, I am launching this as a beta feature. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email. Enjoy!
+> Important: Advanced Indicators is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) that are under development, and there may be custom Filament implementations that haven't been accounted for, I am launching this as a beta feature. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email.
 
 Advanced Indicators gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
 
 ### Updating to the Beta
+
+#### Update and Compile
 
 To update to the beta update your `composer.json` file to:
 
@@ -1895,16 +1897,29 @@ To update to the beta update your `composer.json` file to:
 
 After updating be sure to run `npm run build` and `php artisan filament:upgrade`.
 
-### Enabling Advanced Indicators
+#### Update Custom Filter Classes
 
-During this beta period, Advanced Indicators will be disabled by default. To enable Advanced Indicators use the `->advancedIndicatorsEnabled()` method:
+Advanced Indicators automatically overrides any default Filament filters you have included in your resource or page. However, any custom filter classes that you have created that extends a Filament filter will need to be updated to use Advanced Table's versions. This can be easily accomplished by just updating your imported class with the plugins equivalent:
 
 ```php
-AdvancedFilter::make()
-    ->advancedIndicatorsEnabled()
+- use Filament\Tables\Filters\Filter
++ use Archilex\AdvancedTables\Filament\Filter
+
+- use Filament\Tables\Filters\SelectFilter
++ use Archilex\AdvancedTables\Filament\SelectFilter
+
+- use Filament\Tables\Filters\TernaryFilter
++ use Archilex\AdvancedTables\Filament\TernaryFilter
+
+- use Filament\Tables\Filters\TrashedFilter
++ use Archilex\AdvancedTables\Filament\TrashedFilter
 ```
 
-> Note: When the beta period is complete, Advanced Indicators will be enabled by default. If you know you will never want to use this feature, I recommend you go ahead and set `->advancedIndicatorsEnabled(false)` so it won't be turned on for you later.
+Remember, you only need to override *custom* filter classes you have created. Filters used within Filament's resources and pages will be overridden automatically.
+
+#### Add the AdvancedTables trait
+
+If you haven't already, [add the AdvancedTables trait](#adding-advanced-tables-to-your-table) to your table.
 
 ### Using Advanced Indicators
 
@@ -2054,7 +2069,7 @@ The current implementation of Advanced Indicators is for each indicator form to 
 
 However, if there is sufficient demand/need for it, I will look into bringing deferring to Advanced Indicators in the future. If implemented, each indicator dropdown would have it's own "Apply" button. Please contact me if this is a feature you need.
 
-#### Current Limitations and Unknowns
+### Current Limitations and Unknowns
 
 While Advanced Indicators should work for the majority of implementations, there are currently a few limitations and unknowns:
 
@@ -2062,6 +2077,15 @@ While Advanced Indicators should work for the majority of implementations, there
 2. Custom filters may not be fully supported, but the goal is to support any implementation with Filament's filters. If something is not working as expected please contact me.
 3. Third-party filter plugins have not been tested. If a filter plugin is not working, please contact me. Please note, that full support may require the plugin developer to update their filter. 
 4. Filament's Query Builder Filter is not currently supported. I am looking into supporting it, but if support comes it will be at the very end of this development period.
+
+### Disabling Advanced Indicators
+
+If you wish to disable Advanced Indicators, you may pass false to the `->advancedIndicatorsEnabled()` method:
+
+```php
+AdvancedFilter::make()
+    ->advancedIndicatorsEnabled(false)
+```
 
 ## Advanced Filter Builder (New)
 
