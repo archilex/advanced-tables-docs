@@ -32,6 +32,7 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - (New) Preset Views can also include [filters](#applying-filters-new), [grouping](#applying-default-grouping-new), [toggled columns](#toggling-and-reordering-columns-new), and [column order](#toggling-and-reordering-columns-new)
 - (New) The [Quick Save](#quick-save-new) button means saving custom views is just one click away
 - (New) Enhance your tables with [Column Reordering](#reordering-columns)
+- (BETA) Quickly access your filters with [Advanced Indicators](#advanced-indicators-beta)
 - (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
 - Easily access views in the [Favorites Bar](#favorites-bar)
 - (New) Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
@@ -1875,6 +1876,182 @@ AdvancedTablesPlugin::make()
 ```
 
 To remove any of the icon, don't pass anything to the the respective method: `->hiddenIcon()`
+
+## Advanced Indicators (Beta)
+
+![Advanced indicators](https://private-user-images.githubusercontent.com/6097099/384738348-530b2008-d952-4f04-b95b-2868748bad61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODQ0MTksIm5iZiI6MTczMTI4NDExOSwicGF0aCI6Ii82MDk3MDk5LzM4NDczODM0OC01MzBiMjAwOC1kOTUyLTRmMDQtYjk1Yi0yODY4NzQ4YmFkNjEucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDAxNTE5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NmNhOTk3OWMwNTE5ZmI0NzI3NTA0YTUxMGRhZTYyOTBiZDY0NzMxYTk4NTViNDQ2NjhjZDlhNzc4NzZmY2Q0YiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.oVFcF8hhw-KORcdhuuNY4KYw89XimGW6almphZI0_Jo)
+
+> Important: Advanced Indicators is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) that are under development, and there may be custom Filament implementations that haven't been accounted for, I am launching this as a beta feature. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email. Enjoy!
+
+Advanced Indicators gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
+
+### Enabling Advanced Indicators
+
+During this beta period, Advanced Indicators will be disabled by default. To enable Advanced Indicators use the `->advancedIndicatorsEnabled()` method:
+
+```php
+AdvancedFilter::make()
+    ->advancedIndicatorsEnabled()
+```
+
+> Note: When the beta period is complete, Advanced Indicators will be enabled by default. If you know you will never want to use this feature, I recommend you go ahead and set `->advancedIndicatorsEnabled(false)` so it won't be turned on for you later.
+
+### Using Advanced Indicators
+
+Once enabled, Advanced Indicators should work right out the box with minimal configuration. Just click on any indicator to see the form field(s) associated with that filter. Any adjustments to that filter will be immediately reflected in the table and synced to filament's filter form. 
+
+#### Custom Filters with Multiple Form Fields
+
+When implementing custom filters with multiple form fields in Filament, there are two main ways to display the indicator(s). You could display a single indicator that adapts according to the fields that are set, or you could have individual indicators for each field. As an example, take the following date filter examples which have two date fields, but display the indicator differently.
+
+**Example 1 - Display as a single indicator:**
+
+![Single indicator](https://private-user-images.githubusercontent.com/6097099/384746403-4e085f83-8466-4bd5-9a3d-d25097bbabc8.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg0NDIsIm5iZiI6MTczMTI4ODE0MiwicGF0aCI6Ii82MDk3MDk5LzM4NDc0NjQwMy00ZTA4NWY4My04NDY2LTRiZDUtOWEzZC1kMjUwOTdiYmFiYzgucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyMjIyWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9OTBkZjViYWE5MzQxZThhYjc5OGM0ZmZmNWVjZTMxM2IxNDM0N2RkYzFlNjg5NTk0YTc4MWIxNzVjOGZjMGZhNSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.jfP6TjRXIPqWkVXILUDeYPf_YFVEnts1hJ7P-MUhHac)
+
+```php
+Filter::make('created_at')
+    ->form([
+        DatePicker::make('created_from'),
+        DatePicker::make('created_until'),
+    ])
+    ->query(function (Builder $query, array $data): Builder {
+        ...
+    })
+    ->indicateUsing(function (array $data): ?Indicator {                        
+        if (($data['created_from'] ?? null) && (! ($data['created_until'] ?? null))) {
+            return Indicator::make('Created from ' . Carbon::parse($data['created_from'])->toFormattedDateString());
+        } 
+
+        if ((! ($data['created_from'] ?? null)) && ($data['created_until'] ?? null)) {
+            return Indicator::make('Created until ' . Carbon::parse($data['created_until'])->toFormattedDateString());
+        } 
+
+        if (($data['created_from'] ?? null) && ($data['created_until'] ?? null)) {
+            return Indicator::make('Created between ' . Carbon::parse($data['created_from'])->toFormattedDateString() . ' and ' . Carbon::parse($data['created_until'])->toFormattedDateString());
+        }
+
+        return null;
+    })
+```
+
+**Example 2 - Display as multiple indicators:**
+
+![Multiple indicators](https://private-user-images.githubusercontent.com/6097099/384746401-7dfb99cb-0fb9-4895-a598-5da4fb4efab6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg0NDIsIm5iZiI6MTczMTI4ODE0MiwicGF0aCI6Ii82MDk3MDk5LzM4NDc0NjQwMS03ZGZiOTljYi0wZmI5LTQ4OTUtYTU5OC01ZGE0ZmI0ZWZhYjYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyMjIyWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ODY4Mjk0NWIxM2JiZTM1NzUwMDZkYTllMTAyZGU0NmI4OTdiZDRjNzcwYmYxZmI5NTYzZmI0Y2MzMTdlZmMzYiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.MlpEAogroDbd_HIueFE8reJzjit-2ntEWiqxepVbH5Y)
+
+```php
+Filter::make('published_at')
+    ->form([
+        DatePicker::make('published_from'),
+        DatePicker::make('published_until'),
+    ])
+    ->query(function (Builder $query, array $data): Builder {
+        ...
+    })
+    ->indicateUsing(function (array $data): array {                        
+        $indicators = [];
+
+        if ($data['published_from'] ?? null) {
+            $indicators[] = Indicator::make('Published from ' . Carbon::parse($data['published_from'])->toFormattedDateString())
+                ->removeField('published_from');
+        }
+
+        if ($data['published_until'] ?? null) {
+            $indicators[] = Indicator::make('Published until ' . Carbon::parse($data['published_until'])->toFormattedDateString())
+                ->removeField('published_until');
+        }
+
+        return $indicators;
+    }),
+```
+
+Advanced Indicators supports both of these use cases. In the first example, only one indicator will be shown, but the form will include both fields. In the second, only the indicator's respective field will be displayed. 
+
+If you are using return types (and you should be) then Advanced Indicators will automatically detect how the indicators should be displayed. If you are not using return types, then you will need to be explicit about how Advanced Indicators should display your form fields using the `->multipleIndicators()` method:
+
+**Example 1 - Display as a single indicator:**
+
+```php
+Filter::make('created_at')
+    ->multipleIndicators(false)
+```
+
+**Example 2 - Display as multiple indicators:**
+
+```php
+Filter::make('created_at')`
+    ->multipleIndicators()
+```
+
+> Note: Displaying indicators outside of these two examples (ie. a single indicator for all form fields, or a one-to-one field/indicator setup), is not currently supported. If you have a filter set up like this, please contact me. 
+
+#### Favorite Filters
+
+![Favorite filters](https://private-user-images.githubusercontent.com/6097099/384746981-65a958bf-8361-43a4-80d7-d592024d60ab.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODg3MzMsIm5iZiI6MTczMTI4ODQzMywicGF0aCI6Ii82MDk3MDk5LzM4NDc0Njk4MS02NWE5NThiZi04MzYxLTQzYTQtODBkNy1kNTkyMDI0ZDYwYWIucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDEyNzEzWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9N2ZhZTk5ZGM5ODQ2ZmZhNGRlN2EzNGEwOTZmNDMwYmMxZDZmNWEyMWI2ZTg2MjY2ZjUwYTBlMDkxYmNmMzA3MSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.-LPpiycBM25ZRwlhiKIIN2xgH3D2_GlBXDmC-0lS0_c)
+
+Advanced Indicators not only gives you quick access to applied filters, but also allows you to specify "favorite" filters which will always be displayed in the indicator bar, even when the filter is not active. You can make a filter a favorite by using the `->favorite()` method:
+
+```php
+SelectFilter::make('brand')
+    ->favorite()
+```
+
+>Note: Support for Filament's `->columns()` method on filters is coming soon.
+
+#### Limiting the Indicator labels
+
+![Advanced indicators](https://private-user-images.githubusercontent.com/6097099/384738348-530b2008-d952-4f04-b95b-2868748bad61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzEyODQ0MTksIm5iZiI6MTczMTI4NDExOSwicGF0aCI6Ii82MDk3MDk5LzM4NDczODM0OC01MzBiMjAwOC1kOTUyLTRmMDQtYjk1Yi0yODY4NzQ4YmFkNjEucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTExMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDExMTFUMDAxNTE5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NmNhOTk3OWMwNTE5ZmI0NzI3NTA0YTUxMGRhZTYyOTBiZDY0NzMxYTk4NTViNDQ2NjhjZDlhNzc4NzZmY2Q0YiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.oVFcF8hhw-KORcdhuuNY4KYw89XimGW6almphZI0_Jo)
+
+Advanced Indicators also introduces the ability to limit the number of labels that are shown on a Select Filter. Since you now have easy access to filters through the indicator, it may not be necessary to pollute the indicator bar with an excessively long indicator. To limit the indicator labels you may use the `->limitIndicatorLabels()` method:
+
+```php
+SelectFilter::make('brand')
+    ->limitIndicatorLabels(3)
+```
+
+By default, once the limit is reached Filament's localized version of `& 3 more` will be displayed. However, you may change this by publishing and updating the plugin's language files and updating the `more_indicator_labels` value in the `advanced-tables.php` language file:
+
+```php
+'indicators' => [
+    'more_indicator_labels' => '+ :count', // display as "+ 4"
+],
+```
+
+#### Specifying Favorite Filters in Preset Views
+
+If you are using [Preset Views](#preset-views) you may configure which filters should be displayed as favorites using the `->defaultFavoriteFilters()` method:
+
+```php
+'recentlyCreated' => PresetView::make()
+    ->favorite()
+    ->defaultFavoriteFilters(['created_at'])
+    ->defaultFilters([
+        'created_at' => [
+            'created_from' => now()->startOfWeek()->toDateString(),
+            'created_until' => now()->endOfWeek()->toDateString(),
+        ],
+    ])
+```
+
+> Note: When defining default favorite filters, the order of the filters will be determined by the order they are in listed in Filament's ->filters() array. Support for ordering by the order of the ->defaultFavoriteFilters() array is coming.
+
+#### Specifying Favorite Filters with User Views (Under Development)
+
+User-specified favorite filters is currently under development and should be released soon. When released, your users will be able to favorite, rearrange, and even hide filters according to their needs and then save that configuration as a [User View](#user-views).
+
+#### Deferring Advanced Indicators
+
+The current implementation of Advanced Indicators is for each indicator form to be live even if you are using Filament's [filter deferring](https://filamentphp.com/docs/3.x/tables/filters/getting-started#deferring-filters). Since each indicator is a subset of all the filters, deferring a single filter doesn't seem necessary.
+
+However, if there is sufficient demand/need for it, I will look into bringing deferring to Advanced Indicators in the future. If implemented, each indicator dropdown would have it's own "Apply" button. Please contact me if this is a feature you need.
+
+#### Current Limitations and Unknowns
+
+While Advanced Indicators should work for the majority of implementations, there are currently a few limitations and unknowns:
+
+1. [Advanced Filter Builder](#advanced-filter-builder-new) is not currently supported, but under development.
+2. Custom filters may not be fully supported, but the goal is to support any implementation with Filament's filters. If something is not working as expected please contact me.
+3. Third-party filter plugins have not been tested. If a filter plugin is not working, please contact me. Please note, that full support may require the plugin developer to update their filter. 
+4. Filament's Query Builder Filter is not currently supported. I am looking into supporting it, but if support comes it will be at the very end of this development period.
 
 ## Advanced Filter Builder (New)
 
