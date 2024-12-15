@@ -33,6 +33,7 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - (New) The [Quick Save](#quick-save-new) button means saving custom views is just one click away
 - (New) Enhance your tables with [Column Reordering](#reordering-columns)
 - (BETA) Quickly access your filters with [Advanced Indicators](#advanced-indicators-beta)
+- (BETA) Sort by multiple table columns with [Multi Sort](#advanced-indicators-beta)
 - (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
 - Easily access views in the [Favorites Bar](#favorites-bar)
 - (New) Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
@@ -327,13 +328,19 @@ When deploying, it is not advised to store your `auth.json`` file inside your pr
 composer config http-basic.filament-filter-sets.composer.sh your_account_email your_license_key_including_your_fingerprint_domain
 ```
 
-> Important: Don't forget to append your fingerprint domain to your password.
+> Important: Don't forget to append a colon (:) and your fingerprint domain to your password.
 
 You can see your credentials in your [Anystack account](https://account.anystack.sh/transactions): `Anystack > Transactions > View details` next to Filament Filter Sets. 
 
 > Tip: Make sure the `auth.json` file is in `.gitignore` to avoid leaking credentials into your git history.
 
 If you are using Laravel Forge, you don't need to create the `auth.json` file manually. Instead, you can set the credentials on the `Composer Package Authentication` screen of your server. 
+
+#### Fixing deployment errors
+
+1. The most common mistake when deploying, is not adding the colon (:) followed by the domain you registered. `license_key:domain`. Please review the instructions above.
+
+2. If you have set up everything correctly and are getting the error: `../advanced-tables-for-filament-3.7.29.zip' URL required authentication (HTTP 401). You must be using the interactive console to authenticate` error, you may need to ssh into your server and clear your composer global cache with `composer clear-cache`
 
 ## Upgrading to v3
 
@@ -1157,6 +1164,18 @@ By default, sorting is ascending, but you may choose descending as well `->defau
 
 > Tip: While it is possible to add `orderBy()` to your query to sort your table, using `defaultSort()` is recommended as it will correctly show the sorting indicator on the table column.
 
+### Setting a default table multi-sort (New)
+
+If [Multi-Sort](#multi-sort-beta) is enabled, you may multi-sort your preset views through the same `defaultSort()` method. Just pass an array of columns and their sort direction to `defaultSort()`:
+
+```php
+'processing' => PresetView::make()
+    ->defaultSort([
+        'is_visible' => 'desc',
+        'price' => 'asc'
+    ])
+```
+
 ### Loading a default Preset View
 
 You may choose one of your Preset Views as the default view when loading the page by using the `default()` method:
@@ -1877,6 +1896,81 @@ AdvancedTablesPlugin::make()
 
 To remove any of the icon, don't pass anything to the the respective method: `->hiddenIcon()`
 
+## Multi-Sort (Beta)
+
+![Multi-Sort](https://advancedtables.com/images/multi-sort.png)
+
+Advanced Tables now allows your users to sort their tables by multiple columns. Using the new Multi-Sort dropdown, users can add additional columns to sort by, easily change sort direction, and even reorder the columns. And Multi-Sort is completely integrated with [Preset Views](#preset-views) and [User Views](#user-views).
+
+### Updating to the Beta
+
+1. Update to the beta
+
+    To update to the beta update your `composer.json` file to:
+
+    ```bash
+    "archilex/filament-filter-sets": "^3.8@beta",
+    ```
+
+2. Compile assets
+
+    After updating run `npm run build` and `php artisan filament:upgrade`.
+
+### Using Multi-Sort
+
+To use multi-sort:
+
+1. Click the new multi-sort button in the table toolbar to open the multi-sort dropdown.
+2. Click the `Add column` button to add a column to sort by. Only `->sortable()` table columns will be shown.
+3. Use the `up` and `down` arrow buttons to change the sort direction.
+4. You may add additional columns and then drag and drop the them in the order you prefer.
+
+### Using with Preset Views 
+
+You can apply multi-sorting in your [Preset Views](#preset-views) through the `defaultSort()` method:
+
+```php
+'processing' => PresetView::make()
+    ->defaultSort([
+        'is_visible' => 'desc',
+        'price' => 'asc'
+    ])
+```
+
+### Multi-Sort configurations
+
+Advanced Tables offers multiple ways to customize Multi-Sort. Unless specified otherwise, these options can be configured directly on the `AdvancedTablesPlugin` object inside your `PanelProvider`.
+
+#### Disabling Multi-Sort
+
+Advanced Tables enables multi-sorting by default. You may disable this by passing false to the `multiSortEnabled()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->multiSortEnabled(false)
+```
+
+#### Changing the icon
+
+You may change the icon used for the Multi-Sort dropdown using the `multiSortIcon()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->multiSortIcon('heroicon-s-chevron-up-down')
+```
+
+#### Hiding the badge
+
+By default, when one or more columns is being sorted, the Multi-Sort dropdown button will display a badge indicating the number of columns that are being sorted. You may hide the badge by passing `false` to the `multiSortBadge()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->multiSortBadge(false)
+```
+
+#### Customizing the buttons and labels
+You may customize Multi-Sort buttons, labels in the language file.
+
 ## Advanced Indicators (Beta)
 
 ![Advanced indicators](https://advancedtables.com/images/advanced-indicators.png)
@@ -1887,39 +1981,50 @@ Advanced Indicators gives your users quick access to their filters through Filam
 
 ### Updating to the Beta
 
-#### Update and Compile
+1. Update to the beta
 
-To update to the beta update your `composer.json` file to:
+    To update to the beta update your `composer.json` file to:
 
-```bash
-"archilex/filament-filter-sets": "^3.8@beta",
-```
+    ```bash
+    "archilex/filament-filter-sets": "^3.8@beta",
+    ```
 
-After updating be sure to run `npm run build` and `php artisan filament:upgrade`.
+2. Compile assets
+    
+    After updating be sure to run `npm run build` and `php artisan filament:upgrade`.
 
-#### Update Custom Filter Classes
+3. Update Custom Filter Classes
 
-Advanced Indicators automatically overrides any default Filament filters you have included in your resource or page. However, any custom filter classes that you have created that extends a Filament filter will need to be updated to use Advanced Table's versions. This can be easily accomplished by just updating your imported class with the plugins equivalent:
+    Advanced Indicators automatically overrides any default Filament filters you have included in your resource or page. However, any custom filter classes that you have created that extends a Filament filter will need to be updated to use Advanced Table's versions. This can be easily accomplished by just updating your imported class with the plugins equivalent:
 
-```php
-- use Filament\Tables\Filters\Filter
-+ use Archilex\AdvancedTables\Filament\Filter
+    ```php
+    - use Filament\Tables\Filters\Filter
+    + use Archilex\AdvancedTables\Filament\Filter
 
-- use Filament\Tables\Filters\SelectFilter
-+ use Archilex\AdvancedTables\Filament\SelectFilter
+    - use Filament\Tables\Filters\SelectFilter
+    + use Archilex\AdvancedTables\Filament\SelectFilter
 
-- use Filament\Tables\Filters\TernaryFilter
-+ use Archilex\AdvancedTables\Filament\TernaryFilter
+    - use Filament\Tables\Filters\TernaryFilter
+    + use Archilex\AdvancedTables\Filament\TernaryFilter
 
-- use Filament\Tables\Filters\TrashedFilter
-+ use Archilex\AdvancedTables\Filament\TrashedFilter
-```
+    - use Filament\Tables\Filters\TrashedFilter
+    + use Archilex\AdvancedTables\Filament\TrashedFilter
+    ```
 
-Remember, you only need to override *custom* filter classes you have created. Filters used within Filament's resources and pages will be overridden automatically.
+    Remember, you only need to override *custom* filter classes you have created. Filters used within Filament's resources and pages will be overridden automatically.
 
-#### Add the AdvancedTables trait
+4. Enable Advanced Indicators
 
-If you haven't already, [add the AdvancedTables trait](#adding-advanced-tables-to-your-table) to your table.
+    Advanced Indicators is disabled by default. To enable, add `AdvancedIndicatorsEnabled()` to your panel provider:
+
+    ```php
+    AdvancedTablesPlugin::make()
+        ->advancedIndicatorsEnabled()
+    ```
+
+5. Add the AdvancedTables trait
+
+    If you haven't already, [add the AdvancedTables trait](#adding-advanced-tables-to-your-table) to your table.
 
 ### Using Advanced Indicators
 
@@ -2020,9 +2125,7 @@ SelectFilter::make('brand')
     ->favorite()
 ```
 
-> Note: Support for Filament's `->columns()` method on filters is coming soon.
-
-> Tip: If you use favorite filters, I recommend you publish Filament's table language file (filament/tables/resources/lang/YOUR_LANG/table.php) and change the `indicator` value from "Active Filters" to just "Filters".
+>Note: Support for Filament's `->columns()` method on filters is coming soon.
 
 #### Limiting the Indicator labels
 
@@ -2629,19 +2732,7 @@ Since in a [simple one-to-many tenancy](https://filamentphp.com/docs/3.x/panels/
         ->tenant(Team::class)
     ```
 
-2. Inside your tenant model you need to include a `getTenantId()` method so Advanced Tables knows which tenant to use for its scopes:
-
-    ```php
-    class Team extends Model
-    {
-        public function getTenantId(): ?string
-        {
-            return auth()->user()?->team_id;
-        }
-    }
-    ```
-
-3. After you have configured your tenant model and the `getTenantId()` method, you may proceed to run the `AddTenancy` command:
+2. After you have configured your tenant model you may proceed to run the `AddTenancy` command:
 
     ```bash
     php artisan advanced-tables:add-tenancy
