@@ -40,6 +40,7 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - (New) [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
 - (New) Supports Multi-tenancy
 - Choose from six different [themes](#themes)
+- (New) Table loading [skeleton overlay](#table-loading-indicators-new)
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
 - Users can make their User Views [publicly](#making-a-user-view-public) available to all users
 - Easily [create and export](#create-and-export-reports) reports from your customized views with [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel)
@@ -1448,7 +1449,7 @@ AdvancedTablesPlugin::make()
 
 For more ways to distinguish between Preset Views and Users Views, please read the section [Distinguishing between Preset Views and Users Views](#distinguishing-between-preset-views-and-users-views)
 
-#### Loading Indicator (new)
+#### Loading Indicator (New)
 
 You may show a loading indicator when switching between views by using the `favoritesBarLoadingIndicator()` method:
 
@@ -3050,6 +3051,29 @@ The example policy will apply the following policies:
 9. All users can select a color for their User Views.
 
 ## Additional Configurations
+
+### Table Loading Indicators (New)
+
+If you would like to give your users more feedback when their table is loading, you may enable a loading skeleton overlay by adding the `->tableLoadingOverlay()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->tableLoadingOverlay()
+```
+
+If any of your table columns are using the `->extraCellAttributes()` method, you will need to make sure you pass in `true` as the second parameter so that your attributes are merged with the plugin's:
+
+```php
+TextColumn::make('name')
+    ->extraCellAttributes([
+        'class' => 'bg-gray-500'
+    ], merge: true)
+```
+
+Additional loading indicator types and effects will be coming in the future. Feel free to reach out to me with your suggestions.
+
+> Note: Be sure to run `npm run build` and `php artisan filament:upgrade` after enabling this feature.
+
 ### User::class
 
 If you are using a User configuration other than Laravel's default, you should configure these *before* running your migrations:
@@ -3289,23 +3313,23 @@ The Single License grants the Licensee permission to use Advanced Tables in a si
 
 If you would like to implement Advanced Tables in a SaaS application, you will need an [Unlimited](#unlimited-license) or [Lifetime license](#lifetime-license).
 
-The single license grants permission for up to 5 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables. 
+The single license grants permission for up to 5 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables.
 
-You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
+You will receive updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
 
 ### Unlimited License
 The Unlimited License grants the Licensee permission to use Advanced Tables on **unlimited** domains and subdomains, including SaaS applications. 
 
-The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables.
+The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables. There is no limit on the amount of end-users your app may have.
 
-You will be updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
+You will receive updates and bug fixes for one year from the date of purchase. Should you decide not to renew your license, you will only be able to install the package up to the last version available before the license expired. You can renew the license at a discounted price to continue receiving updates and new features.
 
 ### Lifetime License
 The Lifetime License grants the Licensee permission the same benefits as the Unlimited License.
 
 You will receive updates for the lifetime of the product. 
 
-The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables.
+The unlimited license grants permission for up to 25 Employees and Contractors (i.e. developers) of the Licensee to access and use Advanced Tables. There is no limit on the amount of end-users your app may have.
 
 ### Code Distribution
 None of Advanced Tables' licenses allow the public distribution of its source code. So, you may not build an application using Advanced Tables and distribute that application publicly via an open source repository, hosting platforms, or any other code distribution platform.
