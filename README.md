@@ -1458,25 +1458,6 @@ AdvancedTablesPlugin::make()
     ->favoritesBarLoadingIndicator()
 ```
 
-## Quick Save (New)
-
-Advanced Tables offers a quick way for end-users to save User Views with the Quick Save button. Quick Save can be customized in a variety of ways to match the needs of your application.
-
-### Quick Save configurations
-
-Advanced Tables offers multiple ways to customize Quick Save. Unless specified otherwise, these options can be configured directly on the `AdvancedTablesPlugin` object inside your `PanelProvider`.
-
-#### Disable Quick Save
-
-You may disable User Views entirely which will also remove the Quick Save button by passing `false` to the `userViewsEnabled()` method:
-
-```php
-AdvancedTablesPlugin::make()
-    ->userViewsEnabled(false)
-```
-
-However, by disabling User Views, you also disable public and global favorite User Views. If you wish to just hide the Quick Save button for certain users, you should use [policies](#authorization).
-
 #### Disabling the Favorites Bar
 
 You can disable the Favorites Bar entirely (helpful if you only want to use [reorderable columns](#reorderable-columns-new)) by passing `false` to the `favoritesBarEnabled()` method:
@@ -1499,6 +1480,43 @@ class ListOrders extends ListRecords
     }
     ...
 ```
+
+You may also disable [Quick Save](#disabling-quick-save) or the [View Manager](#disabling-the-view-manager) if needed.
+
+## Quick Save (New)
+
+Advanced Tables offers a quick way for end-users to save User Views with the Quick Save button. Quick Save can be customized in a variety of ways to match the needs of your application.
+
+### Quick Save configurations
+
+Advanced Tables offers multiple ways to customize Quick Save. Unless specified otherwise, these options can be configured directly on the `AdvancedTablesPlugin` object inside your `PanelProvider`.
+
+#### Disabling Quick Save
+
+You may disable Quick Save entirely by passing `false` to the `quickSaveEnabled()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->quickSaveEnabled(false)
+```
+
+You may also configure this per table by overriding the `quickSaveIsEnabled()` method on your List page:
+
+```php
+class ListOrders extends ListRecords
+{
+    use AdvancedTables; 
+
+    public static function quickSaveIsEnabled(): bool
+    {
+        return false;
+    }
+    ...
+```
+
+If you wish to just hide the Quick Save button for certain users, you can also use [policies](#authorization).
+
+You may also disable the [Favorites Bar](#disabling-the-favorites-bar) or the [View Manager](#disabling-the-view-manager) if needed.
 
 #### Changing the icon
 
@@ -1648,16 +1666,30 @@ This in turn means that there is additional memory usage as all of the table's v
 
 In most situations, the additional memory usage of the dropdown is worth the tradeoff to have the View Manager instantly available, but knowing how this works internally will help you decide which is best for your application.
 
-#### Disable View Manager
+#### Disabling the View Manager
 
-You may disable the View Manager entirely which will also remove the View Manager button by setting both `viewManagerInFavorites()` and `viewManagerInTable()` to `false` and displaying the View Manager as a slideOver. This hides the View Manager from the table and also ensures that only the user's favorites are [queried from the database](#dropdown-vs-slideover-internally). 
+You may disable the View Manager entirely by passing `false` to the `viewManagerEnabled()` method:
 
 ```php
 AdvancedTablesPlugin::make()
-    ->viewManagerInFavoritesBar(false)
-    ->viewManagerInTable(false)
-    ->viewManagerSlideOver()
+    ->viewManagerEnabled(false)
 ```
+
+You may also configure this per table by overriding the `viewManagerIsEnabled()` method on your List page:
+
+```php
+class ListOrders extends ListRecords
+{
+    use AdvancedTables; 
+
+    public static function viewManagerIsEnabled(): bool
+    {
+        return false;
+    }
+    ...
+```
+
+You may also disable the [Favorites Bar](#disabling-the-favorites-bar) or [Quick Save](#disabling-quick-save) if needed.
 
 #### Changing the icon
 
