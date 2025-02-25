@@ -1942,7 +1942,7 @@ Advanced Tables now allows your users to sort their tables by multiple columns. 
     To update to the beta update your `composer.json` file to:
 
     ```bash
-    "archilex/filament-filter-sets": "^3.8@beta",
+    "archilex/filament-filter-sets": "^3.10@beta",
     ```
 
 2. Compile assets
@@ -2019,7 +2019,7 @@ Advanced Indicators gives your users quick access to their filters through Filam
     To update to the beta update your `composer.json` file to:
 
     ```bash
-    "archilex/filament-filter-sets": "^3.8@beta",
+    "archilex/filament-filter-sets": "^3.10@beta",
     ```
 
 2. Compile assets
