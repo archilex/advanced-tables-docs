@@ -32,6 +32,7 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - (New) Preset Views can also include [filters](#applying-filters-new), [grouping](#applying-default-grouping-new), [toggled columns](#toggling-and-reordering-columns-new), and [column order](#toggling-and-reordering-columns-new)
 - (New) The [Quick Save](#quick-save-new) button means saving custom views is just one click away
 - (New) Enhance your tables with [Column Reordering](#reordering-columns)
+- (BETA) [Managed Default Views](#managed-default-views-beta)
 - (BETA) Quickly access your filters with [Advanced Indicators](#advanced-indicators-beta)
 - (BETA) Sort by multiple table columns with [Multi Sort](#advanced-indicators-beta)
 - (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
@@ -1567,7 +1568,7 @@ The View Manager allows end-users to access, apply, edit, sort, and manage all t
 
 1. User favorites (includes: favorited Preset Views, favorited User Views, and global favorite views)
 2. User views (non-favorited User Views)
-3. Prest views (non-favorited Preset Views)
+3. Preset views (non-favorited Preset Views)
 3. Public views (other user's public views)
 4. Global views (global favorites that have been removed from the user's favorites)
 
@@ -1576,9 +1577,10 @@ The View Manager allows end-users to access, apply, edit, sort, and manage all t
 Next to each view is an action button that gives the user several options depending on the type of view:
 
 1. Apply view
-2. Add to favorites/Remove from favorites
-3. Edit view (only displayed for the User Views created by the user)
-4. Delete view (only displayed for the User Views created by the user)
+2. Set as default/Remove as default ([NEW!](#managed-default-views-beta))
+3. Add to favorites/Remove from favorites
+4. Edit view (only displayed for the User Views created by the user)
+5. Delete view (only displayed for the User Views created by the user)
 
 #### Sorting views
 
@@ -1929,25 +1931,111 @@ AdvancedTablesPlugin::make()
 
 To remove any of the icon, don't pass anything to the the respective method: `->hiddenIcon()`
 
+## Managed Default Views (Beta)
+
+![Default Views](https://advancedtables.com/images/default-views.png)
+
+Advanced Tables now allows your users to manage which view they would like to be their default view for each table. When a view is a default it will be automatically loaded when the resource/table is first opened after logging in.
+
+### Updating to the Managed Default Views Beta
+
+1. Update to the beta
+
+    If you are on version 3.8 and only want to experiment with Managed Default Views, update your `composer.json` file to:
+
+    ```json
+    "archilex/filament-filter-sets": "~3.9.0@beta-beta.1",
+    ```
+
+    If you want to experiment with Managed Default Views, [Multi-Sort](#multi-sort-beta), and [Advanced Indicators](#advanced-indicators-beta), update your `composer.json` file to:
+
+    ```bash
+    "archilex/filament-filter-sets": "^3.10@beta",
+    ```
+
+2. Publish and run the migrations:
+
+    ```bash
+    php artisan vendor:publish --tag="advanced-tables-migrations"
+    php artisan migrate
+    ```
+
+3.  If you are using [multi-tenancy](#multi-tenancy) run the following command to add the appropriate constraints. If not, you can skip this: 
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+4. Compile assets
+
+    After updating run `npm run build` and `php artisan filament:upgrade`.
+
+5. Enable Managed Default Views
+
+    Managed Default Views are disabled by default. To enable, add `managedDefaultViewsEnabled()` to your panel provider:
+
+    ```php
+    AdvancedTablesPlugin::make()
+        ->managedDefaultViewsEnabled()
+    ```
+
+### Using Managed Default Views
+
+To use Managed Default Views:
+
+1. Open the [View Manager](#view-manager-new).
+2. Next to the view you would like to make default, click the action group button then choose, "Set default".
+3. You may also remove a view as a default view. If there is a matching developer-defined [default Preset View](#loading-a-default-preset-view), it will become the new default.
+
+### UX Recommendation
+
+Advanced Tables comes with an basic "Default" view that is automatically added to each table. However, this default view is an internal "view" and does not display in the View Manager. To offer the clearest UX to your end-users and the best compatibility with Managed Default Views, it is recommended to disable this internal default view, and to add a default Preset View to each of your pages. You can accomplish this by:
+
+1. Disable the internal default view:
+    
+    ```php
+    AdvancedTablesPlugin::make()
+        ->favoritesBarDefaultView(false)
+    ```
+
+2. Add a default Preset View to your list pages:
+
+    ```php
+    public function getPresetViews(): void
+    {
+        return [
+            'default' => PresetView::make()
+                ->default()
+                ->favorite()
+                ->icon('heroicon-o-bars-4')
+        ];
+    }
+
+> Note: Starting in the upcoming v4, the internal default view will be removed in favor of a default Preset View.
+
 ## Multi-Sort (Beta)
 
 ![Multi-Sort](https://advancedtables.com/images/multi-sort.png)
 
 Advanced Tables now allows your users to sort their tables by multiple columns. Using the new Multi-Sort dropdown, users can add additional columns to sort by, easily change sort direction, and even reorder the columns. And Multi-Sort is completely integrated with [Preset Views](#preset-views) and [User Views](#user-views).
 
-### Updating to the Beta
+### Updating to the Multi-Sort Beta
 
 1. Update to the beta
 
     To update to the beta update your `composer.json` file to:
 
-    ```bash
+    ```json
     "archilex/filament-filter-sets": "^3.10@beta",
     ```
 
 2. Compile assets
 
     After updating run `npm run build` and `php artisan filament:upgrade`.
+
+3. Install Default Views (optional)
+
+    If you would also like to use the new Default Views, [follow these instructions](#updating-to-the-managed-default-views-beta).
 
 ### Using Multi-Sort
 
@@ -2012,7 +2100,7 @@ You may customize Multi-Sort buttons, labels in the language file.
 
 Advanced Indicators gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
 
-### Updating to the Beta
+### Updating to the Advanced Indicators Beta
 
 1. Update to the beta
 
@@ -2048,7 +2136,7 @@ Advanced Indicators gives your users quick access to their filters through Filam
 
 4. Enable Advanced Indicators
 
-    Advanced Indicators is disabled by default. To enable, add `AdvancedIndicatorsEnabled()` to your panel provider:
+    Advanced Indicators is disabled by default. To enable, add `advancedIndicatorsEnabled()` to your panel provider:
 
     ```php
     AdvancedTablesPlugin::make()
@@ -2058,6 +2146,10 @@ Advanced Indicators gives your users quick access to their filters through Filam
 5. Add the AdvancedTables trait
 
     If you haven't already, [add the AdvancedTables trait](#adding-advanced-tables-to-your-table) to your table.
+
+6. Install Managed Default Views (optional)
+
+    If you would also like to use the new Managed Default Views, [follow these instructions](#updating-to-the-managed-default-views-beta).
 
 ### Using Advanced Indicators
 
