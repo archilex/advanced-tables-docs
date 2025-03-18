@@ -104,7 +104,7 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 ### Requirements
 
-Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2.118+`, and `Laravel 10+`.
+Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2.133+`, and `Laravel 10+`.
 
 > Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
