@@ -30,16 +30,16 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - Allow your users to save their filters, toggled columns, grouping, and more in customizable [User Views](#user-views)
 - Developers can create [Preset Views](#preset-views) in code and deploy them for their clients
 - (New) Preset Views can also include [filters](#applying-filters-new), [grouping](#applying-default-grouping-new), [toggled columns](#toggling-and-reordering-columns-new), and [column order](#toggling-and-reordering-columns-new)
-- (New) The [Quick Save](#quick-save-new) button means saving custom views is just one click away
-- (New) Enhance your tables with [Column Reordering](#reordering-columns)
+- The [Quick Save](#quick-save-new) button means saving custom views is just one click away
+- Enhance your tables with [Column Reordering](#reordering-columns)
 - (BETA) [Managed Default Views](#managed-default-views-beta)
 - (BETA) Quickly access your filters with [Advanced Indicators](#advanced-indicators-beta)
 - (BETA) Sort by multiple table columns with [Multi Sort](#advanced-indicators-beta)
 - (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
 - Easily access views in the [Favorites Bar](#favorites-bar)
-- (New) Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
-- (New) [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
-- (New) Supports Multi-tenancy
+- Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
+- [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
+- Supports Multi-tenancy
 - Choose from six different [themes](#themes)
 - (New) Table loading [skeleton overlay](#table-loading-indicators-new)
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
@@ -47,7 +47,7 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 - Easily [create and export](#create-and-export-reports) reports from your customized views with [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel)
 - Admins can create [global favorite views](#enabling-making-a-user-view-a-global-favorite) that will appear for all users
 - Powerful [policy integration](#authorization) gives you complete control
-- (New) Includes an [approval system](#approving-public-and-global-favorite-user-views-new) for User Views
+- Includes an [approval system](#approving-public-and-global-favorite-user-views-new) for User Views
 - More than 60 configuration options to completely customize Advanced Tables to your needs
 - Supports [Panel Resource Tables](https://filamentphp.com/docs/3.x/panels/resources/getting-started), [Relation Managers](https://filamentphp.com/docs/3.x/panels/resources/relation-managers#creating-a-relation-manager), [Table Widgets](https://filamentphp.com/docs/3.x/panels/dashboard#table-widgets), and [Standalone Table Builder](https://filamentphp.com/docs/3.x/tables/installation)
 - Full support for dark mode
@@ -110,7 +110,7 @@ Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2
 
 ### Activating your license on AnyStack
 
-AdvancedTables uses [AnyStack](https://anystack.sh) to handle payment, licensing, and distribution.
+Advanced Tables uses [AnyStack](https://anystack.sh) to handle payment, licensing, and distribution.
 
 During the purchasing process, AnyStack will provide you with a license key. You will also be asked by AnyStack to activate your license by providing a `domain`. This is usually the domain of where your final project will live. You’ll use this same domain to install locally and in production. Once you have provide a domain, your license key will be activated and you can proceed with [installing with composer](#installing-with-composer) below. 
 
@@ -343,186 +343,6 @@ If you are using Laravel Forge, you don't need to create the `auth.json` file ma
 1. The most common mistake when deploying, is not adding the colon (:) followed by the domain you registered. `license_key:domain`. Please review the instructions above.
 
 2. If you have set up everything correctly and are getting the error: `../advanced-tables-for-filament-3.7.29.zip' URL required authentication (HTTP 401). You must be using the interactive console to authenticate` error, you may need to ssh into your server and clear your composer global cache with `composer clear-cache`
-
-## Upgrading to v3
-
-### New features
-
-Advanced Tables v3 is the biggest release since it's initial launch and contains numerous improvements over v1 and v2. Here are some of the exciting new features:
-
-- The new [View Manager](#view-manager-new) allows users to edit, manage, and sort their views right on the table
-- A new [Quick Save](#quick-save-new) button means saving views is just one click away
-- [User Views](#user-views) can now include grouping and column order
-- SlideOver, modal, and dropdown options
-- [Preset Views](#preset-views) (formerly developer-created filter sets) can now include filters, grouping, and columns
-- Preset Views can now be [favorited, hidden, and sorted](#disabling-preset-view-management-new) by the user
-- Columns can now be reordered with the enhanced [toggled column manager](#reordering-columns)
-- A new [approval system](#approving-public-and-global-favorite-user-views-new) allows admins to approve or reject public and global favorites
-- Support for Multi-tenancy
-- Two new [themes](#themes) (Github and Filament)
-- Easily add colors to the color picker using Filament's `Color::class`
-- More than 60 configuration options to completely customize Advanced Tables to your needs
-
-### Upgrading
-
-Advanced Tables is almost a complete rewrite of previous releases and thus requires numerous changes to completely upgrade. I've tried to document every required change, but if you have issues or if I have missed a step, please reach out to me at advancedtables@gmail.com.
-
-#### Before you begin
-
-Before you begin, be sure to follow the setup instructions for [Filament panels](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets) or [Table Builder](#setting-up-advanced-tables-in-filament-table-builder).
-
-#### High-impact changes
-
-##### Migrations
-
-Due to the namespace changes, you may need to update your old migrations to use the new namespacing. If you are updating a local project and you have *not yet* deployed to production, you can just delete the old migrations and publish the new ones. 
-
-However, if you have *already* deployed to your production server, you will most likely need to update your *local* migrations so you don't run into errors when trying to `migrate:fresh`:
-
-In your local `yyyy_mm_dd_xxxxxx_create_filament_filter_sets_table` and your `yyyy_mm_dd_xxxxxx_create_filament_filter_set_user_table` migrations, change:
-
-`use Archilex\FilamentFilterSets\Support\Config;` to `use Archilex\AdvancedTables\Support\Config;`
-
-If you wish you can also update the deprecated methods in both migration files:
-
-Change `$userClass = Config::getUserModelName();` to  `$userClass = Config::getUser();`
-
-> Important: If you have already deployed to your production server, do **NOT** delete and republish these two migration files. Doing this will create new migration files and when deploying to production you will encounter errors as the database tables have already been created.
-
-##### Filter Set Filter 
-
-The previous `FilterSetFilter` that lived in the `filters` dropdown has replaced by the [Quick Save](#quick-save-new) button to save new views and the [View Manager](#view-manager-new) to select and manage them. This means you should remove the `FilterSetFilter` and its imported class `use Archilex\FilamentFilterSets\Filters\FilterSetFilter` from each of your tables.
-
-It will also be important for you to educate your end-users accordingly.
-
-##### HasFavorites 
-
-The entry point to using Advanced Tables is now the `AdvancedTables` trait which replaces the previous `HasFavorites` trait. Remove the previous trait and class import and add the new one. 
-
-```php
-// use Archilex\FilamentFilterSets\Concerns\HasFavorites;
-use Archilex\AdvancedTables\AdvancedTables;
-
-class ListUsers extends ListRecords
-{
-    // use HasFavorites;
-    use AdvancedTables;
-```
-
-> Important: Previously, you would only need to use the `HasFavorites` trait if you wanted to use the Favorites Bar on a table. As of v3, the `AdvancedTables` trait is the main entry point for the plugin. This means that anywhere you were using `FilterSetFilter` without the respective `HasFavorite` trait you will now need to add the `AdvancedTables` trait to the appropriate class, usually `List*` or `Manage*`.
-
-##### Heroicons
-
-Filament v3 now uses Heroicons v2. If you are upgrading from Filter Sets v1 *and* you and/or your users were using icons with their views, these icons will need to be updated. Advanced Tables includes a helper service that you may enable to automatically convert icons stored in the database on the fly. You can enable this helper by adding the `convertIcons()` method to the `AdvancedTablesPlugin` object inside your `PanelProvider`: 
-
-```php
-public function panel(Panel $panel): Panel
-{
-    return $panel
-        ->plugins([
-            AdvancedTablesPlugin::make()
-                ->convertIcons()
-        ])
-```
-
-> The helper service exists to get you up and running as quickly as possible. However, when convenient, it's recommended you implement your own script to update the icons directly in your database and then disable this helper.
-
-#### Developer-created Filter Sets are now Preset Views
-
-Developer-created Filter Sets are now Preset Views and should be updated accordingly:
-
-1. The `getFilterSets()` should be renamed to `getPresetViews()`.
-2. The `FilterSet` object should be renamed to `PresetView` and it's class imported.
-3. The name of your Preset View should become the `array key`.
-4. `toggledColumns` has been renamed to `defaultColumns`.
-5. Any v1 Heroicons should be [updated to v2](https://github.com/tailwindlabs/heroicons/releases/tag/v2.0.0). 
-6. Any Preset View you wish to display in the Favorites Bar should use the `favorite()` method.
-
-Before
-```php
-use Archilex\FilamentFilterSets\Components\FilterSet;
-
-class ListUsers extends ListRecords
-{
-    public function getFilterSets(): array
-    {
-        return [
-            FilterSet::make('Delivered this month')
-                ->query(fn ($query) => $query->where('status', 'delivered'))
-                ->toggledColumns(['id', 'name'])
-        ];
-    }
-}
-```
-
-After
-```php
-use Archilex\AdvancedTables\Components\PresetView;
-
-class ListUsers extends ListRecords
-{
-    public function getPresetViews(): array
-    {
-        return [
-            'delivered_this_month' => PresetView::make()
-                ->label('Delivered')
-                ->query(fn ($query) => $query->where('status', 'delivered'))
-                ->defaultColumns(['id', 'name'])
-                ->favorite()
-        ];
-    }
-}
-```
-
-> Important: Be sure that any column included in `defaultColumns` is present in on the `columns` method of your table.
-
-##### Filter Set Resource is now User Views Resource
-
-Since users can now edit, delete, and sort their views in the View Manager, the User Views Resource (formerly Filter Set Resource) has been updated to be a tool *exclusively* for admin users as it now lists *every* user's views. You will most likely want to [limit access](#authorization) to this resource to admins.
-
-#### Medium-impact changes
-
-##### Combining Preset Views into a dropdown
-
-Since the new View Manager displays *all* views, including Preset Views, combining Developer-created Filter Sets into a dropdown using the `showDeveloperFilterSetsAsDropdown` method is now redundant. However, if needed, you may enable this functionality using the `presetViewLegacyDropdown()` method:
-
-```php
-AdvancedTablesPlugin::make()
-    ->presetViewLegacyDropdown()
-```
-
-##### Config file customizations
-
-All of the customizations that were previously managed in the `filament-filter-sets.php` config file are now managed on the `AdvancedTablesPlugin` object inside your `PanelProvider`. For easy reference, here are the previous customization options linked to their respective sections in the documentation:
-
-- [models.user](#userclass)
-- [models.filter_set](#configuring-the-user-view-model)
-- [models.filter_set_user](#configuring-the-managed-user-view-class)
-- [user_table_name_column](#configuring-the-user-name-columns)
-- [filter_set_resource.enabled](#disabling-the-user-views-resource)
-- [filter_set_resource.load_all_users](#disabling-loading-all-users-in-the-user-select-filter)
-- [favorites.view](#themes-1)
-- [favorites.all_icon](#default-view-icon)
-- [favorites.icon_position](#icon-position)
-- [favorites.size](#size)
-- [developer_filter_sets.can_create_using_developer_filter_sets](#disable-user-view-creation)
-- [developer_filter_sets.display_divider_in_favorites](#divider)
-- [developer_filter_sets.lock_icon](#display-a-lock-icon)
-- [developer_filter_sets.display_helper_text](#display-helper-text-in-the-save-view-slideover-or-modal)
-- [colors](#configuring-the-color-picker-colors-new)
-- [forms.display_helper_text](#showinghiding-helper-text)
-- [forms.display_icon_select](#disabling-the-icon-picker)
-- [forms.display_color_picker](#disabling-the-color-picker)
-
-> Note: If you are using the standalone Table Builder the configurations are handled in the new `advanced-tables.php` config file.
-
-##### Language files
-
-The language files have been completely reworked to match the new terminology. Since the language files have been renamed, there isn't a risk of missing translations, but if you had previously published and modified your language files, you will need to [publish](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets) and update the new ones. 
-
-#### What's next
-
-Now that you've successfully upgraded, be sure to take a look at all the [new features](#new-features) for additional options.
 
 ## Getting started
 
@@ -3342,77 +3162,7 @@ If you are using the Filament Panels, Advanced Tables comes with a `UserViewReso
 
 ### Configurations
 
-All of the configurations listed above are also available when using Filament's standalone Table Builder. However, these will need to be configured in the config file. 
-
-## Tips and Tricks
-
-### Create and export reports
-
-By combining Advanced Tables with the powerful [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel) by Dennis Koch, you and your users can take full advantage of your custom views to generate customizable reports. Your view's filters, toggled columns, sorting, and reordered columns are automatically configured in your exported data. Advanced Tables and Excel Export make customizing, saving, and exporting reports easy, yet powerful.
-
-1. Install Excel Export per the plugins [instructions](https://filamentphp.com/plugins/pxlrbt-excel#installation)
-2. Add the `ExportBulkAction` to your table:
-
-```php
-public static function table(Table $table): Table
-{
-    return $table
-        ->bulkActions([
-            ExportBulkAction::make()
-        ]);
-}
-```
-
-3. Create your custom view using either [Preset Views](#preset-views) or [User Views](#user-views). Use whichever combination of filters, sorting, and toggled columns you like. Remember, with Advanced Tables you can also [reorder your columns](#reorderable-columns-new) as well!
-
-4. [Save your custom view](#quick-save-new). If this will be a report you generate frequently, you can add it to your [Favorites Bar](#favorites-bar). Or just keep it in the [View Manager](#view-manager-new) for easy access later on.
-
-5. Click the `bulk select` button in the table header to select the records in your custom view and then choose `Export`. Your selected records will be downloaded, sorted, filtered, and organized, just like you want. 
-
-Be sure to check out the rest of [Excel Export's docs](https://filamentphp.com/plugins/pxlrbt-excel) for further ways to customize your exports. And if Excel Export is helpful to your business, be sure to [sponsor Dennis](https://github.com/sponsors/pxlrbt).
-
-### Updating your Widgets or Charts automatically
-
-Filament v3 now makes it easy for you to have your widgets and charts automatically update when you filter your views using Advanced Tables. Now, when you choose one of your Views, your widgets and/or charts will update to reflect your filtered data. 
-
-> Note: While you can use [Filament's](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget) `ExposesTableToWidgets` and `InteractsWithPageTable` traits, if you are using Preset View's `->modifyQueryUsing()` method you *must* use Advanced Table's versions to fully support interactivity on the first click.
-
-1. Add the `ExposesTableToWidgets` trait to your page class:
-
-```php 
-use Archilex\AdvancedTables\Widgets\Concerns\ExposesTableToWidgets;
-
-class ListOrders extends ListRecords
-{
-    use ExposesTableToWidgets;
-}
-```
-
-2. Inside your widget classes, add the `InteractsWithPageTable` trait and return the name of the page class from the `getTablePage()` method:
-
-```php 
-use Archilex\AdvancedTables\Widgets\Concerns\InteractsWithPageTable;
-
-class OrderStats extends Widget
-{
-    use InteractsWithPageTable;
- 
-    protected function getTablePage(): string
-    {
-        return ListOrders::class;
-    }
-}
-```
-
-3. Finally, in your widget class, use the `$this->getPageTableQuery()` to access the query builder instance:
-
-```php
-use Filament\Widgets\StatsOverviewWidget\Stat;
-
-Stat::make('Orders', $this->getPageTableQuery()->count()),
-```
-
-That's it! Now when you click on one of your Views, the widgets will update accordingly. See [Filament's docs](https://filamentphp.com/docs/3.x/panels/resources/widgets#accessing-page-table-data-in-the-widget) for more details.
+All of the configurations listed above are also available when using Filament's standalone Table Builder. However, these will need to be configured in the config file.
 
 ## Support
 
