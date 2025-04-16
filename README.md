@@ -1764,7 +1764,7 @@ Advanced Tables now allows your users to manage which view they would like to be
     If you are on version 3.8 and only want to experiment with Managed Default Views, update your `composer.json` file to:
 
     ```json
-    "archilex/filament-filter-sets": "~3.9.0@beta-beta.1",
+    "archilex/filament-filter-sets": "~3.9.0-beta.1",
     ```
 
     If you want to experiment with Managed Default Views, [Multi-Sort](#multi-sort-beta), and [Advanced Indicators](#advanced-indicators-beta), update your `composer.json` file to:
