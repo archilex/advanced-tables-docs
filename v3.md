@@ -1,17 +1,17 @@
-# Advanced Tables v4
+# Advanced Tables v3 (formerly Filter Sets)
 
 ![Advanced Tables with View Manager](https://user-images.githubusercontent.com/6097099/269182900-f3226af9-8e0c-4895-98e6-58499a76de7f.png)
 
 ## Introduction
 
-Advanced Tables is a premium plugin for [Filament](https://filamentphp.com/) that supercharges your tables with powerful features like user customizable views, enhanced filter tabs, advanced column reordering, convenient view management, filter builder, and more. 
+Advanced Tables (formerly known as Filter Sets) is a premium plugin for [Filament](https://filamentphp.com/) that supercharges your tables with powerful features like user customizable views, enhanced filter tabs, reorderable columns, convenient view management, filter builder, and more. 
 
 ### Video
 
 Check out a short video of some of the powerful features included in Advanced Tables
 [![Youtube video](https://user-images.githubusercontent.com/6097099/269337282-39ae1c24-eb4c-4d0b-9c88-11fcf14297ef.png)](https://www.youtube.com/watch?v=_vhVHiBzqrs)
 
-### Demo
+### Demo (New)
 
 See all the functionality that Advanced Tables has to offer in an interactive demo. It also includes a Configuration Playground so you can see many of the configuration options you can use to adapt the plugin to your needs.
 
@@ -29,26 +29,25 @@ Best of all, Advanced Tables works with *all* of your Filament tables including 
 
 - Allow your users to save their filters, toggled columns, grouping, and more in customizable [User Views](#user-views)
 - Developers can create [Preset Views](#preset-views) in code and deploy them for their clients
-- Preset Views can also include [filters](#applying-filters), [grouping](#applying-default-grouping), [toggled columns](#toggling-and-reordering-columns), and [column order](#toggling-and-reordering-columns)
-- The [Quick Save](#quick-save) button means saving custom views is just one click away
-- Enhance your tables with [Advanced Column Reordering](#reordering-columns)
-- (NEW) [Managed Default Views](#managed-default-views-new)
-- Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder)
+- (New) Preset Views can also include [filters](#applying-filters-new), [grouping](#applying-default-grouping-new), [toggled columns](#toggling-and-reordering-columns-new), and [column order](#toggling-and-reordering-columns-new)
+- The [Quick Save](#quick-save-new) button means saving custom views is just one click away
+- Enhance your tables with [Column Reordering](#reordering-columns)
+- (BETA) [Managed Default Views](#managed-default-views-beta)
+- (BETA) Quickly access your filters with [Advanced Indicators](#advanced-indicators-beta)
+- (BETA) Sort by multiple table columns with [Multi Sort](#advanced-indicators-beta)
+- (New) Create powerful queries with [Advanced Filter Builder](#advanced-filter-builder-new)
 - Easily access views in the [Favorites Bar](#favorites-bar)
-- Sort, favorite, and edit views on the table using the [View Manager](#view-manager)
+- Sort, favorite, and edit views on the table using the [View Manager](#view-manager-new)
 - [SlideOver](#displaying-as-a-slideover), [modal](#displaying-as-a-modal), and dropdown options
-- Choose from six different [themes](#themes)
-- (NEW) Table loading [skeleton overlay](#table-loading-indicators)
-- (NEW) Sort by multiple table columns with [Multi Sort](#multi-sort-new)
-- (NEW) Quickly access your filters with [Quick Filters](#quick-filters-new)
-- (Coming Soon) Support for Filament's new Modal Table Select
 - Supports Multi-tenancy
+- Choose from six different [themes](#themes)
+- (New) Table loading [skeleton overlay](#table-loading-indicators-new)
 - Includes a [User Views Resource](#user-views-resource) so your admins can manage all user views
 - Users can make their User Views [publicly](#making-a-user-view-public) available to all users
 - Easily [create and export](#create-and-export-reports) reports from your customized views with [Excel Export](https://filamentphp.com/plugins/pxlrbt-excel)
 - Admins can create [global favorite views](#enabling-making-a-user-view-a-global-favorite) that will appear for all users
 - Powerful [policy integration](#authorization) gives you complete control
-- Includes an [approval system](#approving-public-and-global-favorite-user-views) for User Views
+- Includes an [approval system](#approving-public-and-global-favorite-user-views-new) for User Views
 - More than 60 configuration options to completely customize Advanced Tables to your needs
 - Supports [Panel Resource Tables](https://filamentphp.com/docs/3.x/panels/resources/getting-started), [Relation Managers](https://filamentphp.com/docs/3.x/panels/resources/relation-managers#creating-a-relation-manager), [Table Widgets](https://filamentphp.com/docs/3.x/panels/dashboard#table-widgets), and [Standalone Table Builder](https://filamentphp.com/docs/3.x/tables/installation)
 - Full support for dark mode
@@ -105,11 +104,11 @@ Below you'll find extensive documentation on installing and using this plugin. O
 
 ### Requirements
 
-Advanced Tables requires `PHP 8.2+`, `MySQL 5.7.8+` or `Postgres`, `Filament 4.0.0 beta-21+`, and `Laravel 11.28+`.
+Advanced Tables requires `PHP 8.1+`, `MySQL 5.7.8+` or `Postgres`, `Filament 3.2.133+`, and `Laravel 10+`.
 
-### New Installation
+> Advanced Tables v1 is fully compatible with `Filament v2`. After purchasing a license here, please refer to the [Filter Sets v1](https://filamentphp.com.test/plugins/kenneth-sese-advanced-tables?v=v1#documentation) documentation for installation and usage instructions.
 
-#### Activating your license on AnyStack
+### Activating your license on AnyStack
 
 Advanced Tables uses [AnyStack](https://anystack.sh) to handle payment, licensing, and distribution.
 
@@ -119,7 +118,7 @@ During the purchasing process, AnyStack will provide you with a license key. You
 
 > Tip: You will need *both* your `license key` and your `domain` to authenticate when you install the package with composer. 
 
-#### Installing with Composer
+### Installing with Composer
 
 To install Advanced Tables you'll need to add the package to your `composer.json` file:
 
@@ -139,7 +138,7 @@ To install Advanced Tables you'll need to add the package to your `composer.json
 Once the repository has been added to your composer.json file, you can install Advanced Tables like any other composer package using the composer require command:
 
 ```bash
-composer require archilex/filament-filter-sets:"^4.0"
+composer require archilex/filament-filter-sets
 ```
 
 Next, you will be prompted to provide your username and password. 
@@ -170,7 +169,7 @@ The license key and fingerprint should be separated by a colon (:).
 
 > Tip: If you get a `402 error`, most likely you forgot to add the colon and fingerprint.
 
-#### Setting up Advanced Tables in Filament Panels (including Relation Managers, Table Widgets, and Panel Pages)
+### Setting up Advanced Tables in Filament Panels (including Relation Managers, Table Widgets, and Panel Pages)
 
 *If using Filament's standalone Table Builder, please refer to the [Filament Table Builder setup instructions](#setting-up-advanced-tables-in-filament-table-builder)*
 
@@ -220,15 +219,19 @@ The license key and fingerprint should be separated by a colon (:).
 
 5. Integrate Filter Set's Tailwind and css files
 
-    Filament v3 recommends developers [create a custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to better support a plugin's additional Tailwind classes. After you have created your custom theme, add Advanced Tables' views to your *new theme's* `theme.css` file usually located in `resources/css/filament/admin/theme.css`:
+    Filament v3 recommends developers [create a custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to better support a plugin's additional Tailwind classes. After you have created your custom theme, add Advanced Tables' views to your *new theme's* `tailwind.config.js` file usually located in `resources/css/filament/admin/tailwind.config.js`:
+
+    ```js
+    content: [
+        ...
+        './vendor/archilex/filament-filter-sets/**/*.php',
+    ],
+    ```
+
+    Next, import Advanced Tables's custom stylesheet into your theme's css file:
 
     ```css
-    @import '../../../../vendor/filament/filament/resources/css/theme.css';
-    @import '../../../../vendor/archilex/filament-filter-sets/resources/css/plugin.css'; // Add
-
-    @source '../../../../app/Filament';
-    @source '../../../../resources/views/filament';
-    @source '../../../../vendor/archilex/filament-filter-sets'; // Add
+    @import '../../../../vendor/archilex/filament-filter-sets/resources/css/plugin.css';
     ```
 
 6. Compile
@@ -251,7 +254,7 @@ The license key and fingerprint should be separated by a colon (:).
 
 After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#getting-started) to learn how to add Advanced Tables to your resources, relation managers, pages, and/or table widgets.
 
-#### Setting up Advanced Tables in Filament Table Builder
+### Setting up Advanced Tables in Filament Table Builder
 
 > If using Filament Panels, please refer to the [Filament Panels setup instructions](#setting-up-advanced-tables-in-filament-panels-including-relation-managers-and-table-widgets).
 
@@ -296,9 +299,7 @@ After you've successfully installed Advanced Tables, you may review the [Getting
     Add the following line to the top of your `app.css` file:
     
     ```css
-    @import '../../vendor/archilex/filament-filter-sets/resources/css/plugin.css'; // Add
-
-    @source '../../vendor/archilex/filament-filter-sets'; // Add
+    @import '../../vendor/archilex/filament-filter-sets/resources/dist/advanced-tables.css';
     ```
 
 6. Compile
@@ -321,7 +322,7 @@ After you've successfully installed Advanced Tables, you may review the [Getting
 
 After you've successfully installed Advanced Tables, you may review the [Getting Started guide](#filament-table-builder) to learn how to add Advanced Tables to your tables.
 
-#### Deploying
+### Deploying
 
 When deploying, it is not advised to store your `auth.json`` file inside your project's version control repository. To store your credentials on your deployment server you may create a [Composer auth.json file](https://getcomposer.org/doc/articles/http-basic-authentication.md) in your project directory using the following command: 
 
@@ -342,76 +343,6 @@ If you are using Laravel Forge, you don't need to create the `auth.json` file ma
 1. The most common mistake when deploying, is not adding the colon (:) followed by the domain you registered. `license_key:domain`. Please review the instructions above.
 
 2. If you have set up everything correctly and are getting the error: `../advanced-tables-for-filament-3.7.29.zip' URL required authentication (HTTP 401). You must be using the interactive console to authenticate` error, you may need to ssh into your server and clear your composer global cache with `composer clear-cache`
-
-### Upgrading to v4
-
-Before upgrading to Advanced Tables v4, first be sure you are familiar with Filament's [upgrade guide](https://filamentphp.com/docs/4.x/upgrade-guide) and know what changes will be needed along the way. 
-
-1. Update the dependency
-    
-    Before running Filament's upgrade script, you'll want to update your `composer.json` file:
-
-    ```bash
-    "archilex/filament-filter-sets": "^4.0",
-    ```
-
-    Then proceed with running Filament's upgrade script.
-
-2. Integrate Filter Set's Tailwind and css files
-
-    Follow Filament's instructions to [upgrade your custom theme](https://filamentphp.com/docs/4.x/upgrade-guide#high-impact-changes) and add Advanced Tables' css to your theme:
-
-    ```css
-    @import '../../../../vendor/filament/filament/resources/css/theme.css';
-    @import '../../../../vendor/archilex/filament-filter-sets/resources/css/plugin.css'; // Add
-
-    @source '../../../../app/Filament';
-    @source '../../../../resources/views/filament';
-    @source '../../../../vendor/archilex/filament-filter-sets'; // Add
-    ```
-
-3. Publish and run the migrations
-
-    Filament v4 has significant changes to the table columns structure to support reorderable columns and your current user views need to be upgraded to support the new structure. Publish and run the migration to update your user views to support this new structure.
-
-    > IMPORTANT: Backup your user views database table called `filament_filter_set` BEFORE proceeding.
-
-    ```bash
-    php artisan vendor:publish --tag="advanced-tables-migrations"
-    php artisan migrate
-    ```
-
-4. Compile
-
-    Next, compile your theme:
-
-    ```bash 
-    npm run build
-    ```
-
-    and run the Filament upgrade command:
-    
-    ```bash
-    php artisan filament:upgrade
-    ```
-
-5. Review the Important Changes and Known Issues section
-
-    Finally, review the [Important Changes](#important-changes) [Known Issues](#known-issues) section to learn about current limitations and workarounds.
-
-### Important Changes
-
-Listed below are changes that have occurred in v4 that may require attention by the developer.
-
-1. Advanced Indicators has been renamed to Quick Filters. If you are using this feature from v3, you will need to update your plugin config from `advancedIndicatorsEnabled()` to `quickFiltersEnabled()`.
-
-#### Default View
-
-In v3, the default view was an html button that was added to the front of the favorites bar. In v4 this has been replaced with a default Preset View. This allows the default view to appear in the [View Manager](#view-manager) and, if enabled, allows the user to select a [different default view](#managed-default-views-new). 
-
-If you have a Preset View with the key `default` *and* also want to display the internal default view, then you will need to rename your `default` key to something different as your preset view will override the internal default view.
-
-If, per previous recommendations for Managed Default Views, you had [disabled the default view](#disabling-the-default-view) and created a Preset View with the key `default`, this is no longer needed. You can re-enable default views, and remove the default Preset View you created. You can customize the default view using the existing [internal methods](#default-view-name)
 
 ## Getting started
 
@@ -675,7 +606,7 @@ You may also use [policies](#authorization) to configure who can make views favo
 
 By default, when creating/editing views, users can share their views with other users by toggling on `make public`. Public views will appear in other user's View Manager where they can then be added to their favorites if they wish.
 
-Advanced Tables also has an [approval system](#approving-public-and-global-favorite-user-views) so admins can approve public views before they are visible to other users.
+Advanced Tables also has an [approval system](#approving-public-and-global-favorite-user-views-new) so admins can approve public views before they are visible to other users.
 
 #### Disabling making a User View public
 
@@ -699,7 +630,7 @@ AdvancedTablesPlugin::make()
 
 After enabling, you may use [policies](#authorization) to further configure who can make views global favorites.
 
-Advanced Tables also has an [approval system](#approving-public-and-global-favorite-user-views) so admins can approve global favorite views before they are visible to other users.
+Advanced Tables also has an [approval system](#approving-public-and-global-favorite-user-views-new) so admins can approve global favorite views before they are visible to other users.
 
 #### Disabling management of global favorite views (New)
 
@@ -736,7 +667,7 @@ AdvancedTablesPlugin::make()
 
 You may configure the wording of each helper text by modifying the [language file](#language-files).
 
-#### Approving public and global favorite User Views
+#### Approving public and global favorite User Views (New)
 
 Advanced Tables includes a simple approval mechanism to allow admins to approve/reject public and global favorites before they are made available to other users.
 
@@ -785,7 +716,7 @@ AdvancedTablesPlugin::make()
 
 In addition to [User Views](#user-views), developers can also programmatically create Preset Views in code that can be deployed to all users. Preset Views exposes a `query()` api which allows you to modify the underlying eloquent query. This means you can "filter" a table's data without needing to have that filter on your table. 
 
-However, while being able to modify the underlying eloquent query is powerful, and in some cases might be the only way to filter a table, Advanced Tables v3 introduces a new [`defaultFilters()`](#applying-filters) api which allows you to apply values to your table filters. This, in turn, offers a better UX for your end-users as they will then see filter indicators in the table and will better understand how a Preset View is modifying the data. 
+However, while being able to modify the underlying eloquent query is powerful, and in some cases might be the only way to filter a table, Advanced Tables v3 introduces a new [`defaultFilters()`](#applying-filters-new) api which allows you to apply values to your table filters. This, in turn, offers a better UX for your end-users as they will then see filter indicators in the table and will better understand how a Preset View is modifying the data. 
 
 For more information on the difference between User Views and Preset Views please refer to [Core Concept: User Views vs Preset Views](#core-concept-user-views-vs-preset-views)
 
@@ -888,7 +819,7 @@ You may choose any of Filament's [default colors](https://filamentphp.com/docs/3
 
 You may also include any [extra colors you have previously registered in Filament](https://filamentphp.com/docs/3.x/support/colors#registering-extra-colors):
 
-### Adding a badge
+### Adding a badge (New)
 
 Preset Views can display a badge after the label by passing a string into the `badge()` method:
 
@@ -897,7 +828,7 @@ Preset Views can display a badge after the label by passing a string into the `b
     ->badge(Order::query()->where('status', 'processing')->count())
 ```
 
-### Changing the badge color
+### Changing the badge color (New)
 
 The color of a badge may be changed using the `badgeColor()` method:
 
@@ -909,7 +840,7 @@ The color of a badge may be changed using the `badgeColor()` method:
 
 > Tip: If you want to display multiple badges, you should generate one query separately and then use [Laravel collections](https://laravel.com/docs/10.x/collections#main-content) to filter and count them.
 
-### Adding a tooltip
+### Adding a tooltip (New)
 
 Preset Views can display a tooltip when hovered over in the Favorites Bar by passing a string into the `tooltip()` method.:
 
@@ -946,7 +877,7 @@ public function viewProcessing(User $user)
 
 > Tip: If your policy is not working, be sure to register it in `AuthServiceProvider` as sometimes Laravel does not successfully auto-register policies.
 
-### Applying filters
+### Applying filters (New)
 
 You can apply values to your [table filters](https://filamentphp.com/docs/3.x/tables/filters) from your Preset Views with the `defaultFilters()` method:
 
@@ -966,9 +897,9 @@ Using the `defaultFilters()` api gives your users a better understanding of how 
 
 > Tip: The easiest way to know how to properly form your filter array is to apply the desired filter to your table and then `dd($this->tableFilters)` at the top of the `getPresetViews()` method.
 
-### Applying filters with Filter Builder
+### Applying filters with Filter Builder (New)
 
-If you are using [Advanced Filter Builder](#advanced-filter-builder), you should use the following syntax to define your default filters:
+If you are using [Advanced Filter Builder](#advanced-filter-builder-new), you should use the following syntax to define your default filters:
 
 ```php
 'follow_up' => PresetView::make()
@@ -1018,7 +949,7 @@ If you are using the builder's [Column Filters](#enabling-column-filters), then 
 
 > Tip: Many of the column filters have multiple `keys` such as `date_start`, `date_end`, etc. You only need to add the values that you are setting for the filter.
 
-### Applying default grouping
+### Applying default grouping (New)
 
 You can apply one of your table [groupings](https://filamentphp.com/docs/3.x/tables/grouping#overview) to your Preset View with the `defaultGrouping()` method:
 
@@ -1027,9 +958,9 @@ You can apply one of your table [groupings](https://filamentphp.com/docs/3.x/tab
     ->defaultGrouping('created_at', 'desc')
 ```
 
-### Toggling and reordering columns
+### Toggling and reordering columns (New)
 
-Preset Views can toggle and reorder columns as well using the `defaultColumns()` method: 
+Preset Views can toggle columns, and, if [Reorderable Columns](#reorderable-columns-new) are enabled, can reorder them as well using the `defaultColumns()` method: 
 
 ```php
 'processing' => PresetView::make()
@@ -1057,7 +988,7 @@ By default, sorting is ascending, but you may choose descending as well `->defau
 
 ### Setting a default table multi-sort (New)
 
-If [Multi-Sort](#multi-sort) is enabled, you may multi-sort your preset views through the same `defaultSort()` method. Just pass an array of columns and their sort direction to `defaultSort()`:
+If [Multi-Sort](#multi-sort-beta) is enabled, you may multi-sort your preset views through the same `defaultSort()` method. Just pass an array of columns and their sort direction to `defaultSort()`:
 
 ```php
 'processing' => PresetView::make()
@@ -1078,6 +1009,7 @@ You may choose one of your Preset Views as the default view when loading the pag
 
 `default()` can take a callback which can allow you to dynamically choose which Preset View is the default based on the conditions you choose. The first Preset View that returns `true` will be the view that is loaded by default. 
 
+
 ### Preserving user selected filters, toggled columns, sort column, and sort direction
 
 By default, when an end-users clicks a Preset View, the filters, toggled columns, sort column, and sort direction that a user has already applied to a table will be removed in favor of the Preset View's configuration. This is usually the desired behavior as Preset Views are meant to be customized views into data. However in some instances, you may wish to preserve the user's selected filters, columns, etc. To do this you may use `preserveAll()`. 
@@ -1093,7 +1025,8 @@ If you need more fine-grained control you may use the individual methods:
 'processing' => PresetView::make()
     ->preserveFilters()
     ->preserveToggledColumns()
-    ->preserveSort()
+    ->preserveSortColumn()
+    ->preserveSortDirection()
 ```
 
 > Note: By preserving a user's selection you are in turn removing the option for a Preset View to always take a user to that view's predefined configuration as that view is now affected by the user.
@@ -1112,7 +1045,7 @@ public function panel(Panel $panel): Panel
         ])
 ```
 
-#### Configuring the Managed Preset View class
+#### Configuring the Managed Preset View class (New)
 
 The `ManagedPresetView` class is responsable for storing the visibility and sorting configurations between a `User` and a `PresetView` If you need to extend this class, you may pass your custom class to `managedPresetView()`:
 
@@ -1121,11 +1054,13 @@ AdvancedTablesPlugin::make()
     ->managedPresetView(myCustomManagedPresetView::class)
 ```
 
-#### Disabling Preset View management
+#### Disabling Preset View management (New)
 
 By default, Preset Views will be sorted in the order they are added to the `getPresetViews()` array. Similarly, any Preset View that has the `favorite()` method will be displayed by default in the end-user's Favorites Bar, and any Preset View without `favorite()` will be displayed in the View Manager.
 
-By default, users can sort Preset Views as well as add/remove them from the Favorites Bar. If you need to disable Preset View management you may do so by passing `false` to the `->globalUserViewsManageable()` method:
+Advanced Tables v3 now allows Preset Views to be managed by the end-user. Users can sort Preset Views as well as add/remove them from the Favorites Bar. 
+
+If you need to disable Preset View management you may do so by passing `false` to the `->globalUserViewsManageable()` method:
 
 ```php
 AdvancedTablesPlugin::make()
@@ -1134,7 +1069,7 @@ AdvancedTablesPlugin::make()
 
 By disabling `presetViewsManageable`, Preset Views will be not be able to be sorted nor added/removed from a user's Favorites Bar.
 
-#### Configuring new Preset Views sort position
+#### Configuring new Preset Views sort position (New)
 
 When Preset View management is enabled, a user is free to reorder, add or remove them from their Favorites Bar. Now, when a *new* Preset View is added in code and then deployed to the user, a decision needs to be made as to whether this new Preset View should be placed `before` or `after` the user's previously ordered Preset Views. By default new Preset Views are positioned `before` a user's current Preset View ordering, however this can be configured using the `newPresetViewSortPosition()` method:
 
@@ -1194,7 +1129,7 @@ AdvancedTablesPlugin::make()
     ->presetViewLockIcon('heroicon-o-star')
 ```
 
-##### Display a query indicator in the Save View slideOver or modal
+##### Display a query indicator in the Save View slideOver or modal (New)
 
 Another option to help a user know how a Preset View is modifying the query is to use the `->indicator()` method on the Preset View:
 
@@ -1219,6 +1154,17 @@ AdvancedTablesPlugin::make()
     ->quickSaveActivePresetViewHelperText()
 ```
 
+#### Displaying the legacy dropdown
+
+Version 1 of Advanced Tables (Filter Sets), introduced the ability to show Preset Views in a dropdown. This has been deprecated in favor of the [View Manager](#view-manager-new), however if you would still like to display it you may do so with the `presetViewLegacyDropdown()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->presetViewLegacyDropdown()
+```
+
+If you using the legacy dropdown, you may also want to [disable the view manager](#disable-view-manager).
+
 ## Favorites Bar
 
 The Favorites Bar is home to all of a user's favorite views as well as Quick Save and View Manager. The Favorites Bar can be customized in a variety of ways to match the needs of your application.
@@ -1236,7 +1182,7 @@ Advanced Tables includes six different themes for the Favorites Bar:
 3. Branded tabs
 4. Tabs
 5. Github (New, default)
-6. Filament
+6. Filament (New)
 
 You can change the theme with the 'favoritesBarTheme()` method:
 
@@ -1282,7 +1228,7 @@ AdvancedTablesPlugin::make()
 
 #### Disabling the Default View
 
-By default, the Favorites Bar includes a Default View. Clicking this will completely reset the table back to its default settings. You may disable the Default View using the `favoritesBarDefaultView()` method:
+By default, the Favorites Bar includes a Default View (previously named All). Clicking this will completely reset the table back to its default settings. You may disable the Default View using the `favoritesBarDefaultView()` method:
 
 ```php
 AdvancedTablesPlugin::make()
@@ -1298,26 +1244,9 @@ public function hasDefaultView(): bool
 }
 ```
 
-#### Modifying the Default View
+> Note: In prior versions this view was named `All`, however when clicking this view, it actually resets the table to it's ***default*** settings, which may or may not contain all the records. For this reason, it was renamed to `default` in version 3. However, you may change the name of the Default View in the [language file](#language-files).
 
-Behind the scenes, the default view is an internal Preset View that is injected at the front of the views. This means it is easy to modify the default view per resource by [creating a Preset View](#creating-a-preset-view) with the key `default`:
-
-```php
-public function getPresetViews(): array
-{
-    return [
-        'default' => PresetView::make()
-            ->modifyQueryUsing(fn (Builder $query) => $query->active())
-            ->icon(Heroicon::Check)
-            ->default()
-            ->favorite()
-    ];
-}
-```
-
-#### Default View name
-
-You may change the name of the Default View in the [language file](#language-files).
+> Tip: If you need an `All` button in addition/instead of a `Default` button, you can easily create a [Preset View](#creating-a-preset-view) that shows the data you need.
 
 #### Default View icon
 
@@ -1341,7 +1270,7 @@ AdvancedTablesPlugin::make()
 
 For more ways to distinguish between Preset Views and Users Views, please read the section [Distinguishing between Preset Views and Users Views](#distinguishing-between-preset-views-and-users-views)
 
-#### Loading Indicator
+#### Loading Indicator (New)
 
 You may show a loading indicator when switching between views by using the `favoritesBarLoadingIndicator()` method:
 
@@ -1352,7 +1281,7 @@ AdvancedTablesPlugin::make()
 
 #### Disabling the Favorites Bar
 
-You can disable the Favorites Bar entirely (helpful if you only want to use [reorderable columns](#reorderable-columns)) by passing `false` to the `favoritesBarEnabled()` method:
+You can disable the Favorites Bar entirely (helpful if you only want to use [reorderable columns](#reorderable-columns-new)) by passing `false` to the `favoritesBarEnabled()` method:
 
 ```php
 AdvancedTablesPlugin::make()
@@ -1375,7 +1304,7 @@ class ListOrders extends ListRecords
 
 You may also disable [Quick Save](#disabling-quick-save) or the [View Manager](#disabling-the-view-manager) if needed.
 
-## Quick Save
+## Quick Save (New)
 
 Advanced Tables offers a quick way for end-users to save User Views with the Quick Save button. Quick Save can be customized in a variety of ways to match the needs of your application.
 
@@ -1449,7 +1378,7 @@ AdvancedTablesPlugin::make()
     ->quickSaveSlideOver(false)
 ```
 
-## View Manager
+## View Manager (New)
 
 Advanced Tables' View Manager is an easy and convenient way for your end-users to manage all of the views available for the table. Users can quickly search, apply, sort, edit, delete, add to favorites, and more, all from the View Manager. The View Manager can be customized in a variety of ways to match the needs of your application.
 
@@ -1468,7 +1397,7 @@ The View Manager allows end-users to access, apply, edit, sort, and manage all t
 Next to each view is an action button that gives the user several options depending on the type of view:
 
 1. Apply view
-2. Set as default/Remove as default ([NEW!](#managed-default-views-new))
+2. Set as default/Remove as default ([NEW!](#managed-default-views-beta))
 3. Add to favorites/Remove from favorites
 4. Edit view (only displayed for the User Views created by the user)
 5. Delete view (only displayed for the User Views created by the user)
@@ -1746,24 +1675,122 @@ AdvancedTablesPlugin::make()
     ->defaultViewIcon('heroicon-o-queue-list')
 ```
 
-## Reorderable Columns
+## Reorderable Columns (New)
 
-To support the broader community, the reorderable columns feature is now a part of Filament v4 core through Filament's new Column Manager! You can enable reorderable columns by adding `->reorderableColumns()` to your table:
+Advanced Tables enhances Filament's [toggleable columns](https://filamentphp.com/docs/3.x/tables/columns/getting-started#toggling-column-visibility) dropdown with powerful column reordering. Now you and your users can move hide, show, and move columns to create a totally custom view. Best of all, when a user creates a new User View, their new column order is saved as well. 
+
+> Note: When using a table with a [column layout](https://filamentphp.com/docs/3.x/tables/layout), the columns dropdown will not show the reorder button since columns cannot be reordered in this type of layout.
+
+### Reordering columns
+
+To reorder columns:
+
+1. Click the toggle column button in the table toolbar to open the column dropdown. 
+2. Click the `up/down arrow` button to enable reordering
+3. Drag and drop your columns in the order you prefer.
+
+> Note: At least one column in your table must be `toggleable()` for Filament to display the toggle column button.
+
+### Reorderable Columns configurations
+
+Advanced Tables offers multiple ways to customize Reorderable Columns. Unless specified otherwise, these options can be configured directly on the `AdvancedTablesPlugin` object inside your `PanelProvider`. 
+
+#### Disabling column reordering
+
+Advanced Tables enables column reordering by default. You may disable this and use Filament's native column toggling UI by passing `false` to the `reorderableColumnsEnabled()` method:
 
 ```php
-    return $table
-        ->reorderableColumns()
+AdvancedTablesPlugin::make()
+    ->reorderableColumnsEnabled(false)
 ```
 
-However, coming soon, Advanced Tables will be introducing Advanced Column Manager which will bring additional functionality to Filament's such as allowing users to create their own column groupings and allowing columns to be moved between column groups. This will give users ultimate flexibility and save developers time from having to hardcode column groups. 
+You may also disable Reorderable Columns per resource by overriding the `canReorderColumns()` method in the class where you have added the AdvancedTables trait:
 
-## Managed Default Views (New)
+```php
+public function canReorderColumns(): bool
+{
+    return false;
+}
+```
+
+#### Always displaying the hidden label
+
+By default, the enhanced toggle column dropdown will only display the `Hidden` label when there are hidden columns. To always display the hidden label you may use the `reorderableColumnsAlwaysDisplayHiddenLabel()` method:
+
+```php
+AdvancedTablesPlugin::make()
+    ->reorderableColumnsAlwaysDisplayHiddenLabel()
+```
+
+#### Display the toggle column dropdown as two columns
+
+You may show the toggle column dropdown as two columns by using the `columnToggleFormColumns()` method on your table:
+
+```php
+public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            ...
+        ])
+        ->columnToggleFormColumns(2)
+```
+
+#### Configuring the icons
+
+You may change any of the icons used for Reorderable Columns by using the following methods:
+
+```php
+AdvancedTablesPlugin::make()
+    ->reorderIcon('heroicon-m-arrows-up-down')
+    ->checkMarkIcon('heroicon-m-check')
+    ->dragHandleIcon('heroicon-o-bars-2')
+    ->visibleIcon('heroicon-s-eye')
+    ->hiddenIcon('heroicon-o-eye-slash')
+```
+
+To remove any of the icon, don't pass anything to the the respective method: `->hiddenIcon()`
+
+## Managed Default Views (Beta)
 
 ![Default Views](https://advancedtables.com/images/default-views.png)
 
 Advanced Tables now allows your users to manage which view they would like to be their default view for each table. When a view is a default it will be automatically loaded when the resource/table is first opened after logging in.
 
-### Enable Managed Default Views
+### Updating to the Managed Default Views Beta
+
+1. Update to the beta
+
+    If you are on version 3.8 and only want to experiment with Managed Default Views, update your `composer.json` file to:
+
+    ```json
+    "archilex/filament-filter-sets": "~3.9.0-beta.1",
+    ```
+
+    If you want to experiment with Managed Default Views, [Multi-Sort](#multi-sort-beta), and [Advanced Indicators](#advanced-indicators-beta), update your `composer.json` file to:
+
+    ```bash
+    "archilex/filament-filter-sets": "^3.10@beta",
+    ```
+
+2. Publish and run the migrations:
+
+    ```bash
+    php artisan vendor:publish --tag="advanced-tables-migrations"
+    php artisan migrate
+    ```
+
+3.  If you are using [multi-tenancy](#multi-tenancy) run the following command to add the appropriate constraints. If not, you can skip this: 
+
+    ```bash
+    php artisan advanced-tables:add-tenancy
+    ```
+
+4. Compile assets
+
+    After updating run `npm run build` and `php artisan filament:upgrade`.
+
+5. Enable Managed Default Views
 
     Managed Default Views are disabled by default. To enable, add `managedDefaultViewsEnabled()` to your panel provider:
 
@@ -1776,17 +1803,63 @@ Advanced Tables now allows your users to manage which view they would like to be
 
 To use Managed Default Views:
 
-1. Open the [View Manager](#view-manager).
+1. Open the [View Manager](#view-manager-new).
 2. Next to the view you would like to make default, click the action group button then choose, "Set default".
 3. You may also remove a view as a default view. If there is a matching developer-defined [default Preset View](#loading-a-default-preset-view), it will become the new default.
 
-## Multi-Sort (New)
+### UX Recommendation
+
+Advanced Tables comes with an basic "Default" view that is automatically added to each table. However, this default view is an internal "view" and does not display in the View Manager. To offer the clearest UX to your end-users and the best compatibility with Managed Default Views, it is recommended to disable this internal default view, and to add a default Preset View to each of your pages. You can accomplish this by:
+
+1. Disable the internal default view:
+    
+    ```php
+    AdvancedTablesPlugin::make()
+        ->favoritesBarDefaultView(false)
+    ```
+
+2. Add a default Preset View to your list pages:
+
+    ```php
+    public function getPresetViews(): void
+    {
+        return [
+            'default' => PresetView::make()
+                ->default()
+                ->favorite()
+                ->icon('heroicon-o-bars-4')
+        ];
+    }
+
+> Note: Starting in the upcoming v4, the internal default view will be removed in favor of a default Preset View.
+
+## Multi-Sort (Beta)
 
 ![Multi-Sort](https://advancedtables.com/images/multi-sort.png)
 
 Advanced Tables now allows your users to sort their tables by multiple columns. Using the new Multi-Sort dropdown, users can add additional columns to sort by, easily change sort direction, and even reorder the columns. And Multi-Sort is completely integrated with [Preset Views](#preset-views) and [User Views](#user-views).
 
+### Updating to the Multi-Sort Beta
+
+1. Update to the beta
+
+    To update to the beta update your `composer.json` file to:
+
+    ```json
+    "archilex/filament-filter-sets": "^3.10@beta",
+    ```
+
+2. Compile assets
+
+    After updating run `npm run build` and `php artisan filament:upgrade`.
+
+3. Install Default Views (optional)
+
+    If you would also like to use the new Default Views, [follow these instructions](#updating-to-the-managed-default-views-beta).
+
 ### Using Multi-Sort
+
+To use multi-sort:
 
 1. Click the new multi-sort button in the table toolbar to open the multi-sort dropdown.
 2. Click the `Add column` button to add a column to sort by. Only `->sortable()` table columns will be shown.
@@ -1839,32 +1912,31 @@ AdvancedTablesPlugin::make()
 #### Customizing the buttons and labels
 You may customize Multi-Sort buttons, labels in the language file.
 
-## Quick Filters (New)
+## Advanced Indicators (Beta)
 
-![Quick filters](https://advancedtables.com/images/advanced-indicators.png)
+![Advanced indicators](https://advancedtables.com/images/advanced-indicators.png)
 
-> Important: Quick Filters is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since [additional configuration](#enabling-quick-filters) is needed, there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) exist, and there may be custom Filament implementations that haven't been accounted for, this feature is disabled by default. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email.
+> Important: Advanced Indicators is one of the biggest additions to Advanced Tables since it's initial launch and I'm very excited to be able to bring this functionality to Filament. However, since there are still [outstanding features](#specifying-favorite-filters-with-user-views-under-development) to be implemented, [known limitations](#current-limitations-and-unknowns) that are under development, and there may be custom Filament implementations that haven't been accounted for, I am launching this as a beta feature. Please read all the instructions fully to know what is currently supported, what is under development, and what may not be supported. If you do find an issue, please reach out to me on discord our through email.
 
-Quick Filters gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
+Advanced Indicators gives your users quick access to their filters through Filament's indicator system. When enabled, each indicator can be clicked on to access that filter's settings. In addition, filters can be favorited and "pinned" so they always appear, even when not active. 
 
-### Enabling Quick Filters
+### Updating to the Advanced Indicators Beta
 
-1. Enable Quick Filters
+1. Update to the beta
 
-    Quick Filters is disabled by default. To enable, add `quickFiltersEnabled()` to your panel provider:
+    To update to the beta update your `composer.json` file to:
 
-    ```php
-    AdvancedFilter::make()
-        ->quickFiltersEnabled()
+    ```bash
+    "archilex/filament-filter-sets": "^3.10@beta",
     ```
 
 2. Compile assets
     
-    After enabling be sure to run `npm run build` and `php artisan filament:upgrade`.
+    After updating be sure to run `npm run build` and `php artisan filament:upgrade`.
 
 3. Update Custom Filter Classes
 
-    Quick Filters automatically overrides any default Filament filters you have included in your resource or page. However, any *custom* filter classes that you have created that extends a Filament filter will need to be updated to use Advanced Table's versions. This can be easily accomplished by just updating your imported class with the plugins equivalent:
+    Advanced Indicators automatically overrides any default Filament filters you have included in your resource or page. However, any custom filter classes that you have created that extends a Filament filter will need to be updated to use Advanced Table's versions. This can be easily accomplished by just updating your imported class with the plugins equivalent:
 
     ```php
     - use Filament\Tables\Filters\Filter
@@ -1882,13 +1954,26 @@ Quick Filters gives your users quick access to their filters through Filament's 
 
     Remember, you only need to override *custom* filter classes you have created. Filters used within Filament's resources and pages will be overridden automatically.
 
-4. Add the AdvancedTables trait
+4. Enable Advanced Indicators
+
+    Advanced Indicators is disabled by default. To enable, add `advancedIndicatorsEnabled()` to your panel provider:
+
+    ```php
+    AdvancedTablesPlugin::make()
+        ->advancedIndicatorsEnabled()
+    ```
+
+5. Add the AdvancedTables trait
 
     If you haven't already, [add the AdvancedTables trait](#adding-advanced-tables-to-your-table) to your table.
 
-### Using Quick Filters
+6. Install Managed Default Views (optional)
 
-Once enabled, Quick Filters should work right out the box with minimal configuration. Just click on any indicator to see the form field(s) associated with that filter. Any adjustments to that filter will be immediately reflected in the table and synced to filament's filter form. 
+    If you would also like to use the new Managed Default Views, [follow these instructions](#updating-to-the-managed-default-views-beta).
+
+### Using Advanced Indicators
+
+Once enabled, Advanced Indicators should work right out the box with minimal configuration. Just click on any indicator to see the form field(s) associated with that filter. Any adjustments to that filter will be immediately reflected in the table and synced to filament's filter form. 
 
 #### Custom Filters with Multiple Form Fields
 
@@ -1954,9 +2039,9 @@ Filter::make('published_at')
     }),
 ```
 
-Quick Filters supports both of these use cases. In the first example, only one indicator will be shown, but the form will include both fields. In the second, only the indicator's respective field will be displayed. 
+Advanced Indicators supports both of these use cases. In the first example, only one indicator will be shown, but the form will include both fields. In the second, only the indicator's respective field will be displayed. 
 
-If you are using return types (and you should be) then Quick Filters will automatically detect how the indicators should be displayed. If you are not using return types, then you will need to be explicit about how Quick Filters should display your form fields using the `->multipleIndicators()` method:
+If you are using return types (and you should be) then Advanced Indicators will automatically detect how the indicators should be displayed. If you are not using return types, then you will need to be explicit about how Advanced Indicators should display your form fields using the `->multipleIndicators()` method:
 
 **Example 1 - Display as a single indicator:**
 
@@ -1978,7 +2063,7 @@ Filter::make('created_at')`
 
 ![Favorite filters](https://advancedtables.com/images/favorite-filters.png)
 
-Quick Filters not only gives you quick access to applied filters, but also allows you to specify "favorite" filters which will always be displayed in the indicator bar, even when the filter is not active. You can make a filter a favorite by using the `->favorite()` method:
+Advanced Indicators not only gives you quick access to applied filters, but also allows you to specify "favorite" filters which will always be displayed in the indicator bar, even when the filter is not active. You can make a filter a favorite by using the `->favorite()` method:
 
 ```php
 SelectFilter::make('brand')
@@ -1989,9 +2074,9 @@ SelectFilter::make('brand')
 
 #### Limiting the Indicator labels
 
-![Quick Filters](https://advancedtables.com/images/advanced-indicators.png)
+![Advanced indicators](https://advancedtables.com/images/advanced-indicators.png)
 
-Quick Filters also introduces the ability to limit the number of labels that are shown on a Select Filter. Since you now have easy access to filters through the indicator, it may not be necessary to pollute the indicator bar with an excessively long indicator. To limit the indicator labels you may use the `->limitIndicatorLabels()` method:
+Advanced Indicators also introduces the ability to limit the number of labels that are shown on a Select Filter. Since you now have easy access to filters through the indicator, it may not be necessary to pollute the indicator bar with an excessively long indicator. To limit the indicator labels you may use the `->limitIndicatorLabels()` method:
 
 ```php
 SelectFilter::make('brand')
@@ -2028,22 +2113,31 @@ If you are using [Preset Views](#preset-views) you may configure which filters s
 
 User-specified favorite filters is currently under development and should be released soon. When released, your users will be able to favorite, rearrange, and even hide filters according to their needs and then save that configuration as a [User View](#user-views).
 
-#### Deferring Quick Filters
+#### Deferring Advanced Indicators
 
-The current implementation of Quick Filters is for each indicator form to be live even if you are using Filament's [filter deferring](https://filamentphp.com/docs/3.x/tables/filters/getting-started#deferring-filters). Since each indicator is a subset of all the filters, deferring a single filter doesn't seem necessary.
+The current implementation of Advanced Indicators is for each indicator form to be live even if you are using Filament's [filter deferring](https://filamentphp.com/docs/3.x/tables/filters/getting-started#deferring-filters). Since each indicator is a subset of all the filters, deferring a single filter doesn't seem necessary.
 
-However, if there is sufficient demand/need for it, I will look into bringing deferring to Quick Filters in the future. If implemented, each indicator dropdown would have it's own "Apply" button. Please contact me if this is a feature you need.
+However, if there is sufficient demand/need for it, I will look into bringing deferring to Advanced Indicators in the future. If implemented, each indicator dropdown would have it's own "Apply" button. Please contact me if this is a feature you need.
 
 ### Current Limitations and Unknowns
 
-While Quick Filters should work for the majority of implementations, there are currently a few limitations and unknowns:
+While Advanced Indicators should work for the majority of implementations, there are currently a few limitations and unknowns:
 
 1. [Advanced Filter Builder](#advanced-filter-builder-new) is not currently supported, but under development.
 2. Custom filters may not be fully supported, but the goal is to support any implementation with Filament's filters. If something is not working as expected please contact me.
 3. Third-party filter plugins have not been tested. If a filter plugin is not working, please contact me. Please note, that full support may require the plugin developer to update their filter. 
 4. Filament's Query Builder Filter is not currently supported. I am looking into supporting it, but if support comes it will be at the very end of this development period.
 
-## Advanced Filter Builder
+### Disabling Advanced Indicators
+
+If you wish to disable Advanced Indicators, you may pass false to the `->advancedIndicatorsEnabled()` method:
+
+```php
+AdvancedFilter::make()
+    ->advancedIndicatorsEnabled(false)
+```
+
+## Advanced Filter Builder (New)
 
 ![Advanced filter builder](https://user-images.githubusercontent.com/6097099/278955775-f124d155-8fd8-4af5-bf38-e13ec958df3c.png)
 
@@ -2298,7 +2392,7 @@ AdvancedFilter::make()
 
 > Important: If you are updating from a prior release and your users have already saved created User Views with filters, don't worry, Advanced Filter Builder will automatically map them to the first filter group.
 >
-> However, if you are using Preset Views with [default filters](#applying-filters), you will need to [adjust your filters](#applying-filters-with-filter-builder) to be compatible with Advanced Filter Builder.
+> However, if you are using Preset Views with [default filters](#applying-filters-new), you will need to [adjust your filters](#applying-filters-with-filter-builder-new) to be compatible with Advanced Filter Builder.
 
 ### Using filters alongside Advanced Filter Builder
 
@@ -2697,7 +2791,7 @@ Advanced Tables only fully supports Filament's official multi-tenancy implementa
 
 ## User Views Resource
 
-Starting in v3, the User Views Resource is a Filament table resource primarily for admins to be able to manage the User Views of *all* their users. It is also where admins can approve or reject User Views with the [approval system](#approving-public-and-global-favorite-user-views).
+Starting in v3, the User Views Resource is a Filament table resource primarily for admins to be able to manage the User Views of *all* their users. It is also where admins can approve or reject User Views with the [approval system](#approving-public-and-global-favorite-user-views-new).
 
 > Important: You will need to set up a [policy](#authorization) to limit access to the User Views Resource. Without a policy, any user will be able to rename, update, or delete any User View. See the policy section for more information.
 
